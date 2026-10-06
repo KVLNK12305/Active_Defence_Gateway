@@ -14,10 +14,10 @@ pub struct TrustScore {
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum TrustLevel {
-    Trusted,
-    Normal,
-    Suspicious,
-    Untrusted,
+    Trusted,    // 90..=100 -> ALLOW (Priority 1)
+    Normal,     // 70..=89  -> ALLOW (LOG) (Priority 1)
+    Suspicious, // 40..=69  -> MIRROR (Priority 120)
+    Untrusted,  // 0..=39   -> DROP (Priority 200)
 }
 
 impl std::fmt::Display for TrustLevel {
@@ -46,11 +46,7 @@ impl TrustScore {
 pub struct TrustEngine;
 
 impl TrustEngine {
-    /// Computes trust score using SYN behavior analysis.
-    ///
-    /// High SYN ratios may indicate aggressive connection initiation,
-    /// such as scanning or connection-flood behaviour,
-    /// and therefore warrant a trust reduction.
+    /// Computes trust score using SYN behavior and fragmentation analysis.
     pub fn compute(profile: &HostProfile) -> TrustScore {
         let mut trust: i32 = 100;
         let mut syn_contribution: i32 = 0;
@@ -71,9 +67,6 @@ impl TrustEngine {
         }
 
         // Security Signals - Fragmentation
-        // Abnormal IP fragmentation is often associated with
-        // evasion techniques and fragmentation-based attacks.
-        // Apply a severe trust reduction.
         match profile.frag_behavior {
             FragBehavior::Normal => {}
             FragBehavior::Anomalous => {
@@ -144,11 +137,33 @@ mod tests {
     }
 
     #[test]
+    fn test_anomalous_fragmentation_deduction() {
+        let mut profile = create_profile(SynBehavior::Normal);
+        profile.frag_behavior = FragBehavior::Anomalous;
+        let score = TrustEngine::compute(&profile);
+        assert_eq!(score.score, 15);
+        assert_eq!(score.frag_contribution, -85);
+        assert_eq!(score.level(), TrustLevel::Untrusted);
+    }
+
+    #[test]
+    fn test_combined_aggressive_syn_and_frag_clamped_to_zero() {
+        let mut profile = create_profile(SynBehavior::Aggressive);
+        profile.frag_behavior = FragBehavior::Anomalous;
+        let score = TrustEngine::compute(&profile);
+        assert_eq!(score.score, 0);
+        assert_eq!(score.syn_contribution, -50);
+        assert_eq!(score.frag_contribution, -85);
+        assert_eq!(score.level(), TrustLevel::Untrusted);
+    }
+
+    #[test]
     fn test_unknown_syn_no_penalty() {
         let profile = create_profile(SynBehavior::Unknown);
         let score = TrustEngine::compute(&profile);
         assert_eq!(score.score, 100);
         assert_eq!(score.syn_contribution, 0);
+        assert_eq!(score.level(), TrustLevel::Trusted);
     }
 
     #[test]
@@ -185,15 +200,5 @@ mod tests {
         profile.icmp = 500;
         let score = TrustEngine::compute(&profile);
         assert_eq!(score.score, 100, "ICMP is diagnostic, not malicious");
-    }
-
-    #[test]
-    fn test_anomalous_fragmentation_deduction() {
-        let mut profile = create_profile(SynBehavior::Normal);
-        profile.frag_behavior = FragBehavior::Anomalous;
-        let score = TrustEngine::compute(&profile);
-        assert_eq!(score.score, 15);
-        assert_eq!(score.frag_contribution, -85);
-        assert_eq!(score.level(), TrustLevel::Untrusted);
     }
 }
