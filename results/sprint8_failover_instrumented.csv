@@ -1,0 +1,6 @@
+run_id,controller_count,switch_count,host_count,primary_controller,traffic_type,traffic_interval,T0_failure_ns,first_post_failure_packet_ns,recovery_latency_ms,ping_rtt_ms,packet_loss_count,total_packets,PacketIn_ns,FlowMod_ns
+1,2,1,2,C1,ICMP,0.01s,6568909622840,6568916461704,6.838864,,0,0,,
+2,2,1,2,C1,ICMP,0.01s,6585365361257,6585370211614,4.850357,,0,0,,
+3,2,1,2,C1,ICMP,0.01s,6601804519777,6601808146370,3.626593,,0,0,,
+4,2,1,2,C1,ICMP,0.01s,6618272344104,6618273160816,0.816712,,0,0,,
+5,2,1,2,C1,ICMP,0.01s,6634712790186,6634717222792,4.432606,,0,0,,
