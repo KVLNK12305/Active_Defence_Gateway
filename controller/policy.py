@@ -13,15 +13,14 @@ from enum import Enum, auto
 class Action(Enum):
     ALLOW = auto()
     DROP = auto()
-    MIRROR = auto()      # Future IDS support
-    REDIRECT = auto()    # Future Honeypot support
+    MIRROR = auto()      # IDS packet inspection
+    REDIRECT = auto()    # Reserved for future honeypot support (Phase 3)
 
 
 class PolicyConfig:
     ALLOW = 90
     LOG = 70
     MIRROR = 40
-    REDIRECT = 20
 
 class PolicyEngine:
     def evaluate(self, trust: int, risk: int = 0) -> Action:
@@ -39,9 +38,6 @@ class PolicyEngine:
             
         elif trust >= PolicyConfig.MIRROR:
             return Action.MIRROR
-            
-        elif trust >= PolicyConfig.REDIRECT:
-            return Action.REDIRECT
             
         else:
             return Action.DROP

@@ -31,8 +31,7 @@
 | **ALLOW** | ≥90 | 1 | Normal L2 forwarding |
 | **LOG** | 70-89 | 1 (ALLOW + log) | Forward normally, internal log event |
 | **MIRROR** | 40-69 | 120 | Forward via `OFPP_NORMAL` + copy to `OFPP_CONTROLLER` (128 bytes) |
-| **REDIRECT** | 20-39 | 150 | Placeholder for honeypot redirection |
-| **DROP** | <20 | 200 | Empty action list (hardware-offloaded drop) |
+| **DROP** | <40 | 200 | Empty action list (hardware-offloaded drop) |
 
 ### Key Architectural Strengths
 - **Autonomous recovery**: Windowed delta computation means trust naturally returns to 100 when malicious traffic stops.

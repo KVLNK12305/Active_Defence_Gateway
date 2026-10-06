@@ -8,7 +8,7 @@ The Active Defense Gateway has successfully completed **Phase 1** of its impleme
 - **Observation Plane (eBPF/XDP):** High-performance, in-kernel telemetry tracking packets, bytes, TCP/UDP/ICMP ratios, SYN floods, and **Fragmented Packet (Evasion)** anomalies.
 - **Trust Engine (Rust):** A mathematically rigorous, stateless behavioral profiler that translates network telemetry into a dynamic 0-100 `HOST_TRUST` score.
 - **Enforcement Plane (Python OS-Ken):** An SDN controller that polls the Trust Engine without executing heavy logic, triggering dynamic OpenFlow `FlowMod` rules.
-- **Adaptive Policy States:** Hosts automatically transition between `ALLOW`, `MIRROR`, `REDIRECT`, and `DROP` based on their real-time behavior, with proactive fallback and recovery capabilities.
+- **Adaptive Policy States:** Hosts automatically transition between `ALLOW`, `MIRROR`, and `DROP` based on their real-time behavior, with proactive fallback and recovery capabilities.
 - **Automated Evaluation Suite:** Python-based simulation scripts generating thesis-ready metrics and `matplotlib` graphs (Trust vs. Time, Telemetry Correlation).
 - **Network Intelligence Layer:** Real-time event streaming (`PerfEventArray`) mapping TCP control events (`SYN`, `FIN`, `RST`) to userspace for continuous, non-blocking flow and graph analysis.
 - **Proactive Risk Mitigation:** Dynamic `SecurityGraph` computing node degrees and Network Risk metrics, enforcing strict `MIRROR`/`DROP` rules on high-risk traffic.
@@ -33,7 +33,7 @@ There is a critical need for a system that can actively deceive attackers at wir
 
 * **Observation Plane (eBPF/XDP):** Sitting directly on the Network Interface Card (NIC), this Rust-based eBPF program parses packet headers (including IPv4 fragmentation flags) at wire speed. It maintains a `HOST_STATS` map tracking granular behaviors like SYN ratios and fragment counts.
 * **Control Plane (Rust Userspace):** The "Trust Engine" reads the telemetry, builds a `HostProfile`, and calculates a `TrustScore` (0-100). This score is pinned to a global eBPF map (`/sys/fs/bpf/HOST_TRUST`).
-* **Enforcement Plane (SDN Controller):** The Python-based `OS-Ken` controller polls the pinned trust map via `ctypes`. A stateless `PolicyEngine` determines the appropriate action (`ALLOW`, `MIRROR`, `REDIRECT`, `DROP`), and a `FlowInstaller` dynamically pushes high-priority OpenFlow rules to the switches.
+* **Enforcement Plane (SDN Controller):** The Python-based `OS-Ken` controller polls the pinned trust map via `ctypes`. A stateless `PolicyEngine` determines the appropriate action (`ALLOW`, `MIRROR`, `DROP`), and a `FlowInstaller` dynamically pushes high-priority OpenFlow rules to the switches.
 
 ## **3. Advanced Threat Mitigation**
 
