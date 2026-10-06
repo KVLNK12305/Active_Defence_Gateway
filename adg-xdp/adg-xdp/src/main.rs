@@ -7,7 +7,7 @@ use aya::{
 use clap::Parser;
 #[rustfmt::skip]
 use log::{debug, warn};
-use std::{collections, net::Ipv4Addr, sync::Arc, time::Duration};
+use std::{collections, net::Ipv4Addr, sync::Arc, sync::atomic::{AtomicU64, Ordering}, time::Duration};
 use tokio::{signal, sync::RwLock};
 
 
@@ -127,14 +127,16 @@ async fn main() -> anyhow::Result<()> {
     // Global Intelligence State
     let flow_table = Arc::new(RwLock::new(network_intelligence::flow_table::FlowTable::new(10_000, 30_000_000_000)));
     let security_graph = Arc::new(RwLock::new(network_intelligence::security_graph::SecurityGraph::new()));
+    let event_counter = Arc::new(AtomicU64::new(0));
 
-    // Event-driven telemetry path for TCP control events (Constraint 2 & 3)
+    // Event-driven telemetry path for TCP control events (SYN/FIN/RST)
     let mut perf_array = aya::maps::perf::PerfEventArray::try_from(ebpf.take_map("FLOW_EVENTS").ok_or_else(|| anyhow::anyhow!("FLOW_EVENTS map not found"))?)?;
     let cpus = aya::util::online_cpus().map_err(|e| anyhow::anyhow!("Failed to get online CPUs: {:?}", e))?;
     for cpu_id in cpus {
         let mut buf = perf_array.open(cpu_id, None)?;
         let ft = flow_table.clone();
         let sg = security_graph.clone();
+        let ec = event_counter.clone();
         
         tokio::task::spawn_blocking(move || {
             loop {
@@ -145,8 +147,8 @@ async fn main() -> anyhow::Result<()> {
                                 return;
                             }
                             let event = unsafe { std::ptr::read_unaligned(head.as_ptr() as *const adg_xdp_common::FlowEvent) };
+                            ec.fetch_add(1, Ordering::Relaxed);
                             
-                            // Use blocking read for lock
                             let mut ft_guard = ft.blocking_write();
                             let mut sg_guard = sg.blocking_write();
                             
@@ -172,22 +174,30 @@ async fn main() -> anyhow::Result<()> {
                                 host_ip: event.dst_ip, trust_score: 100, risk_level: 0
                             });
                             
-                            let mut edge = sg_guard.get_edge(event.src_ip, event.dst_ip).cloned().unwrap_or_else(|| {
-                                network_intelligence::security_graph::GraphEdge {
-                                    src_ip: event.src_ip,
-                                    dst_ip: event.dst_ip,
-                                    packet_count: 0,
-                                    byte_count: 0,
-                                    flow_count: 0,
-                                    unique_ports: 0,
-                                    edge_risk: 0.0,
-                                    last_seen: 0,
+                            // Build edge with live metadata from FlowTable
+                            let mut flow_count = 0u32;
+                            let mut unique_ports = std::collections::BTreeSet::new();
+                            let mut total_pkts = 0u64;
+                            let mut total_bytes = 0u64;
+                            for (fk, fs) in ft_guard.iter() {
+                                if fk.src_ip == event.src_ip && fk.dst_ip == event.dst_ip {
+                                    flow_count += 1;
+                                    unique_ports.insert(fk.dst_port);
+                                    total_pkts += fs.packets;
+                                    total_bytes += fs.bytes;
                                 }
-                            });
+                            }
                             
-                            edge.packet_count += 1;
-                            edge.byte_count += event.pkt_size as u64;
-                            edge.last_seen = event.timestamp_ns;
+                            let edge = network_intelligence::security_graph::GraphEdge {
+                                src_ip: event.src_ip,
+                                dst_ip: event.dst_ip,
+                                packet_count: total_pkts,
+                                byte_count: total_bytes,
+                                flow_count,
+                                unique_ports: unique_ports.len() as u32,
+                                edge_risk: 0.0,
+                                last_seen: event.timestamp_ns,
+                            };
                             sg_guard.update_edge(edge);
                         }
                         _ => {}
@@ -225,14 +235,18 @@ async fn main() -> anyhow::Result<()> {
                 }
                 if !entries.is_empty() {
                     entries.sort_by_key(|(_, stats)| std::cmp::Reverse(stats.packets));
-                    println!("-----------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    println!("\n===== ADG TELEMETRY CYCLE =====");
                     println!("{:<16} | {:<12} | {:<12} | {:<12} | {:<10} | {:<12} | {:<8} | {:<10} | {:<10} | {:<12}", "Host", "Activity", "Protocol", "SYN", "Frag", "Recent", "Trust", "SYN Pen.", "Frag Pen.", "Level");
-                    println!("-----------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    println!("---------------------------------------------------------------------------------------------------------------------------------------------------------------");
                     let current_time = get_ktime_ns();
                     
                     let ft_guard = flow_table.read().await;
                     let mut sg_guard = security_graph.write().await;
-                    sg_guard.remove_expired_edges(current_time, 30_000_000_000);
+                    let expired_edges = sg_guard.remove_expired_edges(current_time, 30_000_000_000);
+
+                    // Periodic graph analytics (once per poll cycle)
+                    let components = network_intelligence::graph_algorithms::connected_components(&sg_guard);
+                    let events_total = event_counter.load(Ordering::Relaxed);
 
                     for (ip, stats) in &entries {
                         // Compute windowed delta stats for behavioral classification.
@@ -263,7 +277,7 @@ async fn main() -> anyhow::Result<()> {
                             warn!("Failed to update HOST_TRUST for IP {}: {}", ip, e);
                         }
 
-                        // Option D: Live Network Intelligence Integration (Constraints 6, 8, 10, 11)
+                        // Live Network Intelligence Integration
                         let ip_u32: u32 = (*ip).into();
                         
                         let mut context = network_intelligence::host_context::HostContextBuilder::build_for_host(
@@ -272,24 +286,39 @@ async fn main() -> anyhow::Result<()> {
                             (delta.packets as f64) / 2.0
                         );
                         
-                        // Supplement context with live inexpensive graph metrics (Constraint 8)
+                        // Supplement context with live graph metrics
                         let neighbors = sg_guard.neighbors(ip_u32);
                         context.unique_dst_ips = std::cmp::max(context.unique_dst_ips, neighbors.len() as u32);
                         
-                        let risk_score = network_intelligence::network_risk::NetworkRiskEngine::compute(trust.score, &context, 0.0);
+                        // Compute weighted degree from live SecurityGraph
+                        let (_in_deg, out_deg) = network_intelligence::graph_algorithms::weighted_degree(&sg_guard, ip_u32);
+                        
+                        let risk_score = network_intelligence::network_risk::NetworkRiskEngine::compute(trust.score, &context, out_deg);
                         let risk_score_val = (risk_score.total * 100.0) as u32;
 
-                        // Constraint 9: Run expensive traversals only when risk > threshold
-                        if risk_score.total > 0.75 {
-                            let blast_radius = network_intelligence::graph_algorithms::bfs(&sg_guard, ip_u32);
-                            debug!("High risk host {} detected! BFS Blast Radius: {}", ip, blast_radius.len());
+                        // Run graph traversals for high-risk hosts
+                        let mut blast_radius_len = 0usize;
+                        let mut dfs_depth = 0usize;
+                        if risk_score.total > 0.3 {
+                            let bfs_result = network_intelligence::graph_algorithms::bfs(&sg_guard, ip_u32);
+                            blast_radius_len = bfs_result.len();
+                            let dfs_result = network_intelligence::graph_algorithms::dfs(&sg_guard, ip_u32);
+                            dfs_depth = dfs_result.len();
+                            debug!("Elevated risk host {}: BFS={}, DFS={}", ip, blast_radius_len, dfs_depth);
                         }
+
+                        // Find which connected component this host belongs to
+                        let component_size = components.iter()
+                            .find(|c| c.contains(&ip_u32))
+                            .map(|c| c.len())
+                            .unwrap_or(0);
 
                         if let Err(e) = host_risk_bpf.insert(ip_u32, risk_score_val, 0) {
                             warn!("Failed to update HOST_RISK for IP {}: {}", ip, e);
                         }
                         
-                        println!("{:<16} | {:<12} | {:<12} | {:<12} | {:<10} | {:<12} | {:<8} | {:<10} | {:<10} | {:<12} | P:{} B:{} T:{} U:{} I:{} S:{} F:{} L:{}",
+                        // Trust Engine output
+                        println!("{:<16} | {:<12} | {:<12} | {:<12} | {:<10} | {:<12} | {:<8} | {:<10} | {:<10} | {:<12}",
                             std::net::Ipv4Addr::from(profile.ip).to_string(),
                             profile.activity.to_string(),
                             profile.protocol.to_string(),
@@ -300,10 +329,28 @@ async fn main() -> anyhow::Result<()> {
                             trust.syn_contribution,
                             trust.frag_contribution,
                             trust.level().to_string(),
-                            profile.packets, profile.bytes, profile.tcp, profile.udp, profile.icmp, profile.syn, profile.frag, profile.last_seen
                         );
+                        
+                        // Structured Network Intelligence report per host
+                        println!("  [NI] Host: {}", ip);
+                        println!("    Observed:  flows={}, unique_dst_ips={}, unique_dst_ports={}, rst_count={}",
+                            context.flow_count, context.unique_dst_ips, context.unique_dst_ports, context.rst_count);
+                        println!("    Rates:     {:.1} Bps, {:.1} Pps",
+                            context.bytes_per_second, context.packets_per_second);
+                        println!("    Graph:     weighted_out_degree={:.0}, neighbors={}, component_size={}, bfs_reach={}, dfs_depth={}",
+                            out_deg, neighbors.len(), component_size, blast_radius_len, dfs_depth);
+                        println!("    Risk:      total={:.4}, dest={:.3}, port_scan={:.3}, conn_fail={:.3}, centrality={:.3}",
+                            risk_score.total, risk_score.destination_risk, risk_score.port_scan_risk,
+                            risk_score.connection_failure_risk, risk_score.graph_centrality_risk);
+                        println!("    Decision:  HOST_TRUST={}, HOST_RISK={}, policy=EXISTING",
+                            trust.score, risk_score_val);
                     }
-                    println!("-----------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                    // Per-cycle graph summary
+                    println!("--- Graph Summary: nodes={}, edges={}, components={}, expired_edges={}, flow_table_size={}, total_events={} ---",
+                        sg_guard.node_count(), sg_guard.edge_count(), components.len(),
+                        expired_edges, ft_guard.len(), events_total);
+                    println!("===== END CYCLE =====\n");
 
                     // Update previous snapshots for next window
                     for (ip, stats) in entries {
