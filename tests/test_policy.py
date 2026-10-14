@@ -59,5 +59,27 @@ class TestPolicyEngine(unittest.TestCase):
     def test_risk_keeps_mirror(self):
         self.assertEqual(self.engine.evaluate(40, 100), Action.MIRROR)
 
+    def test_precedence_grid_all_boundaries(self):
+        # Every trust boundary x every risk boundary, against the explicit precedence table.
+        A, M, D = Action.ALLOW, Action.MIRROR, Action.DROP
+        risks = (0, 79, 80, 100)
+        table = {
+            100: (A, A, M, M),
+            90:  (A, A, M, M),
+            89:  (A, A, M, M),
+            70:  (A, A, M, M),
+            69:  (M, M, M, M),
+            40:  (M, M, M, M),
+            39:  (D, D, D, D),
+            0:   (D, D, D, D),
+        }
+        for trust, row in table.items():
+            for risk, expected in zip(risks, row):
+                with self.subTest(trust=trust, risk=risk):
+                    self.assertEqual(self.engine.evaluate(trust, risk), expected)
+
+    def test_risk_threshold_constant(self):
+        self.assertEqual(PolicyConfig.RISK_MIRROR, 80)
+
 if __name__ == '__main__':
     unittest.main()

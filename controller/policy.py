@@ -24,8 +24,13 @@ class PolicyConfig:
 
 class PolicyEngine:
     def evaluate(self, trust: int, risk: int = 0) -> Action:
-        # High network risk can only escalate the trust decision (ALLOW -> MIRROR); it never
-        # weakens DROP, so the PacketIn path agrees with the trust-only TrustChangeDetector.
+        """Precedence: trust decides first; risk may only escalate it.
+
+        trust action | risk < 80 | risk >= 80
+        ALLOW        | ALLOW     | MIRROR
+        MIRROR       | MIRROR    | MIRROR
+        DROP         | DROP      | DROP   (risk never weakens DROP)
+        """
         action = self._trust_action(trust)
         if risk >= PolicyConfig.RISK_MIRROR and action == Action.ALLOW:
             return Action.MIRROR
