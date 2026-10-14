@@ -90,11 +90,12 @@ class ADGController(app_manager.OSKenApp):
         src = eth.src
 
         # PacketIn Deduplication Cache for EQUAL-mode Multi-Controller setups
-        now = time.time()
-        pkt_key = (dpid, in_port, src, dst)
-        if pkt_key in self.pkt_seen and (now - self.pkt_seen[pkt_key]) < 1.0:
-            return
-        self.pkt_seen[pkt_key] = now
+        if os.environ.get("ADG_DISABLE_DEDUP") != "1":
+            now = time.time()
+            pkt_key = (dpid, in_port, src, dst)
+            if pkt_key in self.pkt_seen and (now - self.pkt_seen[pkt_key]) < 1.0:
+                return
+            self.pkt_seen[pkt_key] = now
 
         self.logger.info(
             "CONTROLLER=%s PACKET_IN Switch=%s SRC=%s DST=%s IN=%s",
@@ -134,13 +135,14 @@ class ADGController(app_manager.OSKenApp):
             elif decision == Action.REDIRECT: priority = 150
             elif decision == Action.MIRROR: priority = 120
             
-            print("[POLICY]")
-            print(f"Host : {src_ip}")
-            print(f"Trust : {trust}")
-            print(f"Risk : {risk}")
-            print(f"Decision : {decision.name}")
-            print(f"Priority : {priority}\n")
+            logger.info("[POLICY]")
+            logger.info(f"Host : {src_ip}")
+            logger.info(f"Trust : {trust}")
+            logger.info(f"Risk : {risk}")
+            logger.info(f"Decision : {decision.name}")
+            logger.info(f"Priority : {priority}")
         else:
+            logger.info(f"DEBUG: Not an IPv4 packet. Ethertype: {hex(eth.ethertype)}")
             decision = Action.ALLOW
 
         match = parser.OFPMatch(in_port=in_port, eth_src=src, eth_dst=dst)
