@@ -4,8 +4,9 @@
 activate_sdn_env.sh
 target/
 **/target/
-results/
-tests/
+# results/ and tests/ are tracked; only bulky/derived artifacts are ignored
+*.pcap
+**/www/
 
 **/incremental/
 **/*.d

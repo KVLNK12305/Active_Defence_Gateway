@@ -7,6 +7,10 @@ pub const W_PORT_SCAN_RISK: f64 = 0.25;
 pub const W_CONNECTION_FAILURE_RISK: f64 = 0.25;
 pub const W_GRAPH_CENTRALITY_RISK: f64 = 0.25;
 
+/// Length (seconds) of the FlowTable window over which `HostNetworkContext` rates are expressed.
+/// Must equal the FlowTable timeout used by the daemon (30 s).
+pub const FLOW_WINDOW_SECS: f64 = 30.0;
+
 #[derive(Debug, Clone, PartialEq)]
 pub struct NetworkRiskScore {
     pub total: f64,
@@ -33,12 +37,15 @@ impl NetworkRiskEngine {
         context: &HostNetworkContext,
         weighted_out_degree: f64,
     ) -> NetworkRiskScore {
-        let dest_risk = destination_diversity(context.unique_dst_ips, context.flow_count);
+        // Every component is a ratio clamped to [0,1] so no single signal can dominate the total.
+        let dest_risk = destination_diversity(context.unique_dst_ips, context.flow_count).clamp(0.0, 1.0);
 
-        let total_packets = (context.packets_per_second * 2.0) as u64; // windowed packet count approx
-        let port_risk = port_scan_score(context.unique_dst_ports, total_packets.max(1));
+        // Flow events observed in the window (rate * window). Zero events => zero score
+        // (port_scan_score returns 0.0 for a zero denominator).
+        let total_packets = (context.packets_per_second * FLOW_WINDOW_SECS).round() as u64;
+        let port_risk = port_scan_score(context.unique_dst_ports, total_packets).clamp(0.0, 1.0);
 
-        let conn_fail_risk = rst_ratio(context.rst_count, context.flow_count as u64);
+        let conn_fail_risk = rst_ratio(context.rst_count, context.flow_count as u64).clamp(0.0, 1.0);
 
         // Normalize graph centrality risk based on weighted out-degree
         let centrality_risk = (weighted_out_degree / 50_000.0).clamp(0.0, 1.0);
@@ -205,5 +212,27 @@ mod tests {
         let score_trusted = NetworkRiskEngine::compute(100, &ctx, 10000.0);
         let score_untrusted = NetworkRiskEngine::compute(0, &ctx, 10000.0);
         assert_eq!(score_trusted.total, score_untrusted.total);
+    }
+
+    #[test]
+    fn test_idle_host_with_many_ports_has_bounded_port_risk() {
+        // Regression: zero packet rate used to make port score = unique_ports / 1 (unbounded).
+        let ctx = HostNetworkContext {
+            host_ip: 1, unique_dst_ips: 1, unique_dst_ports: 100, flow_count: 100, rst_count: 0,
+            bytes_per_second: 0.0, packets_per_second: 0.0, min_packet_size: 0, max_packet_size: 0,
+        };
+        let score = NetworkRiskEngine::compute(100, &ctx, 0.0);
+        assert_eq!(score.port_scan_risk, 0.0, "no events in window => no port-scan evidence");
+        assert!(score.total < 0.1);
+    }
+
+    #[test]
+    fn test_all_components_individually_clamped() {
+        let ctx = HostNetworkContext {
+            host_ip: 1, unique_dst_ips: 100, unique_dst_ports: 500, flow_count: 10, rst_count: 50,
+            bytes_per_second: 1.0, packets_per_second: 0.1, min_packet_size: 40, max_packet_size: 40,
+        };
+        let s = NetworkRiskEngine::compute(100, &ctx, 0.0);
+        assert!(s.destination_risk <= 1.0 && s.port_scan_risk <= 1.0 && s.connection_failure_risk <= 1.0);
     }
 }

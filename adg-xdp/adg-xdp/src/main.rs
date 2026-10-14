@@ -240,7 +240,9 @@ async fn main() -> anyhow::Result<()> {
                     println!("---------------------------------------------------------------------------------------------------------------------------------------------------------------");
                     let current_time = get_ktime_ns();
                     
-                    let ft_guard = flow_table.read().await;
+                    // Write guard: stale flows must be expired every cycle (previously only on a full table).
+                    let mut ft_guard = flow_table.write().await;
+                    let _expired_flows = ft_guard.expire(get_ktime_ns());
                     let mut sg_guard = security_graph.write().await;
                     let expired_edges = sg_guard.remove_expired_edges(current_time, 30_000_000_000);
 
@@ -283,7 +285,7 @@ async fn main() -> anyhow::Result<()> {
                         let mut context = network_intelligence::host_context::HostContextBuilder::build_for_host(
                             ip_u32,
                             &ft_guard,
-                            (delta.packets as f64) / 2.0
+                            network_intelligence::network_risk::FLOW_WINDOW_SECS
                         );
                         
                         // Supplement context with live graph metrics
