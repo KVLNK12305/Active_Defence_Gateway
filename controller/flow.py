@@ -33,11 +33,6 @@ class FlowInstaller:
             hard_timeout = 30
             idle_timeout = 10
             # No actions == drop
-        elif action == Action.REDIRECT:
-            priority = 150
-            idle_timeout = 60
-            if out_port:
-                actions = [parser.OFPActionOutput(out_port)]
         elif action == Action.MIRROR:
             priority = 120
             idle_timeout = 60
@@ -93,9 +88,6 @@ class FlowInstaller:
         if action == Action.DROP:
             priority = 200
             # No actions == drop
-        elif action == Action.REDIRECT:
-            priority = 150
-            # Placeholder for future redirect actions
         elif action == Action.MIRROR:
             priority = 120
             # Forward traffic normally AND send a copy to controller for inspection.

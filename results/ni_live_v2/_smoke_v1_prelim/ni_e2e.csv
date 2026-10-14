@@ -1,4 +1,0 @@
-run_id,cfg,trial,trigger,t_since_workload_end_s,harness_pre_trust,harness_pre_risk,reply,decision_found,ctrl_trust,ctrl_risk,decision,priority,n_policy_records,ovs_monitor_events_in_window,t_pktin_minus_trigger_ms,classification
-B_t1_20261014T211323,B,1,T_a,0.0,100,0,True,True,100,0,ALLOW,1,1,0,15.5,NEITHER/ALLOW
-B_t1_20261014T211323,B,1,T_b,4.02,100,100,True,True,100,100,MIRROR,120,1,0,18.1,RISK_DRIVEN
-B_t1_20261014T211323,B,1,T_c,34.07,100,100,True,True,100,100,MIRROR,120,1,0,23.3,RISK_DRIVEN

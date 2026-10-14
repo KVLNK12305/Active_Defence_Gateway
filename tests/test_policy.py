@@ -44,5 +44,20 @@ class TestPolicyEngine(unittest.TestCase):
     def test_trust_0(self):
         self.assertEqual(self.engine.evaluate(0), Action.DROP)
 
+    def test_risk_79_does_not_escalate(self):
+        self.assertEqual(self.engine.evaluate(100, 79), Action.ALLOW)
+
+    def test_risk_80_escalates_allow_to_mirror(self):
+        self.assertEqual(self.engine.evaluate(100, 80), Action.MIRROR)
+        self.assertEqual(self.engine.evaluate(70, 100), Action.MIRROR)
+
+    def test_risk_never_weakens_drop(self):
+        # Regression: risk >= 80 used to turn DROP-range trust into MIRROR.
+        self.assertEqual(self.engine.evaluate(39, 100), Action.DROP)
+        self.assertEqual(self.engine.evaluate(0, 80), Action.DROP)
+
+    def test_risk_keeps_mirror(self):
+        self.assertEqual(self.engine.evaluate(40, 100), Action.MIRROR)
+
 if __name__ == '__main__':
     unittest.main()

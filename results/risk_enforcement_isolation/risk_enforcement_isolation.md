@@ -3,7 +3,7 @@
 **Scope: validates the enforcement path only (map → RiskStore/TrustStore → PolicyEngine → FlowInstaller → OpenFlow → OVS). It is NOT evidence of attack-detection quality.** The Rust detector (`adg-xdp`) was not running; every HOST_RISK / HOST_TRUST value below is synthetic test input written by the harness.
 
 Authoritative run: `run_20261014T222219/` + `isolation_results_20261014T222219.csv`. Harness: `tests/run_risk_isolation.py`.
-Superseded runs kept: `run_20261014T221839/` (aborted: bpffs refuses rename; nothing executed), `run_20261014T221853/` + its CSV (first full run without retry logic: 3 of 24 cases had no valid decision/stale flows, which led to the retry/clean-verification logic).
+Superseded run kept: `run_20261014T221853/` + its CSV (first full run without retry logic: 3 of 24 cases had no valid decision/stale flows, which led to the retry/clean-verification logic).
 
 ## 1. Test setup
 - Mininet: s1 (OpenFlow13) + h1 (10.0.0.1, injected host) + h2 (10.0.0.2). One real `osken-manager controller/adg_controller.py` (production code, `ADG_DISABLE_DEDUP` unset, no `ADG_MOCK_TRUST`).
@@ -52,6 +52,8 @@ Current PolicyEngine: `risk>=80 → MIRROR` first; else trust ≥70 ALLOW, ≥40
 - 24/24 valid cases: controller read value == injected value (trust and risk); decision == PolicyEngine expectation; expected rule present immediately.
 
 ## 5. Trust-precedence results (documented, unchanged)
+> **Superseded in code after this run:** `PolicyEngine.evaluate` now lets risk ≥80 only escalate ALLOW → MIRROR; DROP-range trust stays DROP (regression test in `tests/test_policy.py`). The M2 rows for trust 30/39 below describe the pre-change behaviour; the trust ≥40 rows are unchanged.
+
 - With risk ≥80 the PacketIn path returns MIRROR **for DROP-range trust (30, 39)**: the risk override *weakens* the trust-only DROP decision. This is the conflict flagged in earlier audits.
 - Real effective state in that case: the background `TrustChangeDetector` evaluates trust only (no risk) and, within its 2 s cycle, installs a priority-200 DROP flow in addition to the priority-120 MIRROR flow, so the *settled* flow table contains both and the higher priority (DROP) wins. Net effect: the override is only transient (≈ ≤2 s) for DROP-range trust, but the two enforcement paths disagree by design.
 - For trust ≥70, risk ≥80 escalates ALLOW → MIRROR immediately and persistently (detector says ALLOW, the priority-120 rule stays).

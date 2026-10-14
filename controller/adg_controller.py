@@ -132,7 +132,6 @@ class ADGController(app_manager.OSKenApp):
             
             priority = 1
             if decision == Action.DROP: priority = 200
-            elif decision == Action.REDIRECT: priority = 150
             elif decision == Action.MIRROR: priority = 120
             
             logger.info("[POLICY]")
@@ -142,18 +141,17 @@ class ADGController(app_manager.OSKenApp):
             logger.info(f"Decision : {decision.name}")
             logger.info(f"Priority : {priority}")
         else:
-            logger.info(f"DEBUG: Not an IPv4 packet. Ethertype: {hex(eth.ethertype)}")
             decision = Action.ALLOW
 
         match = parser.OFPMatch(in_port=in_port, eth_src=src, eth_dst=dst)
 
-        if decision in (Action.DROP, Action.MIRROR, Action.REDIRECT):
+        if decision in (Action.DROP, Action.MIRROR):
             if src_ip:
                 self.flow_installer.install_ip_policy_flow(datapath, src_ip, decision)
             if decision == Action.DROP:
                 return
 
-        # ALLOW path (or forwarding for first PacketIn of MIRROR/REDIRECT)
+        # ALLOW path (or forwarding for first PacketIn of MIRROR)
         if decision == Action.ALLOW and out_port != ofproto.OFPP_FLOOD:
             self.flow_installer.install_policy_flow(datapath, match, Action.ALLOW, msg.buffer_id, out_port=out_port)
 

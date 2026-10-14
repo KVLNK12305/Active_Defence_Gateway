@@ -14,7 +14,7 @@ Raw evidence: `results/ni_live_v2/runs/<run_id>/` (30 measured runs). Derived CS
 - Root obtained via the password supplied by the user; used for Mininet/XDP/BPF-map/tcpdump only.
 - Ubuntu 22.04, kernel 6.8, Mininet + OVS (bridge `s1`, OpenFlow13), osken-manager, `adg-xdp` release binary (up to date with source), XDP attached to `s1-eth1` (verified in `ip -d link`, `xdp_link.txt`).
 - Cleanup was limited to processes spawned by the harness (SIGINT/terminate on own Popen handles); no global pkill; no leftover processes or bridges afterwards.
-- Previous artifacts preserved: `_smoke_v1_prelim/` (first smoke run), `_derived_prelim_parserbug/` (CSVs produced before I fixed a parser bug on `-0`/negative-zero fields; raw logs unchanged and all CSVs re-derived offline from raw by `ni_v2_reanalyze.py`).
+- Preliminary artifacts (first smoke run; CSVs produced before a parser fix on `-0`/negative-zero fields) were removed as superseded; all CSVs here are re-derived offline from the raw logs by `ni_v2_reanalyze.py`.
 
 ## 3. Actual Risk Formula (source-verified, then confirmed by runtime values)
 | Feature | Implementation (`network_risk.rs`, `telemetry_extensions.rs`, `main.rs`) | Observed consequence |
@@ -80,7 +80,7 @@ Timing stages T1–T5 (event, recompute, map write, read) are not independently 
 - Single-packet probes make risk fall transiently (e.g. 100→6, 100→9) then return to 100, so recovery is also unobservable by naive polling.
 
 ## 12. Trial Statistics
-All 30 trials status OK (0 failed, 0 discarded); every metric listed above had sd = 0 across the 5 trials of its config except D1 `peak_port` (5–6.67, sd 0.82) — outcomes are deterministic under this synthetic workload. Validation (smoke) run is separate in `_smoke_v1_prelim/` and not counted. n=5 per config, single topology, single host observed.
+All 30 trials status OK (0 failed, 0 discarded); every metric listed above had sd = 0 across the 5 trials of its config except D1 `peak_port` (5–6.67, sd 0.82) — outcomes are deterministic under this synthetic workload. The preliminary smoke run is not counted (removed as superseded). n=5 per config, single topology, single host observed.
 
 ## 13. Risk Formula and Policy Semantics — defects found (not patched)
 1. Zero-denominator artifact: idle host with non-empty FlowTable → port score = unique_ports (≥ 4 saturates total) → HOST_RISK 100 indefinitely.
