@@ -1,0 +1,5 @@
+787: s1-eth1@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 xdp qdisc noqueue master ovs-system state UP mode DEFAULT group default qlen 1000
+    link/ether 96:52:6d:4b:d7:7a brd ff:ff:ff:ff:ff:ff link-netnsid 0 promiscuity 2 minmtu 68 maxmtu 65535 
+    veth 
+    openvswitch_slave addrgenmode eui64 numtxqueues 8 numrxqueues 8 gso_max_size 65536 gso_max_segs 65535 
+    prog/xdp id 353 tag 610ad29ae3779958 jited 

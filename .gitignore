@@ -54,6 +54,8 @@ os-ken/
 ############################
 
 *.log
+# per-run experiment logs are raw evidence and stay tracked
+!results/**/*.log
 *.pid
 *.mn
 

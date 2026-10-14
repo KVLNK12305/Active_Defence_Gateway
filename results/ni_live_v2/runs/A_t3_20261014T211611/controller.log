@@ -1,0 +1,294 @@
+loading app controller/adg_controller.py
+loading app os_ken.controller.ofp_handler
+instantiating app controller/adg_controller.py of ADGController
+Successfully opened HOST_TRUST map.
+Successfully opened HOST_RISK map.
+instantiating app os_ken.controller.ofp_handler of OFPHandler
+CONTROLLER=C1 SWITCH_FEATURES DPID=1 Requested EQUAL role
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:16 IN=1
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:02 IN=1
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0b DST=33:33:00:00:00:16 IN=11
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0b DST=33:33:00:00:00:02 IN=11
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:06 DST=33:33:00:00:00:16 IN=6
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:16 IN=2
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:03 DST=33:33:00:00:00:16 IN=3
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:03 DST=33:33:00:00:00:02 IN=3
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:07 DST=33:33:00:00:00:16 IN=7
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:07 DST=33:33:00:00:00:02 IN=7
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:09 DST=33:33:00:00:00:16 IN=9
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:09 DST=33:33:00:00:00:02 IN=9
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0d DST=33:33:00:00:00:16 IN=13
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0d DST=33:33:00:00:00:02 IN=13
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0a DST=33:33:00:00:00:16 IN=10
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0a DST=33:33:00:00:00:02 IN=10
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:04 DST=33:33:00:00:00:16 IN=4
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:04 DST=33:33:00:00:00:02 IN=4
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:05 DST=33:33:00:00:00:16 IN=5
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:05 DST=33:33:00:00:00:02 IN=5
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:08 DST=33:33:00:00:00:16 IN=8
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:08 DST=33:33:00:00:00:02 IN=8
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0c DST=33:33:00:00:00:16 IN=12
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0c DST=33:33:00:00:00:02 IN=12
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0e DST=33:33:00:00:00:16 IN=14
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0e DST=33:33:00:00:00:02 IN=14
+[21:16:13] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:06 DST=33:33:00:00:00:02 IN=6
+[21:16:16] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:02 IN=1
+[21:16:16] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0b DST=33:33:00:00:00:02 IN=11
+[21:16:16] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:04 DST=33:33:00:00:00:02 IN=4
+[21:16:17] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:03 DST=33:33:00:00:00:02 IN=3
+[21:16:17] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0d DST=33:33:00:00:00:02 IN=13
+[21:16:17] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0c DST=33:33:00:00:00:02 IN=12
+[21:16:17] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:05 DST=33:33:00:00:00:02 IN=5
+[21:16:17] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0e DST=33:33:00:00:00:02 IN=14
+[21:16:17] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+[21:16:17] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0a DST=33:33:00:00:00:02 IN=10
+[21:16:17] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:09 DST=33:33:00:00:00:02 IN=9
+[21:16:17] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:07 DST=33:33:00:00:00:02 IN=7
+[21:16:17] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[21:16:17] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x806
+DEBUG: Not an IPv4 packet. Ethertype: 0x806
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[21:16:17] INFO ADG :: [POLICY]
+[POLICY]
+[21:16:17] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[21:16:17] INFO ADG :: Trust : 100
+Trust : 100
+[21:16:17] INFO ADG :: Risk : 0
+Risk : 0
+[21:16:17] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[21:16:17] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:08 DST=33:33:00:00:00:02 IN=8
+[21:16:18] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:03 DST=00:00:00:00:00:01 IN=3
+[21:16:18] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x806
+DEBUG: Not an IPv4 packet. Ethertype: 0x806
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:03 IN=1
+[21:16:18] INFO ADG :: [POLICY]
+[POLICY]
+[21:16:18] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[21:16:18] INFO ADG :: Trust : 100
+Trust : 100
+[21:16:18] INFO ADG :: Risk : 0
+Risk : 0
+[21:16:18] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[21:16:18] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0c DST=00:00:00:00:00:01 IN=12
+[21:16:18] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x806
+DEBUG: Not an IPv4 packet. Ethertype: 0x806
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:0c IN=1
+[21:16:18] INFO ADG :: [POLICY]
+[POLICY]
+[21:16:18] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[21:16:18] INFO ADG :: Trust : 100
+Trust : 100
+[21:16:18] INFO ADG :: Risk : 0
+Risk : 0
+[21:16:18] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[21:16:18] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0d DST=00:00:00:00:00:01 IN=13
+[21:16:23] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x806
+DEBUG: Not an IPv4 packet. Ethertype: 0x806
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:0d IN=1
+[21:16:23] INFO ADG :: [POLICY]
+[POLICY]
+[21:16:23] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[21:16:23] INFO ADG :: Trust : 100
+Trust : 100
+[21:16:23] INFO ADG :: Risk : 75
+Risk : 75
+[21:16:23] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[21:16:23] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:06 DST=33:33:00:00:00:02 IN=6
+[21:16:24] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:02 IN=1
+[21:16:24] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0b DST=33:33:00:00:00:02 IN=11
+[21:16:24] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:04 DST=33:33:00:00:00:02 IN=4
+[21:16:24] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:05 DST=33:33:00:00:00:02 IN=5
+[21:16:25] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0c DST=33:33:00:00:00:02 IN=12
+[21:16:25] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0d DST=33:33:00:00:00:02 IN=13
+[21:16:25] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:03 DST=33:33:00:00:00:02 IN=3
+[21:16:25] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0e DST=33:33:00:00:00:02 IN=14
+[21:16:26] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:09 DST=33:33:00:00:00:02 IN=9
+[21:16:26] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0a DST=33:33:00:00:00:02 IN=10
+[21:16:26] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+[21:16:26] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:08 DST=33:33:00:00:00:02 IN=8
+[21:16:27] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:07 DST=33:33:00:00:00:02 IN=7
+[21:16:27] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0b DST=33:33:00:00:00:02 IN=11
+[21:16:38] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:02 IN=1
+[21:16:38] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:04 DST=33:33:00:00:00:02 IN=4
+[21:16:39] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:06 DST=33:33:00:00:00:02 IN=6
+[21:16:39] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0c DST=33:33:00:00:00:02 IN=12
+[21:16:40] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0d DST=33:33:00:00:00:02 IN=13
+[21:16:41] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:03 DST=33:33:00:00:00:02 IN=3
+[21:16:41] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:05 DST=33:33:00:00:00:02 IN=5
+[21:16:41] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:08 DST=33:33:00:00:00:02 IN=8
+[21:16:43] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0e DST=33:33:00:00:00:02 IN=14
+[21:16:43] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+[21:16:43] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0a DST=33:33:00:00:00:02 IN=10
+[21:16:43] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:09 DST=33:33:00:00:00:02 IN=9
+[21:16:44] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:07 DST=33:33:00:00:00:02 IN=7
+[21:16:45] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:0e DST=00:00:00:00:00:01 IN=14
+[21:16:53] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x806
+DEBUG: Not an IPv4 packet. Ethertype: 0x806
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:0e IN=1
+[21:16:53] INFO ADG :: [POLICY]
+[POLICY]
+[21:16:53] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[21:16:53] INFO ADG :: Trust : 100
+Trust : 100
+[21:16:53] INFO ADG :: Risk : 75
+Risk : 75
+[21:16:53] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[21:16:53] INFO ADG :: Priority : 1
+Priority : 1

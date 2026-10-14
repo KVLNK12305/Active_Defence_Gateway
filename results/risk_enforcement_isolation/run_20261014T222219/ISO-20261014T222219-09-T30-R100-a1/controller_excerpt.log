@@ -1,0 +1,6 @@
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+[22:23:26] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:02 IN=1
+[22:23:26] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd

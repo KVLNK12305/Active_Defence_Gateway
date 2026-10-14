@@ -1,0 +1,4 @@
+OFPT_ERROR (xid=0x6): OFPBRC_BAD_VERSION
+NXST_FLOW_MONITOR request (xid=0x6):
+ id=0 flags=initial,add,delete,modify,actions,own
+2026-10-14T15:44:08Z|00001|fatal_signal|WARN|terminating with signal 2 (signal 2)

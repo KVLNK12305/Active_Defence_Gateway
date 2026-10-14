@@ -1,0 +1,13 @@
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:20:57] INFO ADG :: [POLICY]
+[POLICY]
+[22:20:57] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:20:57] INFO ADG :: Trust : 30
+Trust : 30
+[22:20:57] INFO ADG :: Risk : 0
+Risk : 0
+[22:20:57] INFO ADG :: Decision : DROP
+Decision : DROP
+[22:20:57] INFO ADG :: Priority : 200
+Priority : 200

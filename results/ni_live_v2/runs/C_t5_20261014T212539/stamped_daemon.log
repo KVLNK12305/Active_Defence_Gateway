@@ -1,0 +1,663 @@
+1791993340.935	Attached XDP program to s1-eth1. Monitoring HOST_STATS and populating HOST_TRUST map...
+1791993340.935	
+1791993340.935	Generating Network Intelligence Boot Report...
+1791993340.935	===============================================================
+1791993340.935	       ADG NETWORK INTELLIGENCE LAYER DEMO REPORT
+1791993340.935	===============================================================
+1791993340.935	
+1791993340.935	--- SCENARIO 1: Normal Host Behavior ---
+1791993340.935	Host h1 (10.0.0.1) Trust Score: 100
+1791993340.935	Destination Diversity: 1.00
+1791993340.935	Port Scan Risk:        0.05
+1791993340.935	Connection Fail Risk:  0.00
+1791993340.935	Graph Centrality Risk: 0.48
+1791993340.935	>>> TOTAL NETWORK RISK SCORE: 0.3825 (LOW)
+1791993340.935	
+1791993340.935	--- SCENARIO 2: Reconnaissance & Subnet Scan ---
+1791993340.935	Host h1 (10.0.0.1) Trust Score: 50 (Suspicious)
+1791993340.935	Unique Dst IPs: 9, Unique Ports: 5
+1791993340.935	RST Failures: 45
+1791993340.935	Weighted Out-Degree: 2880 bytes, In-Degree: -0 bytes
+1791993340.935	Destination Diversity: 0.20
+1791993340.935	Port Scan Risk:        0.11
+1791993340.935	Connection Fail Risk:  1.00
+1791993340.935	Graph Centrality Risk: 0.06
+1791993340.935	>>> TOTAL NETWORK RISK SCORE: 0.3422 (HIGH)
+1791993340.935	
+1791993340.935	BFS Blast Radius from h1: 10 hosts reachable ([167772161, 167772162, 167772163, 167772164, 167772165, 167772166, 167772167, 167772168, 167772169, 167772170])
+1791993340.935	DFS Exploration from h1: 10 hosts visited ([167772161, 167772162, 167772163, 167772164, 167772165, 167772166, 167772167, 167772168, 167772169, 167772170])
+1791993340.935	Connected Components in Network: 1
+1791993340.935	Dijkstra Minimum-Risk Path to Critical Server: cost=1.70, path=[167772161, 167772165, 167772414]
+1791993340.935	
+1791993340.935	--- SCENARIO 3: Weighted Max-Min Fairness (WMMF) Allocation ---
+1791993340.935	Flow: Flow_Normal_Web      | Allocated Capacity: 60.00 Mbps
+1791993340.935	Flow: Flow_Recon_Host      | Allocated Capacity: 10.00 Mbps
+1791993340.935	===============================================================
+1791993340.935	
+1791993346.012	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.012	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.012	
+1791993346.012	===== ADG TELEMETRY CYCLE =====
+1791993346.012	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993346.012	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993346.012	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.012	10.0.0.1         | LOW          | TCP          | AGGRESSIVE   | NORMAL     | ACTIVE       | 50       | -50        | 0          | SUSPICIOUS  
+1791993346.012	  [NI] Host: 10.0.0.1
+1791993346.012	    Observed:  flows=0, unique_dst_ips=0, unique_dst_ports=0, rst_count=0
+1791993346.012	    Rates:     0.0 Bps, 0.0 Pps
+1791993346.012	    Graph:     weighted_out_degree=-0, neighbors=0, component_size=0, bfs_reach=0, dfs_depth=0
+1791993346.012	    Risk:      total=0.0000, dest=0.000, port_scan=0.000, conn_fail=0.000, centrality=-0.000
+1791993346.012	    Decision:  HOST_TRUST=50, HOST_RISK=0, policy=EXISTING
+1791993346.012	--- Graph Summary: nodes=0, edges=0, components=0, expired_edges=0, flow_table_size=0, total_events=0 ---
+1791993346.012	===== END CYCLE =====
+1791993346.012	
+1791993346.012	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.012	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.012	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.012	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.012	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.012	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.012	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.012	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.012	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.012	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.012	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.012	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.012	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.012	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.062	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.112	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.162	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.212	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.263	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.313	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.363	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.414	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.464	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.514	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.564	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.614	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.665	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.665	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.665	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.665	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.665	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.665	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.665	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.665	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.665	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.665	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.665	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.665	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.665	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.665	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.665	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.665	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.665	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993346.665	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993348.021	
+1791993348.021	===== ADG TELEMETRY CYCLE =====
+1791993348.021	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993348.021	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993348.021	10.0.0.1         | MEDIUM       | TCP          | NORMAL       | NORMAL     | ACTIVE       | 100      | 0          | 0          | TRUSTED     
+1791993348.021	  [NI] Host: 10.0.0.1
+1791993348.021	    Observed:  flows=10, unique_dst_ips=10, unique_dst_ports=1, rst_count=0
+1791993348.021	    Rates:     6.6 Bps, 0.1 Pps
+1791993348.021	    Graph:     weighted_out_degree=1120, neighbors=10, component_size=11, bfs_reach=11, dfs_depth=11
+1791993348.021	    Risk:      total=0.5056, dest=1.000, port_scan=1.000, conn_fail=0.000, centrality=0.022
+1791993348.021	    Decision:  HOST_TRUST=100, HOST_RISK=50, policy=EXISTING
+1791993348.021	--- Graph Summary: nodes=11, edges=10, components=1, expired_edges=0, flow_table_size=10, total_events=20 ---
+1791993348.021	===== END CYCLE =====
+1791993348.021	
+1791993350.034	
+1791993350.034	===== ADG TELEMETRY CYCLE =====
+1791993350.034	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993350.034	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993350.034	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | ACTIVE       | 100      | 0          | 0          | TRUSTED     
+1791993350.034	  [NI] Host: 10.0.0.1
+1791993350.034	    Observed:  flows=10, unique_dst_ips=10, unique_dst_ports=1, rst_count=0
+1791993350.034	    Rates:     0.0 Bps, 0.0 Pps
+1791993350.034	    Graph:     weighted_out_degree=1120, neighbors=10, component_size=11, bfs_reach=11, dfs_depth=11
+1791993350.034	    Risk:      total=0.5056, dest=1.000, port_scan=1.000, conn_fail=0.000, centrality=0.022
+1791993350.034	    Decision:  HOST_TRUST=100, HOST_RISK=50, policy=EXISTING
+1791993350.034	--- Graph Summary: nodes=11, edges=10, components=1, expired_edges=0, flow_table_size=10, total_events=20 ---
+1791993350.034	===== END CYCLE =====
+1791993350.034	
+1791993350.989	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993351.994	
+1791993351.994	===== ADG TELEMETRY CYCLE =====
+1791993351.994	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993351.994	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993351.994	10.0.0.1         | LOW          | ICMP         | UNKNOWN      | NORMAL     | ACTIVE       | 100      | 0          | 0          | TRUSTED     
+1791993351.994	  [NI] Host: 10.0.0.1
+1791993351.994	    Observed:  flows=10, unique_dst_ips=10, unique_dst_ports=1, rst_count=0
+1791993351.994	    Rates:     2240.0 Bps, 40.0 Pps
+1791993351.994	    Graph:     weighted_out_degree=1120, neighbors=10, component_size=11, bfs_reach=0, dfs_depth=0
+1791993351.994	    Risk:      total=0.2587, dest=1.000, port_scan=0.013, conn_fail=0.000, centrality=0.022
+1791993351.994	    Decision:  HOST_TRUST=100, HOST_RISK=25, policy=EXISTING
+1791993351.994	--- Graph Summary: nodes=11, edges=10, components=1, expired_edges=0, flow_table_size=10, total_events=20 ---
+1791993351.994	===== END CYCLE =====
+1791993351.994	
+1791993354.003	
+1791993354.003	===== ADG TELEMETRY CYCLE =====
+1791993354.003	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993354.003	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993354.003	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | ACTIVE       | 100      | 0          | 0          | TRUSTED     
+1791993354.003	  [NI] Host: 10.0.0.1
+1791993354.003	    Observed:  flows=10, unique_dst_ips=10, unique_dst_ports=1, rst_count=0
+1791993354.003	    Rates:     0.0 Bps, 0.0 Pps
+1791993354.003	    Graph:     weighted_out_degree=1120, neighbors=10, component_size=11, bfs_reach=11, dfs_depth=11
+1791993354.003	    Risk:      total=0.5056, dest=1.000, port_scan=1.000, conn_fail=0.000, centrality=0.022
+1791993354.003	    Decision:  HOST_TRUST=100, HOST_RISK=50, policy=EXISTING
+1791993354.003	--- Graph Summary: nodes=11, edges=10, components=1, expired_edges=0, flow_table_size=10, total_events=20 ---
+1791993354.003	===== END CYCLE =====
+1791993354.003	
+1791993356.013	
+1791993356.013	===== ADG TELEMETRY CYCLE =====
+1791993356.013	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993356.013	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993356.013	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791993356.013	  [NI] Host: 10.0.0.1
+1791993356.013	    Observed:  flows=10, unique_dst_ips=10, unique_dst_ports=1, rst_count=0
+1791993356.013	    Rates:     0.0 Bps, 0.0 Pps
+1791993356.013	    Graph:     weighted_out_degree=1120, neighbors=10, component_size=11, bfs_reach=11, dfs_depth=11
+1791993356.013	    Risk:      total=0.5056, dest=1.000, port_scan=1.000, conn_fail=0.000, centrality=0.022
+1791993356.013	    Decision:  HOST_TRUST=100, HOST_RISK=50, policy=EXISTING
+1791993356.013	--- Graph Summary: nodes=11, edges=10, components=1, expired_edges=0, flow_table_size=10, total_events=20 ---
+1791993356.013	===== END CYCLE =====
+1791993356.013	
+1791993358.023	
+1791993358.023	===== ADG TELEMETRY CYCLE =====
+1791993358.023	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993358.023	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993358.023	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791993358.023	  [NI] Host: 10.0.0.1
+1791993358.023	    Observed:  flows=10, unique_dst_ips=10, unique_dst_ports=1, rst_count=0
+1791993358.023	    Rates:     0.0 Bps, 0.0 Pps
+1791993358.023	    Graph:     weighted_out_degree=1120, neighbors=10, component_size=11, bfs_reach=11, dfs_depth=11
+1791993358.023	    Risk:      total=0.5056, dest=1.000, port_scan=1.000, conn_fail=0.000, centrality=0.022
+1791993358.023	    Decision:  HOST_TRUST=100, HOST_RISK=50, policy=EXISTING
+1791993358.023	--- Graph Summary: nodes=11, edges=10, components=1, expired_edges=0, flow_table_size=10, total_events=20 ---
+1791993358.023	===== END CYCLE =====
+1791993358.023	
+1791993360.033	
+1791993360.033	===== ADG TELEMETRY CYCLE =====
+1791993360.033	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993360.033	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993360.033	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791993360.033	  [NI] Host: 10.0.0.1
+1791993360.033	    Observed:  flows=10, unique_dst_ips=10, unique_dst_ports=1, rst_count=0
+1791993360.033	    Rates:     0.0 Bps, 0.0 Pps
+1791993360.033	    Graph:     weighted_out_degree=1120, neighbors=10, component_size=11, bfs_reach=11, dfs_depth=11
+1791993360.033	    Risk:      total=0.5056, dest=1.000, port_scan=1.000, conn_fail=0.000, centrality=0.022
+1791993360.033	    Decision:  HOST_TRUST=100, HOST_RISK=50, policy=EXISTING
+1791993360.033	--- Graph Summary: nodes=11, edges=10, components=1, expired_edges=0, flow_table_size=10, total_events=20 ---
+1791993360.033	===== END CYCLE =====
+1791993360.033	
+1791993362.042	
+1791993362.042	===== ADG TELEMETRY CYCLE =====
+1791993362.042	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993362.042	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993362.042	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791993362.042	  [NI] Host: 10.0.0.1
+1791993362.042	    Observed:  flows=10, unique_dst_ips=10, unique_dst_ports=1, rst_count=0
+1791993362.042	    Rates:     0.0 Bps, 0.0 Pps
+1791993362.042	    Graph:     weighted_out_degree=1120, neighbors=10, component_size=11, bfs_reach=11, dfs_depth=11
+1791993362.042	    Risk:      total=0.5056, dest=1.000, port_scan=1.000, conn_fail=0.000, centrality=0.022
+1791993362.042	    Decision:  HOST_TRUST=100, HOST_RISK=50, policy=EXISTING
+1791993362.042	--- Graph Summary: nodes=11, edges=10, components=1, expired_edges=0, flow_table_size=10, total_events=20 ---
+1791993362.042	===== END CYCLE =====
+1791993362.042	
+1791993364.002	
+1791993364.002	===== ADG TELEMETRY CYCLE =====
+1791993364.002	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993364.002	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993364.002	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791993364.002	  [NI] Host: 10.0.0.1
+1791993364.002	    Observed:  flows=10, unique_dst_ips=10, unique_dst_ports=1, rst_count=0
+1791993364.002	    Rates:     0.0 Bps, 0.0 Pps
+1791993364.002	    Graph:     weighted_out_degree=1120, neighbors=10, component_size=11, bfs_reach=11, dfs_depth=11
+1791993364.002	    Risk:      total=0.5056, dest=1.000, port_scan=1.000, conn_fail=0.000, centrality=0.022
+1791993364.002	    Decision:  HOST_TRUST=100, HOST_RISK=50, policy=EXISTING
+1791993364.002	--- Graph Summary: nodes=11, edges=10, components=1, expired_edges=0, flow_table_size=10, total_events=20 ---
+1791993364.002	===== END CYCLE =====
+1791993364.002	
+1791993366.012	
+1791993366.012	===== ADG TELEMETRY CYCLE =====
+1791993366.012	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993366.012	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993366.012	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791993366.012	  [NI] Host: 10.0.0.1
+1791993366.012	    Observed:  flows=10, unique_dst_ips=10, unique_dst_ports=1, rst_count=0
+1791993366.012	    Rates:     0.0 Bps, 0.0 Pps
+1791993366.012	    Graph:     weighted_out_degree=1120, neighbors=10, component_size=11, bfs_reach=11, dfs_depth=11
+1791993366.012	    Risk:      total=0.5056, dest=1.000, port_scan=1.000, conn_fail=0.000, centrality=0.022
+1791993366.012	    Decision:  HOST_TRUST=100, HOST_RISK=50, policy=EXISTING
+1791993366.012	--- Graph Summary: nodes=11, edges=10, components=1, expired_edges=0, flow_table_size=10, total_events=20 ---
+1791993366.012	===== END CYCLE =====
+1791993366.012	
+1791993368.022	
+1791993368.022	===== ADG TELEMETRY CYCLE =====
+1791993368.022	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993368.022	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993368.022	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791993368.022	  [NI] Host: 10.0.0.1
+1791993368.022	    Observed:  flows=10, unique_dst_ips=10, unique_dst_ports=1, rst_count=0
+1791993368.022	    Rates:     0.0 Bps, 0.0 Pps
+1791993368.022	    Graph:     weighted_out_degree=1120, neighbors=10, component_size=11, bfs_reach=11, dfs_depth=11
+1791993368.022	    Risk:      total=0.5056, dest=1.000, port_scan=1.000, conn_fail=0.000, centrality=0.022
+1791993368.022	    Decision:  HOST_TRUST=100, HOST_RISK=50, policy=EXISTING
+1791993368.022	--- Graph Summary: nodes=11, edges=10, components=1, expired_edges=0, flow_table_size=10, total_events=20 ---
+1791993368.022	===== END CYCLE =====
+1791993368.022	
+1791993370.033	
+1791993370.033	===== ADG TELEMETRY CYCLE =====
+1791993370.033	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993370.033	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993370.033	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791993370.033	  [NI] Host: 10.0.0.1
+1791993370.033	    Observed:  flows=10, unique_dst_ips=10, unique_dst_ports=1, rst_count=0
+1791993370.033	    Rates:     0.0 Bps, 0.0 Pps
+1791993370.033	    Graph:     weighted_out_degree=1120, neighbors=10, component_size=11, bfs_reach=11, dfs_depth=11
+1791993370.033	    Risk:      total=0.5056, dest=1.000, port_scan=1.000, conn_fail=0.000, centrality=0.022
+1791993370.033	    Decision:  HOST_TRUST=100, HOST_RISK=50, policy=EXISTING
+1791993370.033	--- Graph Summary: nodes=11, edges=10, components=1, expired_edges=0, flow_table_size=10, total_events=20 ---
+1791993370.033	===== END CYCLE =====
+1791993370.033	
+1791993372.042	
+1791993372.042	===== ADG TELEMETRY CYCLE =====
+1791993372.042	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993372.042	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993372.042	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791993372.042	  [NI] Host: 10.0.0.1
+1791993372.042	    Observed:  flows=10, unique_dst_ips=10, unique_dst_ports=1, rst_count=0
+1791993372.042	    Rates:     0.0 Bps, 0.0 Pps
+1791993372.042	    Graph:     weighted_out_degree=1120, neighbors=10, component_size=11, bfs_reach=11, dfs_depth=11
+1791993372.042	    Risk:      total=0.5056, dest=1.000, port_scan=1.000, conn_fail=0.000, centrality=0.022
+1791993372.042	    Decision:  HOST_TRUST=100, HOST_RISK=50, policy=EXISTING
+1791993372.042	--- Graph Summary: nodes=11, edges=10, components=1, expired_edges=0, flow_table_size=10, total_events=20 ---
+1791993372.042	===== END CYCLE =====
+1791993372.042	
+1791993374.052	
+1791993374.052	===== ADG TELEMETRY CYCLE =====
+1791993374.052	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993374.052	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993374.052	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791993374.052	  [NI] Host: 10.0.0.1
+1791993374.052	    Observed:  flows=10, unique_dst_ips=10, unique_dst_ports=1, rst_count=0
+1791993374.052	    Rates:     0.0 Bps, 0.0 Pps
+1791993374.052	    Graph:     weighted_out_degree=1120, neighbors=10, component_size=11, bfs_reach=11, dfs_depth=11
+1791993374.052	    Risk:      total=0.5056, dest=1.000, port_scan=1.000, conn_fail=0.000, centrality=0.022
+1791993374.052	    Decision:  HOST_TRUST=100, HOST_RISK=50, policy=EXISTING
+1791993374.052	--- Graph Summary: nodes=11, edges=10, components=1, expired_edges=0, flow_table_size=10, total_events=20 ---
+1791993374.052	===== END CYCLE =====
+1791993374.052	
+1791993376.012	
+1791993376.012	===== ADG TELEMETRY CYCLE =====
+1791993376.012	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993376.012	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993376.012	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791993376.012	  [NI] Host: 10.0.0.1
+1791993376.012	    Observed:  flows=10, unique_dst_ips=10, unique_dst_ports=1, rst_count=0
+1791993376.012	    Rates:     0.0 Bps, 0.0 Pps
+1791993376.012	    Graph:     weighted_out_degree=1120, neighbors=10, component_size=11, bfs_reach=11, dfs_depth=11
+1791993376.012	    Risk:      total=0.5056, dest=1.000, port_scan=1.000, conn_fail=0.000, centrality=0.022
+1791993376.012	    Decision:  HOST_TRUST=100, HOST_RISK=50, policy=EXISTING
+1791993376.012	--- Graph Summary: nodes=11, edges=10, components=1, expired_edges=0, flow_table_size=10, total_events=20 ---
+1791993376.012	===== END CYCLE =====
+1791993376.012	
+1791993378.024	
+1791993378.024	===== ADG TELEMETRY CYCLE =====
+1791993378.024	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993378.024	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993378.024	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791993378.024	  [NI] Host: 10.0.0.1
+1791993378.024	    Observed:  flows=10, unique_dst_ips=10, unique_dst_ports=1, rst_count=0
+1791993378.024	    Rates:     0.0 Bps, 0.0 Pps
+1791993378.024	    Graph:     weighted_out_degree=-0, neighbors=0, component_size=1, bfs_reach=1, dfs_depth=1
+1791993378.024	    Risk:      total=0.5000, dest=1.000, port_scan=1.000, conn_fail=0.000, centrality=-0.000
+1791993378.024	    Decision:  HOST_TRUST=100, HOST_RISK=50, policy=EXISTING
+1791993378.024	--- Graph Summary: nodes=11, edges=0, components=11, expired_edges=10, flow_table_size=10, total_events=20 ---
+1791993378.024	===== END CYCLE =====
+1791993378.024	
+1791993380.037	
+1791993380.037	===== ADG TELEMETRY CYCLE =====
+1791993380.037	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993380.037	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993380.037	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791993380.037	  [NI] Host: 10.0.0.1
+1791993380.037	    Observed:  flows=10, unique_dst_ips=10, unique_dst_ports=1, rst_count=0
+1791993380.037	    Rates:     0.0 Bps, 0.0 Pps
+1791993380.037	    Graph:     weighted_out_degree=-0, neighbors=0, component_size=1, bfs_reach=1, dfs_depth=1
+1791993380.037	    Risk:      total=0.5000, dest=1.000, port_scan=1.000, conn_fail=0.000, centrality=-0.000
+1791993380.037	    Decision:  HOST_TRUST=100, HOST_RISK=50, policy=EXISTING
+1791993380.037	--- Graph Summary: nodes=11, edges=0, components=11, expired_edges=0, flow_table_size=10, total_events=20 ---
+1791993380.037	===== END CYCLE =====
+1791993380.037	
+1791993380.739	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791993382.046	
+1791993382.046	===== ADG TELEMETRY CYCLE =====
+1791993382.046	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993382.046	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993382.046	10.0.0.1         | LOW          | ICMP         | UNKNOWN      | NORMAL     | ACTIVE       | 100      | 0          | 0          | TRUSTED     
+1791993382.046	  [NI] Host: 10.0.0.1
+1791993382.046	    Observed:  flows=10, unique_dst_ips=10, unique_dst_ports=1, rst_count=0
+1791993382.046	    Rates:     2240.0 Bps, 40.0 Pps
+1791993382.046	    Graph:     weighted_out_degree=-0, neighbors=0, component_size=1, bfs_reach=0, dfs_depth=0
+1791993382.046	    Risk:      total=0.2531, dest=1.000, port_scan=0.013, conn_fail=0.000, centrality=-0.000
+1791993382.046	    Decision:  HOST_TRUST=100, HOST_RISK=25, policy=EXISTING
+1791993382.046	--- Graph Summary: nodes=11, edges=0, components=11, expired_edges=0, flow_table_size=10, total_events=20 ---
+1791993382.046	===== END CYCLE =====
+1791993382.046	
+1791993384.057	
+1791993384.057	===== ADG TELEMETRY CYCLE =====
+1791993384.057	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791993384.057	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791993384.057	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | ACTIVE       | 100      | 0          | 0          | TRUSTED     
+1791993384.057	  [NI] Host: 10.0.0.1
+1791993384.057	    Observed:  flows=10, unique_dst_ips=10, unique_dst_ports=1, rst_count=0
+1791993384.057	    Rates:     0.0 Bps, 0.0 Pps
+1791993384.057	    Graph:     weighted_out_degree=-0, neighbors=0, component_size=1, bfs_reach=1, dfs_depth=1
+1791993384.057	    Risk:      total=0.5000, dest=1.000, port_scan=1.000, conn_fail=0.000, centrality=-0.000
+1791993384.057	    Decision:  HOST_TRUST=100, HOST_RISK=50, policy=EXISTING
+1791993384.057	--- Graph Summary: nodes=11, edges=0, components=11, expired_edges=0, flow_table_size=10, total_events=20 ---
+1791993384.057	===== END CYCLE =====
+1791993384.057	
+1791993384.057	
+1791993384.057	Received Ctrl-C, exiting...

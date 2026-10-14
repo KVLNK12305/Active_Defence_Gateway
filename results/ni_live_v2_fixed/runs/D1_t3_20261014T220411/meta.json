@@ -1,0 +1,61 @@
+{
+ "run_id": "D1_t3_20261014T220411",
+ "cfg": "D1",
+ "trial": 3,
+ "validation": false,
+ "start_wall": "2026-10-14T22:04:11.146373",
+ "status": "OK",
+ "notes": [],
+ "map_ok": true,
+ "pre_trust": 100,
+ "pre_risk": 0,
+ "workload": {
+  "closed_ports": {
+   "attempted": 20,
+   "open": 0,
+   "refused": 19,
+   "timeout": 1,
+   "other": 0,
+   "duration_s": 0.504,
+   "exit": 0
+  }
+ },
+ "triggers": {
+  "T_a": {
+   "dst_ip": "10.0.0.12",
+   "dst_mac": "00:00:00:00:00:0c",
+   "t0": 1791995658.375111,
+   "t1": 1791995658.3783216,
+   "reply": true,
+   "pre_trust": 100,
+   "pre_risk": 0
+  },
+  "T_b": {
+   "dst_ip": "10.0.0.13",
+   "dst_mac": "00:00:00:00:00:0d",
+   "t0": 1791995662.689319,
+   "t1": 1791995662.6930983,
+   "reply": true,
+   "pre_trust": 100,
+   "pre_risk": 26
+  },
+  "T_c": {
+   "dst_ip": "10.0.0.14",
+   "dst_mac": "00:00:00:00:00:0e",
+   "t0": 1791995692.445591,
+   "t1": 1791995692.4502869,
+   "reply": true,
+   "pre_trust": 100,
+   "pre_risk": 0
+  }
+ },
+ "events": {
+  "net_started": 1791995651.6951323,
+  "xdp_attached": 1791995651.8023257,
+  "controller_ready": 1791995652.8094113,
+  "workload_start": 1791995657.8466175,
+  "workload_end": 1791995658.3722708,
+  "end": 1791995695.7582016
+ },
+ "end_wall": "2026-10-14T22:04:57.075459"
+}

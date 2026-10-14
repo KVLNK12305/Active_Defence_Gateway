@@ -1,0 +1,368 @@
+1791995972.813	Attached XDP program to s1-eth1. Monitoring HOST_STATS and populating HOST_TRUST map...
+1791995972.813	
+1791995972.813	Generating Network Intelligence Boot Report...
+1791995972.813	===============================================================
+1791995972.813	       ADG NETWORK INTELLIGENCE LAYER DEMO REPORT
+1791995972.813	===============================================================
+1791995972.813	
+1791995972.813	--- SCENARIO 1: Normal Host Behavior ---
+1791995972.813	Host h1 (10.0.0.1) Trust Score: 100
+1791995972.813	Destination Diversity: 1.00
+1791995972.813	Port Scan Risk:        0.00
+1791995972.813	Connection Fail Risk:  0.00
+1791995972.813	Graph Centrality Risk: 0.48
+1791995972.813	>>> TOTAL NETWORK RISK SCORE: 0.3708 (LOW)
+1791995972.813	
+1791995972.813	--- SCENARIO 2: Reconnaissance & Subnet Scan ---
+1791995972.813	Host h1 (10.0.0.1) Trust Score: 50 (Suspicious)
+1791995972.813	Unique Dst IPs: 9, Unique Ports: 5
+1791995972.813	RST Failures: 45
+1791995972.813	Weighted Out-Degree: 2880 bytes, In-Degree: -0 bytes
+1791995972.813	Destination Diversity: 0.20
+1791995972.813	Port Scan Risk:        0.01
+1791995972.813	Connection Fail Risk:  1.00
+1791995972.813	Graph Centrality Risk: 0.06
+1791995972.813	>>> TOTAL NETWORK RISK SCORE: 0.3163 (HIGH)
+1791995972.813	
+1791995972.813	BFS Blast Radius from h1: 10 hosts reachable ([167772161, 167772162, 167772163, 167772164, 167772165, 167772166, 167772167, 167772168, 167772169, 167772170])
+1791995972.813	DFS Exploration from h1: 10 hosts visited ([167772161, 167772162, 167772163, 167772164, 167772165, 167772166, 167772167, 167772168, 167772169, 167772170])
+1791995972.813	Connected Components in Network: 1
+1791995972.813	Dijkstra Minimum-Risk Path to Critical Server: cost=1.70, path=[167772161, 167772165, 167772414]
+1791995972.813	
+1791995972.813	--- SCENARIO 3: Weighted Max-Min Fairness (WMMF) Allocation ---
+1791995972.813	Flow: Flow_Normal_Web      | Allocated Capacity: 60.00 Mbps
+1791995972.813	Flow: Flow_Recon_Host      | Allocated Capacity: 10.00 Mbps
+1791995972.813	===============================================================
+1791995972.813	
+1791995977.886	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.886	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.886	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.886	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.886	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.886	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.886	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.886	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.886	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.936	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.936	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.936	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.936	
+1791995977.936	===== ADG TELEMETRY CYCLE =====
+1791995977.936	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791995977.936	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791995977.936	10.0.0.1         | LOW          | TCP          | AGGRESSIVE   | NORMAL     | ACTIVE       | 50       | -50        | 0          | SUSPICIOUS  
+1791995977.936	  [NI] Host: 10.0.0.1
+1791995977.936	    Observed:  flows=4, unique_dst_ips=1, unique_dst_ports=4, rst_count=4
+1791995977.936	    Rates:     14.9 Bps, 0.3 Pps
+1791995977.936	    Graph:     weighted_out_degree=448, neighbors=1, component_size=2, bfs_reach=2, dfs_depth=2
+1791995977.936	    Risk:      total=0.4397, dest=0.250, port_scan=0.500, conn_fail=1.000, centrality=0.009
+1791995977.936	    Decision:  HOST_TRUST=50, HOST_RISK=43, policy=EXISTING
+1791995977.936	--- Graph Summary: nodes=2, edges=1, components=1, expired_edges=0, flow_table_size=4, total_events=8 ---
+1791995977.936	===== END CYCLE =====
+1791995977.936	
+1791995977.936	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.936	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.936	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.936	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.936	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.936	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.936	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.936	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.936	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.987	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.987	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.987	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.987	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.987	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.987	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.987	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.987	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.987	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.987	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.987	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.987	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.987	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.987	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995977.987	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.037	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.037	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.037	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.037	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.037	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.037	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.037	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.037	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.037	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.037	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.037	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.037	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.037	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.037	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.037	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.087	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.087	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.087	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.087	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.087	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.087	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.087	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.087	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.087	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.087	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995978.891	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995979.945	
+1791995979.945	===== ADG TELEMETRY CYCLE =====
+1791995979.945	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791995979.945	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791995979.945	10.0.0.1         | MEDIUM       | TCP          | AGGRESSIVE   | NORMAL     | ACTIVE       | 50       | -50        | 0          | SUSPICIOUS  
+1791995979.945	  [NI] Host: 10.0.0.1
+1791995979.945	    Observed:  flows=20, unique_dst_ips=1, unique_dst_ports=20, rst_count=21
+1791995979.945	    Rates:     76.0 Bps, 1.4 Pps
+1791995979.945	    Graph:     weighted_out_degree=2280, neighbors=1, component_size=2, bfs_reach=2, dfs_depth=2
+1791995979.945	    Risk:      total=0.3959, dest=0.050, port_scan=0.488, conn_fail=1.000, centrality=0.046
+1791995979.945	    Decision:  HOST_TRUST=50, HOST_RISK=39, policy=EXISTING
+1791995979.945	--- Graph Summary: nodes=2, edges=1, components=1, expired_edges=0, flow_table_size=20, total_events=41 ---
+1791995979.945	===== END CYCLE =====
+1791995979.945	
+1791995981.904	
+1791995981.904	===== ADG TELEMETRY CYCLE =====
+1791995981.904	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791995981.904	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791995981.904	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | ACTIVE       | 100      | 0          | 0          | TRUSTED     
+1791995981.904	  [NI] Host: 10.0.0.1
+1791995981.904	    Observed:  flows=20, unique_dst_ips=1, unique_dst_ports=20, rst_count=21
+1791995981.904	    Rates:     76.0 Bps, 1.4 Pps
+1791995981.904	    Graph:     weighted_out_degree=2280, neighbors=1, component_size=2, bfs_reach=2, dfs_depth=2
+1791995981.904	    Risk:      total=0.3959, dest=0.050, port_scan=0.488, conn_fail=1.000, centrality=0.046
+1791995981.904	    Decision:  HOST_TRUST=100, HOST_RISK=39, policy=EXISTING
+1791995981.904	--- Graph Summary: nodes=2, edges=1, components=1, expired_edges=0, flow_table_size=20, total_events=41 ---
+1791995981.904	===== END CYCLE =====
+1791995981.904	
+1791995982.407	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791995983.916	
+1791995983.916	===== ADG TELEMETRY CYCLE =====
+1791995983.916	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791995983.916	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791995983.916	10.0.0.1         | LOW          | ICMP         | UNKNOWN      | NORMAL     | ACTIVE       | 100      | 0          | 0          | TRUSTED     
+1791995983.916	  [NI] Host: 10.0.0.1
+1791995983.916	    Observed:  flows=20, unique_dst_ips=1, unique_dst_ports=20, rst_count=21
+1791995983.916	    Rates:     76.0 Bps, 1.4 Pps
+1791995983.916	    Graph:     weighted_out_degree=2280, neighbors=1, component_size=2, bfs_reach=2, dfs_depth=2
+1791995983.916	    Risk:      total=0.3959, dest=0.050, port_scan=0.488, conn_fail=1.000, centrality=0.046
+1791995983.916	    Decision:  HOST_TRUST=100, HOST_RISK=39, policy=EXISTING
+1791995983.916	--- Graph Summary: nodes=2, edges=1, components=1, expired_edges=0, flow_table_size=20, total_events=41 ---
+1791995983.916	===== END CYCLE =====
+1791995983.916	
+1791995985.928	
+1791995985.928	===== ADG TELEMETRY CYCLE =====
+1791995985.928	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791995985.928	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791995985.928	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | ACTIVE       | 100      | 0          | 0          | TRUSTED     
+1791995985.928	  [NI] Host: 10.0.0.1
+1791995985.928	    Observed:  flows=20, unique_dst_ips=1, unique_dst_ports=20, rst_count=21
+1791995985.928	    Rates:     76.0 Bps, 1.4 Pps
+1791995985.928	    Graph:     weighted_out_degree=2280, neighbors=1, component_size=2, bfs_reach=2, dfs_depth=2
+1791995985.928	    Risk:      total=0.3959, dest=0.050, port_scan=0.488, conn_fail=1.000, centrality=0.046
+1791995985.928	    Decision:  HOST_TRUST=100, HOST_RISK=39, policy=EXISTING
+1791995985.928	--- Graph Summary: nodes=2, edges=1, components=1, expired_edges=0, flow_table_size=20, total_events=41 ---
+1791995985.928	===== END CYCLE =====
+1791995985.928	
+1791995987.937	
+1791995987.937	===== ADG TELEMETRY CYCLE =====
+1791995987.937	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791995987.937	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791995987.937	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791995987.937	  [NI] Host: 10.0.0.1
+1791995987.937	    Observed:  flows=20, unique_dst_ips=1, unique_dst_ports=20, rst_count=21
+1791995987.937	    Rates:     76.0 Bps, 1.4 Pps
+1791995987.937	    Graph:     weighted_out_degree=2280, neighbors=1, component_size=2, bfs_reach=2, dfs_depth=2
+1791995987.937	    Risk:      total=0.3959, dest=0.050, port_scan=0.488, conn_fail=1.000, centrality=0.046
+1791995987.937	    Decision:  HOST_TRUST=100, HOST_RISK=39, policy=EXISTING
+1791995987.937	--- Graph Summary: nodes=2, edges=1, components=1, expired_edges=0, flow_table_size=20, total_events=41 ---
+1791995987.937	===== END CYCLE =====
+1791995987.937	
+1791995989.946	
+1791995989.946	===== ADG TELEMETRY CYCLE =====
+1791995989.946	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791995989.946	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791995989.946	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791995989.946	  [NI] Host: 10.0.0.1
+1791995989.946	    Observed:  flows=20, unique_dst_ips=1, unique_dst_ports=20, rst_count=21
+1791995989.946	    Rates:     76.0 Bps, 1.4 Pps
+1791995989.946	    Graph:     weighted_out_degree=2280, neighbors=1, component_size=2, bfs_reach=2, dfs_depth=2
+1791995989.946	    Risk:      total=0.3959, dest=0.050, port_scan=0.488, conn_fail=1.000, centrality=0.046
+1791995989.946	    Decision:  HOST_TRUST=100, HOST_RISK=39, policy=EXISTING
+1791995989.946	--- Graph Summary: nodes=2, edges=1, components=1, expired_edges=0, flow_table_size=20, total_events=41 ---
+1791995989.946	===== END CYCLE =====
+1791995989.946	
+1791995991.956	
+1791995991.956	===== ADG TELEMETRY CYCLE =====
+1791995991.956	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791995991.956	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791995991.956	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791995991.956	  [NI] Host: 10.0.0.1
+1791995991.956	    Observed:  flows=20, unique_dst_ips=1, unique_dst_ports=20, rst_count=21
+1791995991.956	    Rates:     76.0 Bps, 1.4 Pps
+1791995991.956	    Graph:     weighted_out_degree=2280, neighbors=1, component_size=2, bfs_reach=2, dfs_depth=2
+1791995991.956	    Risk:      total=0.3959, dest=0.050, port_scan=0.488, conn_fail=1.000, centrality=0.046
+1791995991.956	    Decision:  HOST_TRUST=100, HOST_RISK=39, policy=EXISTING
+1791995991.956	--- Graph Summary: nodes=2, edges=1, components=1, expired_edges=0, flow_table_size=20, total_events=41 ---
+1791995991.956	===== END CYCLE =====
+1791995991.956	
+1791995993.914	
+1791995993.914	===== ADG TELEMETRY CYCLE =====
+1791995993.914	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791995993.914	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791995993.914	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791995993.914	  [NI] Host: 10.0.0.1
+1791995993.914	    Observed:  flows=20, unique_dst_ips=1, unique_dst_ports=20, rst_count=21
+1791995993.914	    Rates:     76.0 Bps, 1.4 Pps
+1791995993.914	    Graph:     weighted_out_degree=2280, neighbors=1, component_size=2, bfs_reach=2, dfs_depth=2
+1791995993.914	    Risk:      total=0.3959, dest=0.050, port_scan=0.488, conn_fail=1.000, centrality=0.046
+1791995993.914	    Decision:  HOST_TRUST=100, HOST_RISK=39, policy=EXISTING
+1791995993.914	--- Graph Summary: nodes=2, edges=1, components=1, expired_edges=0, flow_table_size=20, total_events=41 ---
+1791995993.914	===== END CYCLE =====
+1791995993.914	
+1791995995.924	
+1791995995.924	===== ADG TELEMETRY CYCLE =====
+1791995995.924	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791995995.924	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791995995.924	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791995995.924	  [NI] Host: 10.0.0.1
+1791995995.924	    Observed:  flows=20, unique_dst_ips=1, unique_dst_ports=20, rst_count=21
+1791995995.924	    Rates:     76.0 Bps, 1.4 Pps
+1791995995.924	    Graph:     weighted_out_degree=2280, neighbors=1, component_size=2, bfs_reach=2, dfs_depth=2
+1791995995.924	    Risk:      total=0.3959, dest=0.050, port_scan=0.488, conn_fail=1.000, centrality=0.046
+1791995995.924	    Decision:  HOST_TRUST=100, HOST_RISK=39, policy=EXISTING
+1791995995.924	--- Graph Summary: nodes=2, edges=1, components=1, expired_edges=0, flow_table_size=20, total_events=41 ---
+1791995995.924	===== END CYCLE =====
+1791995995.924	
+1791995997.935	
+1791995997.935	===== ADG TELEMETRY CYCLE =====
+1791995997.935	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791995997.935	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791995997.935	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791995997.935	  [NI] Host: 10.0.0.1
+1791995997.935	    Observed:  flows=20, unique_dst_ips=1, unique_dst_ports=20, rst_count=21
+1791995997.935	    Rates:     76.0 Bps, 1.4 Pps
+1791995997.935	    Graph:     weighted_out_degree=2280, neighbors=1, component_size=2, bfs_reach=2, dfs_depth=2
+1791995997.935	    Risk:      total=0.3959, dest=0.050, port_scan=0.488, conn_fail=1.000, centrality=0.046
+1791995997.935	    Decision:  HOST_TRUST=100, HOST_RISK=39, policy=EXISTING
+1791995997.935	--- Graph Summary: nodes=2, edges=1, components=1, expired_edges=0, flow_table_size=20, total_events=41 ---
+1791995997.935	===== END CYCLE =====
+1791995997.935	
+1791995999.946	
+1791995999.946	===== ADG TELEMETRY CYCLE =====
+1791995999.946	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791995999.946	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791995999.946	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791995999.946	  [NI] Host: 10.0.0.1
+1791995999.946	    Observed:  flows=20, unique_dst_ips=1, unique_dst_ports=20, rst_count=21
+1791995999.946	    Rates:     76.0 Bps, 1.4 Pps
+1791995999.946	    Graph:     weighted_out_degree=2280, neighbors=1, component_size=2, bfs_reach=2, dfs_depth=2
+1791995999.946	    Risk:      total=0.3959, dest=0.050, port_scan=0.488, conn_fail=1.000, centrality=0.046
+1791995999.946	    Decision:  HOST_TRUST=100, HOST_RISK=39, policy=EXISTING
+1791995999.946	--- Graph Summary: nodes=2, edges=1, components=1, expired_edges=0, flow_table_size=20, total_events=41 ---
+1791995999.946	===== END CYCLE =====
+1791995999.946	
+1791996001.956	
+1791996001.956	===== ADG TELEMETRY CYCLE =====
+1791996001.956	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791996001.956	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791996001.956	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791996001.956	  [NI] Host: 10.0.0.1
+1791996001.956	    Observed:  flows=20, unique_dst_ips=1, unique_dst_ports=20, rst_count=21
+1791996001.956	    Rates:     76.0 Bps, 1.4 Pps
+1791996001.956	    Graph:     weighted_out_degree=2280, neighbors=1, component_size=2, bfs_reach=2, dfs_depth=2
+1791996001.956	    Risk:      total=0.3959, dest=0.050, port_scan=0.488, conn_fail=1.000, centrality=0.046
+1791996001.956	    Decision:  HOST_TRUST=100, HOST_RISK=39, policy=EXISTING
+1791996001.956	--- Graph Summary: nodes=2, edges=1, components=1, expired_edges=0, flow_table_size=20, total_events=41 ---
+1791996001.956	===== END CYCLE =====
+1791996001.956	
+1791996003.964	
+1791996003.964	===== ADG TELEMETRY CYCLE =====
+1791996003.964	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791996003.964	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791996003.964	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791996003.964	  [NI] Host: 10.0.0.1
+1791996003.964	    Observed:  flows=20, unique_dst_ips=1, unique_dst_ports=20, rst_count=21
+1791996003.964	    Rates:     76.0 Bps, 1.4 Pps
+1791996003.964	    Graph:     weighted_out_degree=2280, neighbors=1, component_size=2, bfs_reach=2, dfs_depth=2
+1791996003.964	    Risk:      total=0.3959, dest=0.050, port_scan=0.488, conn_fail=1.000, centrality=0.046
+1791996003.964	    Decision:  HOST_TRUST=100, HOST_RISK=39, policy=EXISTING
+1791996003.964	--- Graph Summary: nodes=2, edges=1, components=1, expired_edges=0, flow_table_size=20, total_events=41 ---
+1791996003.964	===== END CYCLE =====
+1791996003.964	
+1791996005.924	
+1791996005.924	===== ADG TELEMETRY CYCLE =====
+1791996005.924	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791996005.924	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791996005.924	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791996005.924	  [NI] Host: 10.0.0.1
+1791996005.924	    Observed:  flows=20, unique_dst_ips=1, unique_dst_ports=20, rst_count=21
+1791996005.924	    Rates:     76.0 Bps, 1.4 Pps
+1791996005.924	    Graph:     weighted_out_degree=2280, neighbors=1, component_size=2, bfs_reach=2, dfs_depth=2
+1791996005.924	    Risk:      total=0.3959, dest=0.050, port_scan=0.488, conn_fail=1.000, centrality=0.046
+1791996005.924	    Decision:  HOST_TRUST=100, HOST_RISK=39, policy=EXISTING
+1791996005.924	--- Graph Summary: nodes=2, edges=1, components=1, expired_edges=0, flow_table_size=20, total_events=41 ---
+1791996005.924	===== END CYCLE =====
+1791996005.924	
+1791996007.936	
+1791996007.936	===== ADG TELEMETRY CYCLE =====
+1791996007.936	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791996007.936	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791996007.936	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791996007.936	  [NI] Host: 10.0.0.1
+1791996007.936	    Observed:  flows=15, unique_dst_ips=1, unique_dst_ports=15, rst_count=16
+1791996007.936	    Rates:     57.3 Bps, 1.0 Pps
+1791996007.936	    Graph:     weighted_out_degree=2280, neighbors=1, component_size=2, bfs_reach=2, dfs_depth=2
+1791996007.936	    Risk:      total=0.3990, dest=0.067, port_scan=0.484, conn_fail=1.000, centrality=0.046
+1791996007.936	    Decision:  HOST_TRUST=100, HOST_RISK=39, policy=EXISTING
+1791996007.936	--- Graph Summary: nodes=2, edges=1, components=1, expired_edges=0, flow_table_size=15, total_events=41 ---
+1791996007.936	===== END CYCLE =====
+1791996007.936	
+1791996009.948	
+1791996009.948	===== ADG TELEMETRY CYCLE =====
+1791996009.948	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791996009.948	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791996009.948	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791996009.948	  [NI] Host: 10.0.0.1
+1791996009.948	    Observed:  flows=0, unique_dst_ips=0, unique_dst_ports=0, rst_count=0
+1791996009.948	    Rates:     0.0 Bps, 0.0 Pps
+1791996009.948	    Graph:     weighted_out_degree=-0, neighbors=0, component_size=1, bfs_reach=0, dfs_depth=0
+1791996009.948	    Risk:      total=0.0000, dest=0.000, port_scan=0.000, conn_fail=0.000, centrality=-0.000
+1791996009.948	    Decision:  HOST_TRUST=100, HOST_RISK=0, policy=EXISTING
+1791996009.948	--- Graph Summary: nodes=2, edges=0, components=2, expired_edges=1, flow_table_size=0, total_events=41 ---
+1791996009.948	===== END CYCLE =====
+1791996009.948	
+1791996011.959	
+1791996011.959	===== ADG TELEMETRY CYCLE =====
+1791996011.959	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791996011.959	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791996011.959	10.0.0.1         | IDLE         | UNKNOWN      | UNKNOWN      | NORMAL     | RECENT       | 100      | 0          | 0          | TRUSTED     
+1791996011.959	  [NI] Host: 10.0.0.1
+1791996011.959	    Observed:  flows=0, unique_dst_ips=0, unique_dst_ports=0, rst_count=0
+1791996011.959	    Rates:     0.0 Bps, 0.0 Pps
+1791996011.959	    Graph:     weighted_out_degree=-0, neighbors=0, component_size=1, bfs_reach=0, dfs_depth=0
+1791996011.959	    Risk:      total=0.0000, dest=0.000, port_scan=0.000, conn_fail=0.000, centrality=-0.000
+1791996011.959	    Decision:  HOST_TRUST=100, HOST_RISK=0, policy=EXISTING
+1791996011.959	--- Graph Summary: nodes=2, edges=0, components=2, expired_edges=0, flow_table_size=0, total_events=41 ---
+1791996011.959	===== END CYCLE =====
+1791996011.959	
+1791996012.160	[INFO  adg_xdp] packet seen from src: 1.0.0.10, action: PASS
+1791996013.969	
+1791996013.969	===== ADG TELEMETRY CYCLE =====
+1791996013.969	Host             | Activity     | Protocol     | SYN          | Frag       | Recent       | Trust    | SYN Pen.   | Frag Pen.  | Level       
+1791996013.969	---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1791996013.969	10.0.0.1         | LOW          | ICMP         | UNKNOWN      | NORMAL     | ACTIVE       | 100      | 0          | 0          | TRUSTED     
+1791996013.969	  [NI] Host: 10.0.0.1
+1791996013.969	    Observed:  flows=0, unique_dst_ips=0, unique_dst_ports=0, rst_count=0
+1791996013.969	    Rates:     0.0 Bps, 0.0 Pps
+1791996013.969	    Graph:     weighted_out_degree=-0, neighbors=0, component_size=1, bfs_reach=0, dfs_depth=0
+1791996013.969	    Risk:      total=0.0000, dest=0.000, port_scan=0.000, conn_fail=0.000, centrality=-0.000
+1791996013.969	    Decision:  HOST_TRUST=100, HOST_RISK=0, policy=EXISTING
+1791996013.969	--- Graph Summary: nodes=2, edges=0, components=2, expired_edges=0, flow_table_size=0, total_events=41 ---
+1791996013.969	===== END CYCLE =====
+1791996013.969	
+1791996015.475	
+1791996015.475	Received Ctrl-C, exiting...

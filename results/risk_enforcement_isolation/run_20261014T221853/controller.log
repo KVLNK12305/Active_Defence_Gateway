@@ -1,0 +1,721 @@
+loading app controller/adg_controller.py
+loading app os_ken.controller.ofp_handler
+instantiating app controller/adg_controller.py of ADGController
+Successfully opened HOST_TRUST map.
+Successfully opened HOST_RISK map.
+instantiating app os_ken.controller.ofp_handler of OFPHandler
+CONTROLLER=ISO SWITCH_FEATURES DPID=1 Requested EQUAL role
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:18:54] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x806
+DEBUG: Not an IPv4 packet. Ethertype: 0x806
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:18:54] INFO ADG :: [POLICY]
+[POLICY]
+[22:18:54] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:18:54] INFO ADG :: Trust : 100
+Trust : 100
+[22:18:54] INFO ADG :: Risk : 0
+Risk : 0
+[22:18:54] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:18:54] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:16 IN=2
+[22:18:54] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+[22:18:54] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:16 IN=1
+[22:18:55] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+[22:18:59] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:02 IN=1
+[22:18:59] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:19:00] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x806
+DEBUG: Not an IPv4 packet. Ethertype: 0x806
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:19:00] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x806
+DEBUG: Not an IPv4 packet. Ethertype: 0x806
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:02 IN=1
+[22:19:08] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+[22:19:08] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:19:08] INFO ADG :: [POLICY]
+[POLICY]
+[22:19:08] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:19:08] INFO ADG :: Trust : 100
+Trust : 100
+[22:19:08] INFO ADG :: Risk : 39
+Risk : 39
+[22:19:08] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:19:08] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:19:08] INFO ADG :: [POLICY]
+[POLICY]
+[22:19:08] INFO ADG :: Host : 10.0.0.2
+Host : 10.0.0.2
+[22:19:08] INFO ADG :: Trust : 100
+Trust : 100
+[22:19:08] INFO ADG :: Risk : 0
+Risk : 0
+[22:19:08] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:19:08] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:19:16] INFO ADG :: [POLICY]
+[POLICY]
+[22:19:16] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:19:16] INFO ADG :: Trust : 100
+Trust : 100
+[22:19:16] INFO ADG :: Risk : 40
+Risk : 40
+[22:19:16] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:19:16] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:19:16] INFO ADG :: [POLICY]
+[POLICY]
+[22:19:16] INFO ADG :: Host : 10.0.0.2
+Host : 10.0.0.2
+[22:19:16] INFO ADG :: Trust : 100
+Trust : 100
+[22:19:16] INFO ADG :: Risk : 0
+Risk : 0
+[22:19:16] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:19:16] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:19:23] INFO ADG :: [POLICY]
+[POLICY]
+[22:19:23] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:19:23] INFO ADG :: Trust : 100
+Trust : 100
+[22:19:23] INFO ADG :: Risk : 69
+Risk : 69
+[22:19:23] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:19:23] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:19:23] INFO ADG :: [POLICY]
+[POLICY]
+[22:19:23] INFO ADG :: Host : 10.0.0.2
+Host : 10.0.0.2
+[22:19:23] INFO ADG :: Trust : 100
+Trust : 100
+[22:19:23] INFO ADG :: Risk : 0
+Risk : 0
+[22:19:23] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:19:23] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+[22:19:25] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:02 IN=1
+[22:19:26] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:19:30] INFO ADG :: [POLICY]
+[POLICY]
+[22:19:30] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:19:30] INFO ADG :: Trust : 100
+Trust : 100
+[22:19:30] INFO ADG :: Risk : 70
+Risk : 70
+[22:19:30] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:19:30] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:19:30] INFO ADG :: [POLICY]
+[POLICY]
+[22:19:30] INFO ADG :: Host : 10.0.0.2
+Host : 10.0.0.2
+[22:19:30] INFO ADG :: Trust : 100
+Trust : 100
+[22:19:30] INFO ADG :: Risk : 0
+Risk : 0
+[22:19:30] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:19:30] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:19:37] INFO ADG :: [POLICY]
+[POLICY]
+[22:19:37] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:19:37] INFO ADG :: Trust : 100
+Trust : 100
+[22:19:37] INFO ADG :: Risk : 79
+Risk : 79
+[22:19:37] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:19:37] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:19:37] INFO ADG :: [POLICY]
+[POLICY]
+[22:19:37] INFO ADG :: Host : 10.0.0.2
+Host : 10.0.0.2
+[22:19:37] INFO ADG :: Trust : 100
+Trust : 100
+[22:19:37] INFO ADG :: Risk : 0
+Risk : 0
+[22:19:37] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:19:37] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:19:44] INFO ADG :: [POLICY]
+[POLICY]
+[22:19:44] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:19:44] INFO ADG :: Trust : 100
+Trust : 100
+[22:19:44] INFO ADG :: Risk : 80
+Risk : 80
+[22:19:44] INFO ADG :: Decision : MIRROR
+Decision : MIRROR
+[22:19:44] INFO ADG :: Priority : 120
+Priority : 120
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:19:44] INFO ADG :: [POLICY]
+[POLICY]
+[22:19:44] INFO ADG :: Host : 10.0.0.2
+Host : 10.0.0.2
+[22:19:44] INFO ADG :: Trust : 100
+Trust : 100
+[22:19:44] INFO ADG :: Risk : 0
+Risk : 0
+[22:19:44] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:19:44] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:19:51] INFO ADG :: [POLICY]
+[POLICY]
+[22:19:51] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:19:51] INFO ADG :: Trust : 100
+Trust : 100
+[22:19:51] INFO ADG :: Risk : 100
+Risk : 100
+[22:19:51] INFO ADG :: Decision : MIRROR
+Decision : MIRROR
+[22:19:51] INFO ADG :: Priority : 120
+Priority : 120
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:19:51] INFO ADG :: [POLICY]
+[POLICY]
+[22:19:51] INFO ADG :: Host : 10.0.0.2
+Host : 10.0.0.2
+[22:19:51] INFO ADG :: Trust : 100
+Trust : 100
+[22:19:51] INFO ADG :: Risk : 0
+Risk : 0
+[22:19:51] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:19:51] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:19:57] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x806
+DEBUG: Not an IPv4 packet. Ethertype: 0x806
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:19:59] INFO ADG :: [POLICY]
+[POLICY]
+[22:19:59] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:19:59] INFO ADG :: Trust : 30
+Trust : 30
+[22:19:59] INFO ADG :: Risk : 100
+Risk : 100
+[22:19:59] INFO ADG :: Decision : MIRROR
+Decision : MIRROR
+[22:19:59] INFO ADG :: Priority : 120
+Priority : 120
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:19:59] INFO ADG :: [POLICY]
+[POLICY]
+[22:19:59] INFO ADG :: Host : 10.0.0.2
+Host : 10.0.0.2
+[22:19:59] INFO ADG :: Trust : 100
+Trust : 100
+[22:19:59] INFO ADG :: Risk : 0
+Risk : 0
+[22:19:59] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:19:59] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:02 IN=1
+[22:20:01] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+[22:20:01] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:20:14] INFO ADG :: [POLICY]
+[POLICY]
+[22:20:14] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:20:14] INFO ADG :: Trust : 40
+Trust : 40
+[22:20:14] INFO ADG :: Risk : 100
+Risk : 100
+[22:20:14] INFO ADG :: Decision : MIRROR
+Decision : MIRROR
+[22:20:14] INFO ADG :: Priority : 120
+Priority : 120
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:20:14] INFO ADG :: [POLICY]
+[POLICY]
+[22:20:14] INFO ADG :: Host : 10.0.0.2
+Host : 10.0.0.2
+[22:20:14] INFO ADG :: Trust : 100
+Trust : 100
+[22:20:14] INFO ADG :: Risk : 0
+Risk : 0
+[22:20:14] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:20:14] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:20:21] INFO ADG :: [POLICY]
+[POLICY]
+[22:20:21] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:20:21] INFO ADG :: Trust : 69
+Trust : 69
+[22:20:21] INFO ADG :: Risk : 100
+Risk : 100
+[22:20:21] INFO ADG :: Decision : MIRROR
+Decision : MIRROR
+[22:20:21] INFO ADG :: Priority : 120
+Priority : 120
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:20:21] INFO ADG :: [POLICY]
+[POLICY]
+[22:20:21] INFO ADG :: Host : 10.0.0.2
+Host : 10.0.0.2
+[22:20:21] INFO ADG :: Trust : 100
+Trust : 100
+[22:20:21] INFO ADG :: Risk : 0
+Risk : 0
+[22:20:21] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:20:21] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:20:27] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x806
+DEBUG: Not an IPv4 packet. Ethertype: 0x806
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:20:28] INFO ADG :: [POLICY]
+[POLICY]
+[22:20:28] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:20:28] INFO ADG :: Trust : 70
+Trust : 70
+[22:20:28] INFO ADG :: Risk : 100
+Risk : 100
+[22:20:28] INFO ADG :: Decision : MIRROR
+Decision : MIRROR
+[22:20:28] INFO ADG :: Priority : 120
+Priority : 120
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:20:28] INFO ADG :: [POLICY]
+[POLICY]
+[22:20:28] INFO ADG :: Host : 10.0.0.2
+Host : 10.0.0.2
+[22:20:28] INFO ADG :: Trust : 100
+Trust : 100
+[22:20:28] INFO ADG :: Risk : 0
+Risk : 0
+[22:20:28] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:20:28] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:20:34] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x806
+DEBUG: Not an IPv4 packet. Ethertype: 0x806
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:20:36] INFO ADG :: [POLICY]
+[POLICY]
+[22:20:36] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:20:36] INFO ADG :: Trust : 89
+Trust : 89
+[22:20:36] INFO ADG :: Risk : 100
+Risk : 100
+[22:20:36] INFO ADG :: Decision : MIRROR
+Decision : MIRROR
+[22:20:36] INFO ADG :: Priority : 120
+Priority : 120
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:20:36] INFO ADG :: [POLICY]
+[POLICY]
+[22:20:36] INFO ADG :: Host : 10.0.0.2
+Host : 10.0.0.2
+[22:20:36] INFO ADG :: Trust : 100
+Trust : 100
+[22:20:36] INFO ADG :: Risk : 0
+Risk : 0
+[22:20:36] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:20:36] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:20:43] INFO ADG :: [POLICY]
+[POLICY]
+[22:20:43] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:20:43] INFO ADG :: Trust : 90
+Trust : 90
+[22:20:43] INFO ADG :: Risk : 100
+Risk : 100
+[22:20:43] INFO ADG :: Decision : MIRROR
+Decision : MIRROR
+[22:20:43] INFO ADG :: Priority : 120
+Priority : 120
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:20:43] INFO ADG :: [POLICY]
+[POLICY]
+[22:20:43] INFO ADG :: Host : 10.0.0.2
+Host : 10.0.0.2
+[22:20:43] INFO ADG :: Trust : 100
+Trust : 100
+[22:20:43] INFO ADG :: Risk : 0
+Risk : 0
+[22:20:43] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:20:43] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:20:50] INFO ADG :: [POLICY]
+[POLICY]
+[22:20:50] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:20:50] INFO ADG :: Trust : 100
+Trust : 100
+[22:20:50] INFO ADG :: Risk : 100
+Risk : 100
+[22:20:50] INFO ADG :: Decision : MIRROR
+Decision : MIRROR
+[22:20:50] INFO ADG :: Priority : 120
+Priority : 120
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:20:50] INFO ADG :: [POLICY]
+[POLICY]
+[22:20:50] INFO ADG :: Host : 10.0.0.2
+Host : 10.0.0.2
+[22:20:50] INFO ADG :: Trust : 100
+Trust : 100
+[22:20:50] INFO ADG :: Risk : 0
+Risk : 0
+[22:20:50] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:20:50] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:20:55] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x806
+DEBUG: Not an IPv4 packet. Ethertype: 0x806
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:20:57] INFO ADG :: [POLICY]
+[POLICY]
+[22:20:57] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:20:57] INFO ADG :: Trust : 30
+Trust : 30
+[22:20:57] INFO ADG :: Risk : 0
+Risk : 0
+[22:20:57] INFO ADG :: Decision : DROP
+Decision : DROP
+[22:20:57] INFO ADG :: Priority : 200
+Priority : 200
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:21:05] INFO ADG :: [POLICY]
+[POLICY]
+[22:21:05] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:21:05] INFO ADG :: Trust : 39
+Trust : 39
+[22:21:05] INFO ADG :: Risk : 0
+Risk : 0
+[22:21:05] INFO ADG :: Decision : DROP
+Decision : DROP
+[22:21:05] INFO ADG :: Priority : 200
+Priority : 200
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+[22:21:11] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:21:13] INFO ADG :: [POLICY]
+[POLICY]
+[22:21:13] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:21:13] INFO ADG :: Trust : 40
+Trust : 40
+[22:21:13] INFO ADG :: Risk : 0
+Risk : 0
+[22:21:13] INFO ADG :: Decision : MIRROR
+Decision : MIRROR
+[22:21:13] INFO ADG :: Priority : 120
+Priority : 120
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:21:13] INFO ADG :: [POLICY]
+[POLICY]
+[22:21:13] INFO ADG :: Host : 10.0.0.2
+Host : 10.0.0.2
+[22:21:13] INFO ADG :: Trust : 100
+Trust : 100
+[22:21:13] INFO ADG :: Risk : 0
+Risk : 0
+[22:21:13] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:21:13] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:02 IN=1
+[22:21:15] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:21:21] INFO ADG :: [POLICY]
+[POLICY]
+[22:21:21] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:21:21] INFO ADG :: Trust : 69
+Trust : 69
+[22:21:21] INFO ADG :: Risk : 0
+Risk : 0
+[22:21:21] INFO ADG :: Decision : MIRROR
+Decision : MIRROR
+[22:21:21] INFO ADG :: Priority : 120
+Priority : 120
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:21:21] INFO ADG :: [POLICY]
+[POLICY]
+[22:21:21] INFO ADG :: Host : 10.0.0.2
+Host : 10.0.0.2
+[22:21:21] INFO ADG :: Trust : 100
+Trust : 100
+[22:21:21] INFO ADG :: Risk : 0
+Risk : 0
+[22:21:21] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:21:21] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:21:26] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x806
+DEBUG: Not an IPv4 packet. Ethertype: 0x806
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:21:27] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x806
+DEBUG: Not an IPv4 packet. Ethertype: 0x806
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:21:27] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x806
+DEBUG: Not an IPv4 packet. Ethertype: 0x806
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:21:35] INFO ADG :: [POLICY]
+[POLICY]
+[22:21:35] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:21:35] INFO ADG :: Trust : 89
+Trust : 89
+[22:21:35] INFO ADG :: Risk : 0
+Risk : 0
+[22:21:35] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:21:35] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:21:35] INFO ADG :: [POLICY]
+[POLICY]
+[22:21:35] INFO ADG :: Host : 10.0.0.2
+Host : 10.0.0.2
+[22:21:35] INFO ADG :: Trust : 100
+Trust : 100
+[22:21:35] INFO ADG :: Risk : 0
+Risk : 0
+[22:21:35] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:21:35] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:21:42] INFO ADG :: [POLICY]
+[POLICY]
+[22:21:42] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:21:42] INFO ADG :: Trust : 90
+Trust : 90
+[22:21:42] INFO ADG :: Risk : 0
+Risk : 0
+[22:21:42] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:21:42] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:21:42] INFO ADG :: [POLICY]
+[POLICY]
+[22:21:42] INFO ADG :: Host : 10.0.0.2
+Host : 10.0.0.2
+[22:21:42] INFO ADG :: Trust : 100
+Trust : 100
+[22:21:42] INFO ADG :: Risk : 0
+Risk : 0
+[22:21:42] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:21:42] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:21:49] INFO ADG :: [POLICY]
+[POLICY]
+[22:21:49] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:21:49] INFO ADG :: Trust : 100
+Trust : 100
+[22:21:49] INFO ADG :: Risk : 0
+Risk : 0
+[22:21:49] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:21:49] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+[22:21:49] INFO ADG :: [POLICY]
+[POLICY]
+[22:21:49] INFO ADG :: Host : 10.0.0.2
+Host : 10.0.0.2
+[22:21:49] INFO ADG :: Trust : 100
+Trust : 100
+[22:21:49] INFO ADG :: Risk : 0
+Risk : 0
+[22:21:49] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[22:21:49] INFO ADG :: Priority : 1
+Priority : 1
+
+[TRUST UPDATE]
+Host        : 10.0.0.1
+Trust       : 30
+Policy      : ALLOW -> DROP
+Time        : 22:19:59
+
+
+[TRUST UPDATE]
+Host        : 10.0.0.1
+Trust       : 100
+Policy      : DROP -> ALLOW
+Time        : 22:20:03
+
+
+[TRUST UPDATE]
+Host        : 10.0.0.1
+Trust       : 39
+Policy      : ALLOW -> DROP
+Time        : 22:20:05
+
+
+[TRUST UPDATE]
+Host        : 10.0.0.1
+Trust       : 100
+Policy      : DROP -> ALLOW
+Time        : 22:20:11
+
+
+[TRUST UPDATE]
+Host        : 10.0.0.1
+Trust       : 40
+Policy      : ALLOW -> MIRROR
+Time        : 22:20:13
+
+
+[TRUST UPDATE]
+Host        : 10.0.0.1
+Trust       : 100
+Policy      : MIRROR -> ALLOW
+Time        : 22:20:17
+
+
+[TRUST UPDATE]
+Host        : 10.0.0.1
+Trust       : 69
+Policy      : ALLOW -> MIRROR
+Time        : 22:20:21
+
+
+[TRUST UPDATE]
+Host        : 10.0.0.1
+Trust       : 100
+Policy      : MIRROR -> ALLOW
+Time        : 22:20:25
+
+
+[TRUST UPDATE]
+Host        : 10.0.0.1
+Trust       : 30
+Policy      : ALLOW -> DROP
+Time        : 22:20:57
+
+
+[TRUST UPDATE]
+Host        : 10.0.0.1
+Trust       : 100
+Policy      : DROP -> ALLOW
+Time        : 22:21:01
+
+
+[TRUST UPDATE]
+Host        : 10.0.0.1
+Trust       : 39
+Policy      : ALLOW -> DROP
+Time        : 22:21:05
+
+
+[TRUST UPDATE]
+Host        : 10.0.0.1
+Trust       : 100
+Policy      : DROP -> ALLOW
+Time        : 22:21:09
+
+
+[TRUST UPDATE]
+Host        : 10.0.0.1
+Trust       : 40
+Policy      : ALLOW -> MIRROR
+Time        : 22:21:13
+
+
+[TRUST UPDATE]
+Host        : 10.0.0.1
+Trust       : 100
+Policy      : MIRROR -> ALLOW
+Time        : 22:21:17
+
+
+[TRUST UPDATE]
+Host        : 10.0.0.1
+Trust       : 69
+Policy      : ALLOW -> MIRROR
+Time        : 22:21:21
+
+
+[TRUST UPDATE]
+Host        : 10.0.0.1
+Trust       : 100
+Policy      : MIRROR -> ALLOW
+Time        : 22:21:25
+

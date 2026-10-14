@@ -1,0 +1,90 @@
+== A trial 1
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 75 min_trust= 100
+== A trial 2
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 75 min_trust= 100
+== A trial 3
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 75 min_trust= 100
+== A trial 4
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 75 min_trust= 100
+== A trial 5
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 75 min_trust= 100
+== B trial 1
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 100 min_trust= 50
+== B trial 2
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 100 min_trust= 50
+== B trial 3
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 100 min_trust= 50
+== B trial 4
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 100 min_trust= 50
+== B trial 5
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 100 min_trust= 50
+== C trial 1
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 50 min_trust= 100
+== C trial 2
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 50 min_trust= 100
+== C trial 3
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 50 min_trust= 100
+== C trial 4
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 50 min_trust= 100
+== C trial 5
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 50 min_trust= 100
+== D1 trial 1
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 100 min_trust= 50
+== D1 trial 2
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 100 min_trust= 50
+== D1 trial 3
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 100 min_trust= 50
+== D1 trial 4
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 100 min_trust= 50
+== D1 trial 5
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 100 min_trust= 50
+== D2 trial 1
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 100 min_trust= 50
+== D2 trial 2
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 100 min_trust= 50
+== D2 trial 3
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 100 min_trust= 50
+== D2 trial 4
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 100 min_trust= 50
+== D2 trial 5
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 100 min_trust= 50
+== F trial 1
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 50 min_trust= 100
+== F trial 2
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 50 min_trust= 100
+== F trial 3
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 50 min_trust= 100
+== F trial 4
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 50 min_trust= 100
+== F trial 5
+Unable to contact the remote controller at 127.0.0.1:6653
+    OK  peak_risk= 50 min_trust= 100

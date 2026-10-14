@@ -1,0 +1,19 @@
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[22:24:34] INFO ADG :: [POLICY]
+[POLICY]
+[22:24:34] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[22:24:34] INFO ADG :: Trust : 39
+Trust : 39
+[22:24:34] INFO ADG :: Risk : 0
+Risk : 0
+[22:24:34] INFO ADG :: Decision : DROP
+Decision : DROP
+[22:24:34] INFO ADG :: Priority : 200
+Priority : 200
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:02 IN=1
+[22:24:35] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+CONTROLLER=ISO PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+[22:24:35] INFO ADG :: DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
+DEBUG: Not an IPv4 packet. Ethertype: 0x86dd
