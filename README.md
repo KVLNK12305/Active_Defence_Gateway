@@ -8,10 +8,12 @@ The Active Defense Gateway has successfully completed **Phase 1** of its impleme
 - **Observation Plane (eBPF/XDP):** High-performance, in-kernel telemetry tracking packets, bytes, TCP/UDP/ICMP ratios, SYN floods, and **Fragmented Packet (Evasion)** anomalies.
 - **Trust Engine (Rust):** A mathematically rigorous, stateless behavioral profiler that translates network telemetry into a dynamic 0-100 `HOST_TRUST` score.
 - **Enforcement Plane (Python OS-Ken):** An SDN controller that polls the Trust Engine without executing heavy logic, triggering dynamic OpenFlow `FlowMod` rules.
-- **Adaptive Policy States:** Hosts automatically transition between `ALLOW`, `MIRROR`, and `DROP` based on their real-time behavior, with proactive fallback and recovery capabilities.
-- **Automated Evaluation Suite:** Python-based simulation scripts generating thesis-ready metrics and `matplotlib` graphs (Trust vs. Time, Telemetry Correlation).
+- **Adaptive Policy States:** Hosts transition between `ALLOW`, `MIRROR`, and `DROP` based on their real-time behavior: trust < 40 → `DROP`; 40–69 → `MIRROR`; ≥ 70 → `ALLOW`, escalated to `MIRROR` when network risk ≥ 80. Risk never weakens `MIRROR` or `DROP`.
+- **Background Reconciliation:** Every 2 s the controller re-evaluates trust and risk for all known hosts and updates OpenFlow rules idempotently, without waiting for a `PacketIn`.
+- **Telemetry Freshness:** The daemon publishes a heartbeat; the controller detects stale telemetry and replaced pinned maps, holds the last valid value for at most 30 s, then applies explicit degraded actions (trust unavailable → `DROP`). Failures never become trust 100 / risk 0.
+- **Evaluation:** Unit/integration tests (Rust and Python), live acceptance tests (daemon restart and SIGKILL during `DROP`), and a live network-intelligence campaign; thesis figures are generated from recorded evidence by `results/plot_live_figures.py`.
 - **Network Intelligence Layer:** Real-time event streaming (`PerfEventArray`) mapping TCP control events (`SYN`, `FIN`, `RST`) to userspace for continuous, non-blocking flow and graph analysis.
-- **Proactive Risk Mitigation:** Dynamic `SecurityGraph` computing node degrees and Network Risk metrics, enforcing strict `MIRROR`/`DROP` rules on high-risk traffic.
+- **Network Risk Score (auxiliary):** A `SecurityGraph` and flow table feed a 0–100 risk score; risk ≥ 80 can escalate an otherwise allowed host to `MIRROR` only. In 30 live trials the maximum observed risk was 50 and benign and attack scores overlapped, so risk-driven enforcement has been validated only with injected values (see `results/risk_threshold_limitation.md`).
 
 ---
 
@@ -27,22 +29,22 @@ There is a critical need for a system that can actively deceive attackers at wir
 
 ## **2. Architecture Overview**
 
-![SDN Architecture Diagram](https://raw.githubusercontent.com/ksskarthik18/Active_Defence_Gateway/main/adg_architectureDiagram.png)
+![ADG implemented components](results/Images/adg_architecture.png)
 
 ### **2.1 The Three-Plane Security Model**
 
 * **Observation Plane (eBPF/XDP):** Sitting directly on the Network Interface Card (NIC), this Rust-based eBPF program parses packet headers (including IPv4 fragmentation flags) at wire speed. It maintains a `HOST_STATS` map tracking granular behaviors like SYN ratios and fragment counts.
 * **Control Plane (Rust Userspace):** The "Trust Engine" reads the telemetry, builds a `HostProfile`, and calculates a `TrustScore` (0-100). This score is pinned to a global eBPF map (`/sys/fs/bpf/HOST_TRUST`).
-* **Enforcement Plane (SDN Controller):** The Python-based `OS-Ken` controller polls the pinned trust map via `ctypes`. A stateless `PolicyEngine` determines the appropriate action (`ALLOW`, `MIRROR`, `DROP`), and a `FlowInstaller` dynamically pushes high-priority OpenFlow rules to the switches.
+* **Enforcement Plane (SDN Controller):** The Python-based `OS-Ken` controller reads the pinned trust and risk maps via `ctypes`. A stateless `PolicyEngine` determines the action (`ALLOW`, `MIRROR`, `DROP`), and a `FlowInstaller` pushes OpenFlow rules to the switches. The XDP program only observes (`XDP_PASS`); all enforcement happens in Open vSwitch.
 
 ## **3. Advanced Threat Mitigation**
 
 The ADG evaluates traffic continuously, allowing it to adapt to complex, multi-stage attacks:
 
-* **Volumetric SYN Floods:** Detected via anomalous TCP SYN ratios in the eBPF map. The Trust Engine applies heavy penalties, transitioning the host to a `DROP` state, triggering a hardware-offloaded OpenFlow drop rule.
-* **Fragmented Packet Evasion (Teardrop / Ping of Death):** Tools like `hping3 -f` use fragmentation to bypass IDSs. ADG's eBPF parser natively detects IPv4 `More Fragments (MF)` flags and non-zero offsets, triggering an immediate 85-point trust plunge.
-* **Stealth Scans:** Slow-rate attacks that do not trigger volumetric thresholds slowly degrade trust, isolating the attacker into a `MIRROR` port for IDS analysis without breaking network connectivity.
-* **Gaming the System:** "Ping-Pong" attackers who pause their attacks to regain trust are countered by mathematical decay functions in the recovery algorithm.
+* **SYN-Heavy Traffic:** Detected via the TCP SYN ratio in each 2 s window. A moderate ratio costs 20 points (still `ALLOW`); an aggressive ratio costs 50 points (trust 50 → `MIRROR`). SYN behaviour alone does not lead to `DROP`.
+* **Fragmented Packet Evasion (Teardrop / Ping of Death):** Tools like `hping3 -f` use fragmentation to bypass IDSs. ADG's eBPF parser natively detects IPv4 `More Fragments (MF)` flags and non-zero offsets; more than 5% fragmented packets in a window costs 85 points (trust 15 → OpenFlow `DROP`).
+* **`MIRROR`:** Traffic keeps flowing and a 128-byte copy is sent to the controller, which currently discards it. No IDS is integrated, so `MIRROR` marks a host but does not inspect or contain its traffic.
+* **Known limitation — pulsing attackers:** Trust is computed from the last 2 s window, so it recovers as soon as an attack pauses. Persistent reputation (decay) is not implemented and remains future work.
 
 ## **4. Quick Start / Installation**
 
@@ -62,24 +64,26 @@ sudo target/release/adg-xdp --iface <network_interface>
 
 ### **Running the Python Enforcement Plane**
 ```bash
-cd controller
-ryu-manager adg_controller.py
+osken-manager controller/adg_controller.py
 ```
 
 ### **Generating Evaluation Metrics (Thesis Validation)**
-An automated evaluation suite is provided to orchestrate simulated attacks and generate high-DPI `matplotlib` graphs for academic validation.
+Thesis figures are regenerated from recorded experiment evidence (needs `matplotlib` and `tcpdump`):
 ```bash
-cd results
-# Make sure pandas, matplotlib, and numpy are installed
-python simulate_advanced_cases.py
-python simulate_fragmentation.py
+python3 results/plot_live_figures.py
 ```
+Live acceptance tests (root; each detaches and writes evidence under `results/live_acceptance/`):
+```bash
+sudo python3 tests/live_restart_during_drop.py
+sudo python3 tests/live_sigkill_outage.py
+```
+The older `results/simulate_*.py` scripts produce synthetic plots based on an obsolete five-tier policy and are not used by the thesis.
 
 ## **5. Roadmap**
 
 - [x] **Phase 1:** Intelligent Trust-Based SDN (eBPF Telemetry, Trust Engine, Dynamic OpenFlow)
 - [x] **Phase 1.5:** Live Network Intelligence (PerfEventArray Streaming, Network Risk Scoring, Dynamic Security Graph)
-- [x] **Phase 2:** Multi-controller SDN (Distributed control, failover, synchronization)
+- [x] **Phase 2:** Multi-controller SDN (EQUAL-role controllers, failover, PacketIn deduplication; no state synchronization)
 - [ ] **Phase 3:** Active Deception (Honeypots, Tarpits, moving target defense logic)
 - [ ] **Phase 4:** AI-assisted Trust (ML models, anomaly detection enhancements)
 - [ ] **Phase 5:** Production Hardening (Scalability tests, Kubernetes deployment)
