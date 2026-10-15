@@ -1,0 +1,16 @@
+== cleanup at 2026-10-15T01:00:56+05:30
+PID 21088 ownership re-verified
+PID 21088 gone
+bridge s1 deleted
+== after
+b8b04e22-dd1b-4888-9ad2-1071674fc8a4
+    ovs_version: "2.17.12"
+no related processes
+no s1/host interfaces
+EXTENDED_HOST_STATS
+HOST_RISK
+HOST_TRUST
+snap
+xdp:
+
+tc:

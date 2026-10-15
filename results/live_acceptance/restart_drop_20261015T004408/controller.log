@@ -1,0 +1,46 @@
+loading app controller/adg_controller.py
+loading app os_ken.controller.ofp_handler
+instantiating app controller/adg_controller.py of ADGController
+Successfully opened HOST_TRUST map.
+Successfully opened HOST_RISK map.
+trust telemetry DEGRADED: STARTING
+risk telemetry DEGRADED: STARTING
+instantiating app os_ken.controller.ofp_handler of OFPHandler
+CONTROLLER=C1 SWITCH_FEATURES DPID=1 Requested EQUAL role
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:16 IN=2
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:16 IN=1
+trust telemetry FRESH (was STARTING)
+risk telemetry FRESH (was STARTING)
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[00:44:12] INFO ADG :: [POLICY]
+[POLICY]
+[00:44:12] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[00:44:12] INFO ADG :: Trust : 100
+Trust : 100
+[00:44:12] INFO ADG :: Risk : 0
+Risk : 0
+[00:44:12] INFO ADG :: Telemetry : trust=PROVISIONAL risk=PROVISIONAL
+Telemetry : trust=PROVISIONAL risk=PROVISIONAL
+[00:44:12] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[00:44:12] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:02 IN=1
+[00:44:19] INFO ADG-Detector :: [POLICY UPDATE] Host=10.0.0.1 Trust=15(VALID) Risk=0(VALID) Action=DROP Datapaths=[1]
+[POLICY UPDATE] Host=10.0.0.1 Trust=15(VALID) Risk=0(VALID) Action=DROP Datapaths=[1]
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:02 IN=1
+trust telemetry DEGRADED: DAEMON_STOPPED
+risk telemetry DEGRADED: DAEMON_STOPPED
+[00:44:25] ERROR ADG-Detector :: [TELEMETRY ALERT] trust and risk telemetry both degraded: {'trust': 'DAEMON_STOPPED', 'risk': 'DAEMON_STOPPED'}
+[TELEMETRY ALERT] trust and risk telemetry both degraded: {'trust': 'DAEMON_STOPPED', 'risk': 'DAEMON_STOPPED'}
+[00:44:25] WARNING ADG-Detector :: Host=10.0.0.1 trust HELD at last valid value 15
+Host=10.0.0.1 trust HELD at last valid value 15
+[00:44:25] WARNING ADG-Detector :: Host=10.0.0.1 risk HELD at last valid value 0
+Host=10.0.0.1 risk HELD at last valid value 0
+[00:44:27] ERROR ADG-Detector :: [TELEMETRY ALERT] trust and risk telemetry both degraded: {'trust': 'DAEMON_STOPPED', 'risk': 'DAEMON_STOPPED'}
+[TELEMETRY ALERT] trust and risk telemetry both degraded: {'trust': 'DAEMON_STOPPED', 'risk': 'DAEMON_STOPPED'}

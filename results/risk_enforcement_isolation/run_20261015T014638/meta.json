@@ -1,0 +1,10 @@
+{
+ "run": "20261015T014638",
+ "synthetic": true,
+ "detector_running": false,
+ "backups": [
+  "HOST_RISK pre-existing, snapshot original_HOST_RISK_dump.txt",
+  "HOST_TRUST pre-existing, snapshot original_HOST_TRUST_dump.txt"
+ ],
+ "end": "2026-10-15T01:49:28.338666"
+}

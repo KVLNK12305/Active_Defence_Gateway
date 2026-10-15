@@ -1,0 +1,76 @@
+{
+  "run_dir": "/home/kushal/FYP/results/live_acceptance/restart_drop_20261015T012928",
+  "harness_pid": 29884,
+  "processes": {
+    "mininet_h1": {
+      "pid": 29921,
+      "cmd": [
+        "mininet:h1"
+      ]
+    },
+    "mininet_h2": {
+      "pid": 29923,
+      "cmd": [
+        "mininet:h2"
+      ]
+    },
+    "tcpdump": {
+      "pid": 30061,
+      "cmd": [
+        "tcpdump",
+        "-i",
+        "s1-eth1",
+        "-nn",
+        "-U",
+        "-w",
+        "/home/kushal/FYP/results/live_acceptance/restart_drop_20261015T012928/s1-eth1.pcap"
+      ]
+    },
+    "daemon1": {
+      "pid": 30063,
+      "cmd": [
+        "/home/kushal/FYP/adg-xdp/target/release/adg-xdp",
+        "--iface",
+        "s1-eth1",
+        "--heartbeat-path",
+        "/home/kushal/FYP/results/live_acceptance/restart_drop_20261015T012928/heartbeat.json"
+      ]
+    },
+    "controller": {
+      "pid": 30082,
+      "cmd": [
+        "osken-manager",
+        "controller/adg_controller.py",
+        "--ofp-tcp-listen-port",
+        "6653"
+      ]
+    },
+    "attack_ping": {
+      "pid": 30151,
+      "cmd": [
+        "ping",
+        "-s",
+        "3000",
+        "-i",
+        "0.2",
+        "10.0.0.2"
+      ]
+    },
+    "daemon2": {
+      "pid": 30235,
+      "cmd": [
+        "/home/kushal/FYP/adg-xdp/target/release/adg-xdp",
+        "--iface",
+        "s1-eth1",
+        "--heartbeat-path",
+        "/home/kushal/FYP/results/live_acceptance/restart_drop_20261015T012928/heartbeat.json"
+      ]
+    }
+  },
+  "bridges": [
+    {
+      "name": "s1",
+      "controller": "tcp:127.0.0.1:6653"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+== captured at 2026-10-15T01:00:10+05:30
+== PID 21088
+    PID    PPID    PGID     SID STAT                  STARTED CMD
+  21088    1543   20905   20904 Sl   Thu Oct 15 00:44:08 2026 /home/kushal/FYP/adg-xdp/target/release/adg-xdp --iface s1-eth1 --heartbeat-path /home/kushal/FYP/results/live_acceptance/restart_drop_20261015T004408/heartbeat.json
+/home/kushal/FYP/adg-xdp/target/release/adg-xdp --iface s1-eth1 --heartbeat-path /home/kushal/FYP/results/live_acceptance/restart_drop_20261015T004408/heartbeat.json 
+== threads
+21088 adg-xdp futex_wait_queue
+21097 tokio-rt-worker hrtimer_nanosleep
+21098 tokio-rt-worker hrtimer_nanosleep
+21099 tokio-rt-worker hrtimer_nanosleep
+21100 tokio-rt-worker hrtimer_nanosleep
+21101 tokio-rt-worker hrtimer_nanosleep
+21102 tokio-rt-worker hrtimer_nanosleep
+21103 tokio-rt-worker hrtimer_nanosleep
+21104 tokio-rt-worker hrtimer_nanosleep
+== ovs bridges
+s1
+== ovs show
+b8b04e22-dd1b-4888-9ad2-1071674fc8a4
+    Bridge s1
+        Controller "tcp:127.0.0.1:6653"
+        fail_mode: secure
+        Port s1
+            Interface s1
+                type: internal
+        Port s1-eth1
+            Interface s1-eth1
+                error: "could not open network device s1-eth1 (No such device)"
+        Port s1-eth2
+            Interface s1-eth2
+                error: "could not open network device s1-eth2 (No such device)"
+    ovs_version: "2.17.12"
+== s1 flows
+OFPST_FLOW reply (OF1.3) (xid=0x2):
+ cookie=0x0, duration=960.512s, table=0, n_packets=4, n_bytes=168, priority=10,dl_dst=ff:ff:ff:ff:ff:ff actions=FLOOD
+ cookie=0x0, duration=960.512s, table=0, n_packets=13, n_bytes=990, priority=0 actions=CONTROLLER:65535
+== s1 bridge record
+name                : s1
+datapath_id         : "0000000000000001"
+controller          : [e2b85d93-7010-4ca2-a3da-f1c8e064cf94]
+fail_mode           : secure
+external_ids        : {}
+other_config        : {datapath-id="0000000000000001", disable-in-band="true", dp-desc=s1}
+== mininet / harness / controller processes
+  21088    1543   20905   20904 Sl   Thu Oct 15 00:44:08 2026 /home/kushal/FYP/adg-xdp/target/release/adg-xdp --iface s1-eth1 --heartbeat-path /home/kushal/FYP/results/live_acceptance/restart_drop_20261015T004408/heartbeat.json
+== netns
+total 0
+drwxr-xr-x  2 root root  40 Oct 14 23:31 .
+drwxr-xr-x 37 root root 960 Oct 15 00:30 ..
+== links
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+enp1s0           UP             52:54:00:be:3b:95 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+ovs-system       DOWN           0a:2b:9e:c4:d6:ec <BROADCAST,MULTICAST> 
+s1               DOWN           16:88:e1:b4:3f:4a <BROADCAST,MULTICAST> 
+== bpffs pins
+total 0
+drwx-----T 3 root root 0 Oct 15 00:44 .
+drwxr-xr-x 8 root root 0 Oct 14 23:31 ..
+-rw------- 1 root root 0 Oct 15 00:44 EXTENDED_HOST_STATS
+-rw------- 1 root root 0 Oct 15 00:44 HOST_RISK
+-rw------- 1 root root 0 Oct 15 00:44 HOST_TRUST
+drwx------ 2 root root 0 Oct 14 23:32 snap
+== pinned map ids
+13: hash  name HOST_TRUST  flags 0x0
+	key 4B  value 4B  max_entries 10240  memlock 919296B
+8: hash  name HOST_RISK  flags 0x0
+	key 4B  value 4B  max_entries 10240  memlock 919296B
+== HOST_TRUST dump
+key: 01 00 00 0a  value: 0f 03 01 00
+Found 1 element
+== xdp programs attached
+xdp:
+
+tc:
+
+flow_dissector:
+
+netfilter:
+
+== listeners 6653
+State Recv-Q Send-Q Local Address:Port Peer Address:PortProcess

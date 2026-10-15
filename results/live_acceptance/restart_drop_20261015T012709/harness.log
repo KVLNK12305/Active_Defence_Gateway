@@ -1,0 +1,25 @@
+Unable to contact the remote controller at 127.0.0.1:6653
+{
+  "checks": {
+    "p0_no_adg_rule_for_benign": true,
+    "drop_installed_during_attack": true,
+    "daemon1_exits_within_5s_of_sigint": false,
+    "daemon1_final_heartbeat_stopped": true,
+    "daemon1_clean_stop_heartbeat": true,
+    "daemon2_new_maps": true,
+    "drop_never_released_before_rescoring": true,
+    "no_mirror_rule_in_span": true,
+    "map_replacement_detected": true,
+    "trust_held_after_restart": true,
+    "hold_expiry_at_30s": true,
+    "released_after_rescoring": true,
+    "replies_resume_after_release": true,
+    "daemon2_exits_within_5s_of_sigint": false,
+    "daemon2_final_heartbeat_stopped": true,
+    "daemon2_clean_stop_heartbeat": true,
+    "no_external_signals_to_harness": true
+  },
+  "all_passed": false,
+  "notes": [],
+  "failure_phase": null
+}

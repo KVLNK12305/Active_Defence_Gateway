@@ -1,0 +1,2 @@
+[01:47:54] INFO ADG-Detector :: [POLICY UPDATE] Host=10.0.0.1 Trust=69(VALID) Risk=100(VALID) Action=MIRROR Datapaths=[1]
+[POLICY UPDATE] Host=10.0.0.1 Trust=69(VALID) Risk=100(VALID) Action=MIRROR Datapaths=[1]

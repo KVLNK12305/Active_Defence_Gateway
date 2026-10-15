@@ -1,0 +1,30 @@
+1792008827.697 event harness_session
+1792008827.836 event net_started
+1792008827.838 started tcpdump pid=31575
+1792008827.840 started daemon1 pid=31576
+1792008828.040 event daemon1_ready
+1792008828.041 event daemon1_map_ids
+1792008828.041 started controller pid=31596
+1792008832.451 event p0_start
+1792008836.465 event p0_rules
+1792008836.466 event p1_start
+1792008836.467 started attack_ping pid=31667
+1792008838.501 event drop_installed
+1792008842.505 event daemon1_sigkill_time
+1792008842.521 stopped daemon1: {'signal': 'SIGKILL', 'exit_s': 0.016, 'returncode': -9}
+1792008842.522 event hb_after_daemon1_sigkill
+1792008842.523 stopped attack_ping: {'signal': 'SIGINT', 'exit_s': 0.001, 'returncode': 0}
+1792008842.523 event attack_stopped
+1792008887.537 started daemon2 pid=32098
+1792008887.738 event daemon2_ready
+1792008887.738 event daemon2_map_ids
+1792008889.741 event p3_start
+1792008903.334 event p3_end
+1792008903.373 stopped daemon2: {'signal': 'SIGINT', 'exit_s': 0.032, 'returncode': 0}
+1792008903.373 event hb_after_daemon2_stop
+1792008903.486 already stopped daemon2: returncode=0
+1792008903.486 already stopped attack_ping: returncode=0
+1792008903.550 stopped controller: {'signal': 'SIGINT', 'exit_s': 0.064, 'returncode': 0}
+1792008903.550 already stopped daemon1: returncode=-9
+1792008903.582 stopped tcpdump: {'signal': 'SIGINT', 'exit_s': 0.032, 'returncode': 0}
+1792008904.043 summary written; all_passed=True

@@ -1,0 +1,76 @@
+{
+  "run_dir": "/home/kushal/FYP/results/live_acceptance/sigkill_outage_20261015T014347",
+  "harness_pid": 31412,
+  "processes": {
+    "mininet_h1": {
+      "pid": 31449,
+      "cmd": [
+        "mininet:h1"
+      ]
+    },
+    "mininet_h2": {
+      "pid": 31451,
+      "cmd": [
+        "mininet:h2"
+      ]
+    },
+    "tcpdump": {
+      "pid": 31575,
+      "cmd": [
+        "tcpdump",
+        "-i",
+        "s1-eth1",
+        "-nn",
+        "-U",
+        "-w",
+        "/home/kushal/FYP/results/live_acceptance/sigkill_outage_20261015T014347/s1-eth1.pcap"
+      ]
+    },
+    "daemon1": {
+      "pid": 31576,
+      "cmd": [
+        "/home/kushal/FYP/adg-xdp/target/release/adg-xdp",
+        "--iface",
+        "s1-eth1",
+        "--heartbeat-path",
+        "/home/kushal/FYP/results/live_acceptance/sigkill_outage_20261015T014347/heartbeat.json"
+      ]
+    },
+    "controller": {
+      "pid": 31596,
+      "cmd": [
+        "osken-manager",
+        "controller/adg_controller.py",
+        "--ofp-tcp-listen-port",
+        "6653"
+      ]
+    },
+    "attack_ping": {
+      "pid": 31667,
+      "cmd": [
+        "ping",
+        "-s",
+        "3000",
+        "-i",
+        "0.2",
+        "10.0.0.2"
+      ]
+    },
+    "daemon2": {
+      "pid": 32098,
+      "cmd": [
+        "/home/kushal/FYP/adg-xdp/target/release/adg-xdp",
+        "--iface",
+        "s1-eth1",
+        "--heartbeat-path",
+        "/home/kushal/FYP/results/live_acceptance/sigkill_outage_20261015T014347/heartbeat.json"
+      ]
+    }
+  },
+  "bridges": [
+    {
+      "name": "s1",
+      "controller": "tcp:127.0.0.1:6653"
+    }
+  ]
+}

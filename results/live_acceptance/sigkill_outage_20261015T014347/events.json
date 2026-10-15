@@ -1,0 +1,94 @@
+{
+  "harness_session": {
+    "pid": 31412,
+    "sid": 31412,
+    "pgid": 31412
+  },
+  "net_started": 1792008827.8360753,
+  "daemon1_ready": 1792008828.040454,
+  "daemon1_map_ids": [
+    61,
+    60
+  ],
+  "p0_start": 1792008832.4506378,
+  "p0_rules": {
+    "120": false,
+    "200": false
+  },
+  "p1_start": 1792008836.4657626,
+  "drop_installed": 1792008838.5011978,
+  "daemon1_sigkill_time": 1792008842.5045488,
+  "stop_daemon1": {
+    "signal": "SIGKILL",
+    "exit_s": 0.016,
+    "returncode": -9
+  },
+  "hb_after_daemon1_sigkill": {
+    "schema": 1,
+    "incarnation": "31576-7940851385347",
+    "pid": 31576,
+    "state": "running",
+    "generation": 7,
+    "monotonic_ns": 7954924383355,
+    "wall_unix_ms": 1792008841966,
+    "trust_map_id": 61,
+    "risk_map_id": 60,
+    "hosts": 1,
+    "stats_read_errors": 0,
+    "trust_write_errors": 0,
+    "risk_write_errors": 0,
+    "flow_events_lost": 0,
+    "flow_consumers_alive": 8,
+    "flow_consumers_expected": 8,
+    "trust_ok": true,
+    "risk_ok": true
+  },
+  "stop_attack_ping": {
+    "signal": "SIGINT",
+    "exit_s": 0.001,
+    "returncode": 0
+  },
+  "attack_stopped": 1792008842.523373,
+  "daemon2_ready": 1792008887.7379076,
+  "daemon2_map_ids": [
+    69,
+    73
+  ],
+  "p3_start": 1792008889.7408645,
+  "p3_end": 1792008903.3341894,
+  "stop_daemon2": {
+    "signal": "SIGINT",
+    "exit_s": 0.032,
+    "returncode": 0
+  },
+  "hb_after_daemon2_stop": {
+    "schema": 1,
+    "incarnation": "32098-8000543280306",
+    "pid": 32098,
+    "state": "stopped",
+    "generation": 7,
+    "monotonic_ns": 8016299161701,
+    "wall_unix_ms": 1792008903341,
+    "trust_map_id": 69,
+    "risk_map_id": 73,
+    "hosts": 1,
+    "stats_read_errors": 0,
+    "trust_write_errors": 0,
+    "risk_write_errors": 0,
+    "flow_events_lost": 0,
+    "flow_consumers_alive": 8,
+    "flow_consumers_expected": 8,
+    "trust_ok": true,
+    "risk_ok": true
+  },
+  "stop_controller": {
+    "signal": "SIGINT",
+    "exit_s": 0.064,
+    "returncode": 0
+  },
+  "stop_tcpdump": {
+    "signal": "SIGINT",
+    "exit_s": 0.032,
+    "returncode": 0
+  }
+}

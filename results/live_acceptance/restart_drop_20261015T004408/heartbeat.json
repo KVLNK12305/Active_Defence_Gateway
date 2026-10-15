@@ -1,0 +1,1 @@
+{"schema":1,"incarnation":"21088-4361575216828","pid":21088,"state":"stopped","generation":7,"monotonic_ns":4376201188981,"wall_unix_ms":1792005263243,"trust_map_id":13,"risk_map_id":8,"hosts":1,"stats_read_errors":0,"trust_write_errors":0,"risk_write_errors":0,"flow_events_lost":0,"flow_consumers_alive":8,"flow_consumers_expected":8,"trust_ok":true,"risk_ok":true}

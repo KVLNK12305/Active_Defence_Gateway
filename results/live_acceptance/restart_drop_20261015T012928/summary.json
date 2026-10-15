@@ -1,0 +1,361 @@
+{
+  "test": "restart_during_drop",
+  "out": "/home/kushal/FYP/results/live_acceptance/restart_drop_20261015T012928",
+  "failure_phase": null,
+  "exit_codes": {
+    "tcpdump": 0,
+    "daemon1": 0,
+    "controller": 0,
+    "attack_ping": 0,
+    "daemon2": 0
+  },
+  "cleanup_results": {
+    "daemon2": {
+      "signal": "SIGINT",
+      "exit_s": 0.032,
+      "returncode": 0
+    },
+    "attack_ping": {
+      "signal": "SIGINT",
+      "exit_s": 0.001,
+      "returncode": 0
+    },
+    "controller": {
+      "signal": "SIGINT",
+      "exit_s": 0.167,
+      "returncode": 0
+    },
+    "daemon1": {
+      "signal": "SIGINT",
+      "exit_s": 0.064,
+      "returncode": 0
+    },
+    "tcpdump": {
+      "signal": "SIGINT",
+      "exit_s": 0.016,
+      "returncode": 0
+    },
+    "net_stop": "completed"
+  },
+  "checks": {
+    "p0_no_adg_rule_for_benign": true,
+    "drop_installed_during_attack": true,
+    "daemon1_exits_within_5s_of_sigint": true,
+    "daemon1_final_heartbeat_stopped": true,
+    "daemon1_clean_stop_heartbeat": true,
+    "daemon2_new_maps": true,
+    "drop_never_released_before_rescoring": true,
+    "no_mirror_rule_in_span": true,
+    "map_replacement_detected": true,
+    "trust_held_after_restart": true,
+    "hold_expiry_at_30s": true,
+    "released_after_rescoring": true,
+    "replies_resume_after_release": true,
+    "daemon2_exits_within_5s_of_sigint": true,
+    "daemon2_final_heartbeat_stopped": true,
+    "daemon2_clean_stop_heartbeat": true,
+    "no_external_signals_to_harness": true
+  },
+  "all_passed": true,
+  "data": {
+    "daemon1_final_heartbeat": {
+      "schema": 1,
+      "incarnation": "30063-7081518373693",
+      "pid": 30063,
+      "state": "stopped",
+      "generation": 7,
+      "monotonic_ns": 7095933728638,
+      "wall_unix_ms": 1792007982976,
+      "trust_map_id": 43,
+      "risk_map_id": 42,
+      "hosts": 1,
+      "stats_read_errors": 0,
+      "trust_write_errors": 0,
+      "risk_write_errors": 0,
+      "flow_events_lost": 0,
+      "flow_consumers_alive": 8,
+      "flow_consumers_expected": 8,
+      "trust_ok": true,
+      "risk_ok": true
+    },
+    "last_obs_wall": 1792007982.976,
+    "daemon_map_ids": {
+      "daemon1_map_ids": [
+        43,
+        42
+      ],
+      "daemon2_map_ids": [
+        54,
+        52
+      ]
+    },
+    "daemon_stops": {
+      "stop_daemon1": {
+        "signal": "SIGINT",
+        "exit_s": 0.064,
+        "returncode": 0
+      },
+      "stop_daemon2": {
+        "signal": "SIGINT",
+        "exit_s": 0.032,
+        "returncode": 0
+      }
+    },
+    "drop_span_samples": 198,
+    "drop_gap_samples": 0,
+    "first_gap": [],
+    "replaced_line": "HOST_TRUST map was replaced (daemon restart); reopened map id 54",
+    "held_line": "[01:29:44] WARNING ADG-Detector :: Host=10.0.0.1 trust HELD at last valid value 15",
+    "alert_line": "[01:30:13] ERROR ADG-Detector :: [TELEMETRY ALERT] Host=10.0.0.1 trust unavailable (no valid value within 30.0s hold); applying degraded policy",
+    "alert_minus_last_obs_s": 30.08,
+    "p3_ping": "20 packets transmitted, 16 received",
+    "release_after_p3_start_s": 1.88,
+    "signals_to_run_processes": [
+      {
+        "scomm": "python3",
+        "spid": 29884,
+        "sig": 2,
+        "tcomm": "adg-xdp",
+        "tpid": 30063
+      },
+      {
+        "scomm": "python3",
+        "spid": 29884,
+        "sig": 2,
+        "tcomm": "ping",
+        "tpid": 30151
+      },
+      {
+        "scomm": "python3",
+        "spid": 29884,
+        "sig": 2,
+        "tcomm": "adg-xdp",
+        "tpid": 30235
+      },
+      {
+        "scomm": "python3",
+        "spid": 29884,
+        "sig": 2,
+        "tcomm": "osken-manager",
+        "tpid": 30082
+      },
+      {
+        "scomm": "python3",
+        "spid": 29884,
+        "sig": 2,
+        "tcomm": "tcpdump",
+        "tpid": 30061
+      },
+      {
+        "scomm": "python3",
+        "spid": 30748,
+        "sig": 1,
+        "tcomm": "bash",
+        "tpid": 29921
+      },
+      {
+        "scomm": "python3",
+        "spid": 30748,
+        "sig": 1,
+        "tcomm": "bash",
+        "tpid": 29921
+      },
+      {
+        "scomm": "bash",
+        "spid": 29921,
+        "sig": 1,
+        "tcomm": "bash",
+        "tpid": 29921
+      },
+      {
+        "scomm": "bash",
+        "spid": 29921,
+        "sig": 1,
+        "tcomm": "bash",
+        "tpid": 29921
+      },
+      {
+        "scomm": "python3",
+        "spid": 30748,
+        "sig": 1,
+        "tcomm": "bash",
+        "tpid": 29923
+      },
+      {
+        "scomm": "python3",
+        "spid": 30748,
+        "sig": 1,
+        "tcomm": "bash",
+        "tpid": 29923
+      },
+      {
+        "scomm": "bash",
+        "spid": 29923,
+        "sig": 1,
+        "tcomm": "bash",
+        "tpid": 29923
+      },
+      {
+        "scomm": "bash",
+        "spid": 29923,
+        "sig": 1,
+        "tcomm": "bash",
+        "tpid": 29923
+      }
+    ],
+    "signals_not_sent_by_harness": [
+      {
+        "scomm": "python3",
+        "spid": 30748,
+        "sig": 1,
+        "tcomm": "bash",
+        "tpid": 29921
+      },
+      {
+        "scomm": "python3",
+        "spid": 30748,
+        "sig": 1,
+        "tcomm": "bash",
+        "tpid": 29921
+      },
+      {
+        "scomm": "bash",
+        "spid": 29921,
+        "sig": 1,
+        "tcomm": "bash",
+        "tpid": 29921
+      },
+      {
+        "scomm": "bash",
+        "spid": 29921,
+        "sig": 1,
+        "tcomm": "bash",
+        "tpid": 29921
+      },
+      {
+        "scomm": "python3",
+        "spid": 30748,
+        "sig": 1,
+        "tcomm": "bash",
+        "tpid": 29923
+      },
+      {
+        "scomm": "python3",
+        "spid": 30748,
+        "sig": 1,
+        "tcomm": "bash",
+        "tpid": 29923
+      },
+      {
+        "scomm": "bash",
+        "spid": 29923,
+        "sig": 1,
+        "tcomm": "bash",
+        "tpid": 29923
+      },
+      {
+        "scomm": "bash",
+        "spid": 29923,
+        "sig": 1,
+        "tcomm": "bash",
+        "tpid": 29923
+      }
+    ],
+    "harness_signals_received": []
+  },
+  "notes": [],
+  "events": {
+    "harness_session": {
+      "pid": 29884,
+      "sid": 29884,
+      "pgid": 29884
+    },
+    "net_started": 1792007968.5031164,
+    "daemon1_ready": 1792007968.7063947,
+    "daemon1_map_ids": [
+      43,
+      42
+    ],
+    "p0_start": 1792007972.7155788,
+    "p0_rules": {
+      "120": false,
+      "200": false
+    },
+    "p1_start": 1792007976.7297065,
+    "drop_installed": 1792007978.9713166,
+    "daemon1_stop": 1792007982.97577,
+    "stop_daemon1": {
+      "signal": "SIGINT",
+      "exit_s": 0.064,
+      "returncode": 0
+    },
+    "hb_after_daemon1_stop": {
+      "schema": 1,
+      "incarnation": "30063-7081518373693",
+      "pid": 30063,
+      "state": "stopped",
+      "generation": 7,
+      "monotonic_ns": 7095933728638,
+      "wall_unix_ms": 1792007982976,
+      "trust_map_id": 43,
+      "risk_map_id": 42,
+      "hosts": 1,
+      "stats_read_errors": 0,
+      "trust_write_errors": 0,
+      "risk_write_errors": 0,
+      "flow_events_lost": 0,
+      "flow_consumers_alive": 8,
+      "flow_consumers_expected": 8,
+      "trust_ok": true,
+      "risk_ok": true
+    },
+    "stop_attack_ping": {
+      "signal": "SIGINT",
+      "exit_s": 0.001,
+      "returncode": 0
+    },
+    "attack_stopped": 1792007983.042122,
+    "daemon2_ready": 1792007984.2452948,
+    "daemon2_map_ids": [
+      54,
+      52
+    ],
+    "p3_start": 1792008029.2459514,
+    "p3_end": 1792008041.832052,
+    "stop_daemon2": {
+      "signal": "SIGINT",
+      "exit_s": 0.032,
+      "returncode": 0
+    },
+    "hb_after_daemon2_stop": {
+      "schema": 1,
+      "incarnation": "30235-7097053472889",
+      "pid": 30235,
+      "state": "stopped",
+      "generation": 28,
+      "monotonic_ns": 7154797813826,
+      "wall_unix_ms": 1792008041840,
+      "trust_map_id": 54,
+      "risk_map_id": 52,
+      "hosts": 1,
+      "stats_read_errors": 0,
+      "trust_write_errors": 0,
+      "risk_write_errors": 0,
+      "flow_events_lost": 0,
+      "flow_consumers_alive": 8,
+      "flow_consumers_expected": 8,
+      "trust_ok": true,
+      "risk_ok": true
+    },
+    "stop_controller": {
+      "signal": "SIGINT",
+      "exit_s": 0.167,
+      "returncode": 0
+    },
+    "stop_tcpdump": {
+      "signal": "SIGINT",
+      "exit_s": 0.016,
+      "returncode": 0
+    }
+  }
+}

@@ -1,0 +1,68 @@
+loading app controller/adg_controller.py
+loading app os_ken.controller.ofp_handler
+instantiating app controller/adg_controller.py of ADGController
+Successfully opened HOST_TRUST map.
+Successfully opened HOST_RISK map.
+trust telemetry DEGRADED: STARTING
+risk telemetry DEGRADED: STARTING
+instantiating app os_ken.controller.ofp_handler of OFPHandler
+CONTROLLER=C1 SWITCH_FEATURES DPID=1 Requested EQUAL role
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:16 IN=2
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:16 IN=1
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:02 IN=1
+trust telemetry FRESH (was STARTING)
+risk telemetry FRESH (was STARTING)
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=00:00:00:00:00:01 IN=2
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=00:00:00:00:00:02 IN=1
+[01:43:52] INFO ADG :: [POLICY]
+[POLICY]
+[01:43:52] INFO ADG :: Host : 10.0.0.1
+Host : 10.0.0.1
+[01:43:52] INFO ADG :: Trust : 100
+Trust : 100
+[01:43:52] INFO ADG :: Risk : 0
+Risk : 0
+[01:43:52] INFO ADG :: Telemetry : trust=PROVISIONAL risk=PROVISIONAL
+Telemetry : trust=PROVISIONAL risk=PROVISIONAL
+[01:43:52] INFO ADG :: Decision : ALLOW
+Decision : ALLOW
+[01:43:52] INFO ADG :: Priority : 1
+Priority : 1
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:02 IN=1
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+[01:43:58] INFO ADG-Detector :: [POLICY UPDATE] Host=10.0.0.1 Trust=15(VALID) Risk=0(VALID) Action=DROP Datapaths=[1]
+[POLICY UPDATE] Host=10.0.0.1 Trust=15(VALID) Risk=0(VALID) Action=DROP Datapaths=[1]
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:02 IN=1
+trust telemetry DEGRADED: STALE
+risk telemetry DEGRADED: STALE
+[01:44:08] ERROR ADG-Detector :: [TELEMETRY ALERT] trust and risk telemetry both degraded: {'trust': 'STALE', 'risk': 'STALE'}
+[TELEMETRY ALERT] trust and risk telemetry both degraded: {'trust': 'STALE', 'risk': 'STALE'}
+[01:44:08] WARNING ADG-Detector :: Host=10.0.0.1 trust HELD at last valid value 15
+Host=10.0.0.1 trust HELD at last valid value 15
+[01:44:08] WARNING ADG-Detector :: Host=10.0.0.1 risk HELD at last valid value 0
+Host=10.0.0.1 risk HELD at last valid value 0
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:02 IN=1
+[01:44:32] ERROR ADG-Detector :: [TELEMETRY ALERT] Host=10.0.0.1 trust unavailable (no valid value within 30.0s hold); applying degraded policy
+[TELEMETRY ALERT] Host=10.0.0.1 trust unavailable (no valid value within 30.0s hold); applying degraded policy
+[01:44:32] ERROR ADG-Detector :: [TELEMETRY ALERT] Host=10.0.0.1 risk unavailable (no valid value within 30.0s hold); applying degraded policy
+[TELEMETRY ALERT] Host=10.0.0.1 risk unavailable (no valid value within 30.0s hold); applying degraded policy
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:02 DST=33:33:00:00:00:02 IN=2
+CONTROLLER=C1 PACKET_IN Switch=1 SRC=00:00:00:00:00:01 DST=33:33:00:00:00:02 IN=1
+HOST_TRUST map was replaced (daemon restart); reopened map id 69
+HOST_RISK map was replaced (daemon restart); reopened map id 73
+adg-xdp daemon restart detected: incarnation 31576-7940851385347 -> 32098-8000543280306
+trust telemetry DEGRADED: STARTING
+risk telemetry DEGRADED: STARTING
+trust telemetry FRESH (was STARTING)
+risk telemetry FRESH (was STARTING)
+[01:44:50] INFO ADG-Detector :: Telemetry no longer fully degraded: {'trust': 'FRESH', 'risk': 'FRESH'}
+Telemetry no longer fully degraded: {'trust': 'FRESH', 'risk': 'FRESH'}
+[01:44:52] INFO ADG-Detector :: Host=10.0.0.1 trust recovered (VALID)
+Host=10.0.0.1 trust recovered (VALID)
+[01:44:52] INFO ADG-Detector :: Host=10.0.0.1 risk recovered (VALID)
+Host=10.0.0.1 risk recovered (VALID)
+[01:44:52] INFO ADG-Detector :: [POLICY UPDATE] Host=10.0.0.1 Trust=100(VALID) Risk=0(VALID) Action=ALLOW Datapaths=[1]
+[POLICY UPDATE] Host=10.0.0.1 Trust=100(VALID) Risk=0(VALID) Action=ALLOW Datapaths=[1]

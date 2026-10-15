@@ -1,0 +1,40 @@
+{
+  "test": "restart_during_drop",
+  "out": "/home/kushal/FYP/results/live_acceptance/restart_drop_20261015T004427",
+  "checks": {
+    "p0_no_adg_rule_for_benign": false,
+    "drop_installed_during_attack": false,
+    "daemon1_clean_stop_heartbeat": false,
+    "daemon2_new_maps": false,
+    "drop_never_released_before_rescoring": false,
+    "no_mirror_rule_in_span": true,
+    "map_replacement_detected": false,
+    "trust_held_after_restart": false,
+    "hold_expiry_at_30s": false,
+    "released_after_rescoring": false,
+    "replies_resume_after_release": false
+  },
+  "all_passed": false,
+  "data": {
+    "daemon1_final_heartbeat": {},
+    "last_obs_wall": null,
+    "daemon_map_ids": {
+      "daemon1_map_ids": null,
+      "daemon2_map_ids": null
+    },
+    "drop_span_samples": 0,
+    "drop_gap_samples": 0,
+    "first_gap": [],
+    "replaced_line": null,
+    "held_line": null,
+    "alert_line": null,
+    "held_minus_daemon1_stop_s": null,
+    "alert_minus_last_obs_s": null,
+    "p3_ping": null,
+    "release_after_p3_start_s": null
+  },
+  "notes": [
+    "ERROR: RuntimeError('bridge s1 already exists; refusing to touch it')"
+  ],
+  "events": {}
+}

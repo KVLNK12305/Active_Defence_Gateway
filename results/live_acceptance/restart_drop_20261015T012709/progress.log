@@ -1,0 +1,30 @@
+1792007830.023 event harness_session
+1792007830.214 event net_started
+1792007830.218 started tcpdump pid=29059
+1792007830.219 started daemon1 pid=29060
+1792007830.420 event daemon1_ready
+1792007830.420 event daemon1_map_ids
+1792007830.424 started controller pid=29077
+1792007834.433 event p0_start
+1792007838.448 event p0_rules
+1792007838.448 event p1_start
+1792007838.449 started attack_ping pid=29149
+1792007840.891 event drop_installed
+1792007844.895 event daemon1_stop
+1792007844.927 stopped daemon1: {'signal': 'SIGINT', 'exit_s': 0.032, 'returncode': 0}
+1792007844.928 event hb_after_daemon1_stop
+1792007844.929 stopped attack_ping: {'signal': 'SIGINT', 'exit_s': 0.001, 'returncode': 0}
+1792007844.929 event attack_stopped
+1792007845.931 started daemon2 pid=29240
+1792007846.132 event daemon2_ready
+1792007846.132 event daemon2_map_ids
+1792007891.143 event p3_start
+1792007903.729 event p3_end
+1792007903.774 stopped daemon2: {'signal': 'SIGINT', 'exit_s': 0.032, 'returncode': 0}
+1792007903.774 event hb_after_daemon2_stop
+1792007903.945 stopped daemon2: {'signal': None, 'exit_s': 0.0, 'returncode': 0}
+1792007903.945 stopped attack_ping: {'signal': None, 'exit_s': 0.0, 'returncode': 0}
+1792007904.060 stopped controller: {'signal': 'SIGINT', 'exit_s': 0.114, 'returncode': 0}
+1792007904.060 stopped daemon1: {'signal': None, 'exit_s': 0.0, 'returncode': 0}
+1792007904.093 stopped tcpdump: {'signal': 'SIGINT', 'exit_s': 0.032, 'returncode': 0}
+1792007904.562 summary written; all_passed=False
