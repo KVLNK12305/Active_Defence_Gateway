@@ -117,3 +117,9 @@ Thumbs.db
 *.exe
 *.dll
 *.dylib
+
+# Temporary: uncommitted network-intelligence campaign evidence
+/results/ni_validation_20261015T015200/
+
+# Temporary: uncommitted network-intelligence campaign evidence
+/results/ni_validation_20261015T015200/
