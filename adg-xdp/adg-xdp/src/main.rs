@@ -7,7 +7,7 @@ use aya::{
 use clap::Parser;
 #[rustfmt::skip]
 use log::{debug, warn};
-use std::{collections, net::Ipv4Addr, sync::Arc, sync::atomic::{AtomicBool, AtomicU64, Ordering}, time::Duration};
+use std::{collections, net::Ipv4Addr, sync::Arc, sync::atomic::{AtomicBool, AtomicU64, AtomicUsize, Ordering}, time::Duration};
 use tokio::{signal, sync::RwLock};
 
 
@@ -15,8 +15,12 @@ use tokio::{signal, sync::RwLock};
 struct Opt {
     #[clap(short, long, default_value = "enp1s0")]
     iface: String,
+    /// Heartbeat file the SDN controller uses to validate HOST_TRUST / HOST_RISK freshness.
+    #[clap(long, default_value = heartbeat::DEFAULT_HEARTBEAT_PATH)]
+    heartbeat_path: std::path::PathBuf,
 }
 
+mod heartbeat;
 mod shutdown;
 mod profiler;
 mod telemetry_extensions;
@@ -32,6 +36,35 @@ fn get_ktime_ns() -> u64 {
         libc::clock_gettime(libc::CLOCK_MONOTONIC, &mut ts);
     }
     (ts.tv_sec as u64) * 1_000_000_000 + (ts.tv_nsec as u64)
+}
+
+/// Counts a FLOW_EVENTS consumer as alive until its thread exits, including by panic (unwinding).
+struct ConsumerAlive(Arc<AtomicUsize>);
+
+impl ConsumerAlive {
+    fn new(counter: Arc<AtomicUsize>) -> Self {
+        counter.fetch_add(1, Ordering::SeqCst);
+        ConsumerAlive(counter)
+    }
+}
+
+impl Drop for ConsumerAlive {
+    fn drop(&mut self) {
+        self.0.fetch_sub(1, Ordering::SeqCst);
+    }
+}
+
+fn wall_unix_ms() -> u64 {
+    std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|d| d.as_millis() as u64)
+        .unwrap_or(0)
+}
+
+fn publish_heartbeat(path: &std::path::Path, hb: &heartbeat::Heartbeat) {
+    if let Err(e) = heartbeat::write_atomic(path, &hb.to_json()) {
+        warn!("Failed to write heartbeat {}: {}", path.display(), e);
+    }
 }
 
 /// Compute the delta between the current and previous HostStats snapshots.
@@ -92,7 +125,7 @@ async fn main() -> anyhow::Result<()> {
         }
     }
 
-    let Opt { iface } = opt;
+    let Opt { iface, heartbeat_path } = opt;
     let program: &mut Xdp = ebpf.program_mut("adg_xdp").unwrap().try_into()?;
     program.load()?;
     program.attach(&iface, XdpFlags::default())
@@ -125,10 +158,19 @@ async fn main() -> anyhow::Result<()> {
     host_risk_map.pin(risk_pin_path).context("Failed to pin HOST_RISK map")?;
     let mut host_risk_bpf: HashMap<_, u32, u32> = HashMap::try_from(host_risk_map)?;
 
+    // Kernel IDs of the maps actually pinned by this incarnation (what the controller will open).
+    let trust_map_id = aya::maps::MapInfo::from_pin(pin_path).context("HOST_TRUST map info")?.id();
+    let risk_map_id = aya::maps::MapInfo::from_pin(risk_pin_path).context("HOST_RISK map info")?.id();
+    let mut hb = heartbeat::Heartbeat::new(std::process::id(), get_ktime_ns(), trust_map_id, risk_map_id);
+    publish_heartbeat(&heartbeat_path, &hb);
+
     // Global Intelligence State
     let flow_table = Arc::new(RwLock::new(network_intelligence::flow_table::FlowTable::new(10_000, 30_000_000_000)));
     let security_graph = Arc::new(RwLock::new(network_intelligence::security_graph::SecurityGraph::new()));
     let event_counter = Arc::new(AtomicU64::new(0));
+    // FLOW_EVENTS input health, reported in the heartbeat as part of risk_ok
+    let consumers_alive = Arc::new(AtomicUsize::new(0));
+    let events_lost = Arc::new(AtomicU64::new(0));
     // Set on SIGINT/SIGTERM; every FLOW_EVENTS consumer checks it so the runtime can shut down.
     let stop_consumers = Arc::new(AtomicBool::new(false));
     let mut consumer_handles = Vec::new();
@@ -136,14 +178,18 @@ async fn main() -> anyhow::Result<()> {
     // Event-driven telemetry path for TCP control events (SYN/FIN/RST)
     let mut perf_array = aya::maps::perf::PerfEventArray::try_from(ebpf.take_map("FLOW_EVENTS").ok_or_else(|| anyhow::anyhow!("FLOW_EVENTS map not found"))?)?;
     let cpus = aya::util::online_cpus().map_err(|e| anyhow::anyhow!("Failed to get online CPUs: {:?}", e))?;
+    let consumers_expected = cpus.len();
     for cpu_id in cpus {
         let mut buf = perf_array.open(cpu_id, None)?;
         let ft = flow_table.clone();
         let sg = security_graph.clone();
         let ec = event_counter.clone();
+        let lost = events_lost.clone();
+        let alive = ConsumerAlive::new(consumers_alive.clone());
         let stop = stop_consumers.clone();
         
         consumer_handles.push(tokio::task::spawn_blocking(move || {
+            let _alive = alive;
             shutdown::consumer_loop(&stop, || {
                 if buf.readable() {
                     buf.for_each(|event| match event {
@@ -205,7 +251,9 @@ async fn main() -> anyhow::Result<()> {
                             };
                             sg_guard.update_edge(edge);
                         }
-                        _ => {}
+                        aya::maps::perf::PerfEvent::Lost { count } => {
+                            lost.fetch_add(count, Ordering::Relaxed);
+                        }
                     });
                 }
             }, Duration::from_millis(10));
@@ -221,6 +269,7 @@ async fn main() -> anyhow::Result<()> {
     println!("\nGenerating Network Intelligence Boot Report...");
     println!("{}", network_intelligence::demo::run_intelligence_demo());
 
+    let mut lost_reported = 0u64;
     let ctrl_c = signal::ctrl_c();
     tokio::pin!(ctrl_c);
     let mut sigterm = signal::unix::signal(signal::unix::SignalKind::terminate())?;
@@ -236,12 +285,20 @@ async fn main() -> anyhow::Result<()> {
                 break;
             }
             _ = tokio::time::sleep(Duration::from_secs(2)) => {
+                let mut outcome = heartbeat::CycleOutcome::default();
                 let mut entries = Vec::new();
                 for item in host_stats.iter() {
-                    if let Ok((ip, stats)) = item {
-                        entries.push((Ipv4Addr::from(ip), stats));
+                    match item {
+                        Ok((ip, stats)) => entries.push((Ipv4Addr::from(ip), stats)),
+                        Err(_) => outcome.stats_read_errors += 1,
                     }
                 }
+                outcome.hosts = entries.len();
+                let lost_total = events_lost.load(Ordering::Relaxed);
+                outcome.flow_events_lost = lost_total - lost_reported;
+                lost_reported = lost_total;
+                outcome.flow_consumers_alive = consumers_alive.load(Ordering::SeqCst);
+                outcome.flow_consumers_expected = consumers_expected;
                 if !entries.is_empty() {
                     entries.sort_by_key(|(_, stats)| std::cmp::Reverse(stats.packets));
                     println!("\n===== ADG TELEMETRY CYCLE =====");
@@ -285,6 +342,7 @@ async fn main() -> anyhow::Result<()> {
                         };
                         let ip_u32: u32 = (*ip).into();
                         if let Err(e) = host_trust.insert(ip_u32, trust_entry, 0) {
+                            outcome.trust_write_errors += 1;
                             warn!("Failed to update HOST_TRUST for IP {}: {}", ip, e);
                         }
 
@@ -325,6 +383,7 @@ async fn main() -> anyhow::Result<()> {
                             .unwrap_or(0);
 
                         if let Err(e) = host_risk_bpf.insert(ip_u32, risk_score_val, 0) {
+                            outcome.risk_write_errors += 1;
                             warn!("Failed to update HOST_RISK for IP {}: {}", ip, e);
                         }
                         
@@ -370,9 +429,15 @@ async fn main() -> anyhow::Result<()> {
                 } else {
                     debug!("HOST_STATS map currently empty.");
                 }
+                // Published only after the whole pipeline ran for every host this cycle.
+                hb.complete_cycle(outcome, get_ktime_ns(), wall_unix_ms());
+                publish_heartbeat(&heartbeat_path, &hb);
             }
         }
     }
+
+    hb.stop(get_ktime_ns(), wall_unix_ms());
+    publish_heartbeat(&heartbeat_path, &hb);
 
     // Bounded, cooperative stop of the blocking consumers; otherwise dropping the runtime waits forever.
     stop_consumers.store(true, Ordering::SeqCst);

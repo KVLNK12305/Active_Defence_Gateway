@@ -5,6 +5,8 @@ import socket
 import struct
 import logging
 
+from telemetry import LookupStatus, Reading, refresh_pinned, MapRefresh
+
 logger = logging.getLogger("ADG-Risk")
 
 # syscall numbers and constants
@@ -42,29 +44,48 @@ def bpf_syscall(cmd, attr_struct):
     return ret
 
 class RiskStore:
+    DEFAULT_RISK = 0  # get() fallback for legacy callers; the controller uses read() + hold policy
+    _close = staticmethod(os.close)  # injectable for tests
+
     def __init__(self):
         self.map_fd = None
+        self.map_id = None
         self._open_map()
+
+    def _obj_get(self):
+        path_bytes = HOST_RISK_MAP_PATH.encode('utf-8')
+        attr = BpfAttrObjGet()
+        attr.pathname = ctypes.cast(ctypes.c_char_p(path_bytes), ctypes.c_void_p).value
+        attr.bpf_fd = 0
+        attr.file_flags = 0
+        return bpf_syscall(BPF_OBJ_GET, attr)
+
+    def refresh(self) -> MapRefresh:
+        """Reopen HOST_RISK if the daemon re-pinned a new map (restart)."""
+        result = refresh_pinned(self, self._obj_get, lambda cmd, attr: bpf_syscall(cmd, attr), self._close)
+        if result == MapRefresh.REPLACED:
+            logger.warning("HOST_RISK map was replaced (daemon restart); reopened map id %s", self.map_id)
+        return result
 
     def _open_map(self):
         try:
-            path_bytes = HOST_RISK_MAP_PATH.encode('utf-8')
-            attr = BpfAttrObjGet()
-            attr.pathname = ctypes.cast(ctypes.c_char_p(path_bytes), ctypes.c_void_p).value
-            attr.bpf_fd = 0
-            attr.file_flags = 0
-            
-            self.map_fd = bpf_syscall(BPF_OBJ_GET, attr)
+            self.map_fd = self._obj_get()
+            self.map_id = None
             logger.info("Successfully opened HOST_RISK map.")
         except OSError as e:
             logger.warning("Could not open HOST_RISK map at %s: %s", HOST_RISK_MAP_PATH, e)
             self.map_fd = None
 
     def get(self, ip: str) -> int:
+        reading = self.read(ip)
+        return reading.value if reading.status == LookupStatus.OK else self.DEFAULT_RISK
+
+    def read(self, ip: str) -> Reading:
+        """Risk score with an explicit status; NO_ENTRY is distinct from map/lookup failures."""
         if self.map_fd is None:
             self._open_map()
             if self.map_fd is None:
-                return 0
+                return Reading(None, LookupStatus.MAP_UNAVAILABLE)
 
         try:
             ip_bytes = socket.inet_aton(ip)
@@ -81,9 +102,9 @@ class RiskStore:
 
             bpf_syscall(BPF_MAP_LOOKUP_ELEM, attr)
             
-            return value.value
+            return Reading(value.value, LookupStatus.OK)
         except OSError as e:
             if e.errno == errno.ENOENT:
-                return 0
+                return Reading(None, LookupStatus.NO_ENTRY)
             logger.error("HOST_RISK lookup failed for %s: %s", ip, os.strerror(e.errno))
-            return 0
+            return Reading(None, LookupStatus.LOOKUP_ERROR)

@@ -2,6 +2,7 @@
 PacketIn path share one decision function, and ADG IP-level rules converge to the desired action
 on a simulated OVS flow table (real os_ken FlowMod objects, strict/non-strict delete semantics)."""
 import unittest
+import errno
 import sys
 import os
 from types import SimpleNamespace
@@ -13,6 +14,9 @@ from os_ken.ofproto import ofproto_v1_3 as ofp, ofproto_v1_3_parser as ofp_parse
 from detector import TrustChangeDetector
 from flow import FlowInstaller, ADG_IP_POLICY_COOKIE
 from policy import Action, PolicyEngine
+from trust import TrustStore
+from risk import RiskStore
+from telemetry import Reading, LookupStatus
 
 HOST = "10.0.0.1"
 OTHER = "10.0.0.9"
@@ -63,6 +67,11 @@ class MapValues:
 
     def get(self, ip):
         return self.values.get(ip, self.default)
+
+    def read(self, ip):
+        if ip in self.values:
+            return Reading(self.values[ip], LookupStatus.OK)
+        return Reading(None, LookupStatus.NO_ENTRY)
 
 
 class ReconcilerTestBase(unittest.TestCase):
@@ -203,6 +212,45 @@ class TestStaleState(ReconcilerTestBase):
         sent = len(self.sw.sent)
         self.det.reconcile_once()
         self.assertEqual(len(self.sw.sent), sent)
+
+
+class TestUnavailableMaps(ReconcilerTestBase):
+    """Map-open and lookup failures are never converted into a score: the last valid value is
+    held for DegradedConfig.MAX_HOLD_S, after which the explicit degraded policy applies
+    (trust unavailable -> DROP by default). Full matrix in test_hold_policy.py."""
+
+    def _real_stores(self, trust_err, risk_err):
+        with patch('trust.bpf_syscall', side_effect=trust_err), \
+             patch('risk.bpf_syscall', side_effect=risk_err):
+            self.controller.trust_store = TrustStore()
+            self.controller.risk_store = RiskStore()
+            return self.det.decide(HOST)
+
+    def test_maps_missing_never_valid_fails_closed(self):
+        enoent = OSError(errno.ENOENT, "No such file or directory")
+        self.assertEqual(self._real_stores(enoent, enoent), (None, None, Action.DROP))
+
+    def test_lookup_errors_never_valid_fail_closed(self):
+        eperm = OSError(errno.EPERM, "Operation not permitted")
+        trust_err = [10, eperm]   # map opens, lookup fails
+        risk_err = [11, eperm]
+        self.assertEqual(self._real_stores(trust_err, risk_err), (None, None, Action.DROP))
+
+    def test_map_loss_holds_then_applies_degraded_policy(self):
+        now = [0.0]
+        self.det.clock = lambda: now[0]
+        self.assertEqual(self.cycle(100, 90), [120])          # risk-driven MIRROR, both VALID
+        enoent = OSError(errno.ENOENT, "No such file or directory")
+        with patch('trust.bpf_syscall', side_effect=enoent), \
+             patch('risk.bpf_syscall', side_effect=enoent):
+            self.controller.trust_store = TrustStore()
+            self.controller.risk_store = RiskStore()
+            now[0] = 30.0
+            self.det.reconcile_once()
+            self.assertEqual(self.sw.adg_rules(), [120])      # held: enforcement not relaxed
+            now[0] = 30.5
+            self.det.reconcile_once()
+            self.assertEqual(self.sw.adg_rules(), [200])      # hold expired: trust unavailable -> DROP
 
 
 if __name__ == '__main__':

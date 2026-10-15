@@ -5,6 +5,8 @@ import socket
 import struct
 import logging
 
+from telemetry import LookupStatus, Reading, refresh_pinned, MapRefresh
+
 logger = logging.getLogger("ADG-Trust")
 
 # syscall numbers and constants
@@ -51,19 +53,33 @@ def bpf_syscall(cmd, attr_struct):
     return ret
 
 class TrustStore:
+    DEFAULT_TRUST = 100  # get() fallback for legacy callers; the controller uses read() + hold policy
+    _close = staticmethod(os.close)  # injectable for tests
+
     def __init__(self):
         self.map_fd = None
+        self.map_id = None
         self._open_map()
+
+    def _obj_get(self):
+        path_bytes = HOST_TRUST_MAP_PATH.encode('utf-8')
+        attr = BpfAttrObjGet()
+        attr.pathname = ctypes.cast(ctypes.c_char_p(path_bytes), ctypes.c_void_p).value
+        attr.bpf_fd = 0
+        attr.file_flags = 0
+        return bpf_syscall(BPF_OBJ_GET, attr)
+
+    def refresh(self) -> MapRefresh:
+        """Reopen HOST_TRUST if the daemon re-pinned a new map (restart)."""
+        result = refresh_pinned(self, self._obj_get, lambda cmd, attr: bpf_syscall(cmd, attr), self._close)
+        if result == MapRefresh.REPLACED:
+            logger.warning("HOST_TRUST map was replaced (daemon restart); reopened map id %s", self.map_id)
+        return result
 
     def _open_map(self):
         try:
-            path_bytes = HOST_TRUST_MAP_PATH.encode('utf-8')
-            attr = BpfAttrObjGet()
-            attr.pathname = ctypes.cast(ctypes.c_char_p(path_bytes), ctypes.c_void_p).value
-            attr.bpf_fd = 0
-            attr.file_flags = 0
-            
-            self.map_fd = bpf_syscall(BPF_OBJ_GET, attr)
+            self.map_fd = self._obj_get()
+            self.map_id = None
             logger.info("Successfully opened HOST_TRUST map.")
         except OSError as e:
             # We don't crash if the map isn't there, we just fallback.
@@ -71,11 +87,16 @@ class TrustStore:
             self.map_fd = None
 
     def get(self, ip: str) -> int:
+        reading = self.read(ip)
+        return reading.value if reading.status == LookupStatus.OK else self.DEFAULT_TRUST
+
+    def read(self, ip: str) -> Reading:
+        """Trust score with an explicit status; NO_ENTRY is distinct from map/lookup failures."""
         if self.map_fd is None:
             self._open_map()
             if self.map_fd is None:
                 logger.error("HOST_TRUST map unavailable; cannot determine trust for %s", ip)
-                return 100
+                return Reading(None, LookupStatus.MAP_UNAVAILABLE)
 
         try:
             ip_bytes = socket.inet_aton(ip)
@@ -93,24 +114,24 @@ class TrustStore:
 
             bpf_syscall(BPF_MAP_LOOKUP_ELEM, attr)
             
-            return value.score
+            return Reading(value.score, LookupStatus.OK)
         except OSError as e:
             if e.errno == errno.ENOENT:  # ENOENT: host is not currently in HOST_TRUST
                 logger.debug(
                     "No trust entry for %s; using default trust 100",
                     ip
                 )
-                return 100
+                return Reading(None, LookupStatus.NO_ENTRY)
 
             logger.error(
                 "HOST_TRUST lookup failed for %s: %s",
                 ip,
                 e
             )
-            return 100
+            return Reading(None, LookupStatus.LOOKUP_ERROR)
         except Exception as e:
             logger.exception(
                 "Unexpected HOST_TRUST lookup error for %s",
                 ip
             )
-            return 100
+            return Reading(None, LookupStatus.LOOKUP_ERROR)

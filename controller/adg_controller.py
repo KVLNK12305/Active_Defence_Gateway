@@ -13,6 +13,7 @@ from trust import TrustStore
 from risk import RiskStore
 from flow import FlowInstaller, ADG_IP_POLICY_COOKIE, IP_POLICY_PRIORITY
 from detector import TrustChangeDetector
+from telemetry import TelemetryMonitor
 from utils import get_logger, debug_packet
 
 logger = get_logger("ADG")
@@ -29,10 +30,15 @@ class ADGController(app_manager.OSKenApp):
         self.policy_engine = PolicyEngine()
         self.trust_store = TrustStore()
         self.risk_store = RiskStore()
+        # Per-signal freshness of HOST_TRUST / HOST_RISK (checked every cycle); drives the hold policy
+        self.telemetry = TelemetryMonitor({"trust": self.trust_store, "risk": self.risk_store})
         self.flow_installer = FlowInstaller(self.logger)
         self.datapaths = {}
         self.detector = TrustChangeDetector(self)
+        # Classify telemetry before the first PacketIn instead of waiting for the first cycle
+        self.telemetry.check()
         self.pkt_seen = {}
+        self.mirror_copies = 0
 
     # pyrefly: ignore [missing-attribute]
     @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
@@ -77,6 +83,17 @@ class ADGController(app_manager.OSKenApp):
         parser = datapath.ofproto_parser
 
         dpid = datapath.id
+
+        # Copy produced by an ADG MIRROR rule (actions=NORMAL,CONTROLLER:128). The switch already
+        # forwarded the original, so a copy must never be packet-out'd (it would be a duplicate,
+        # or truncated to 128 bytes), MAC-learned, re-evaluated, or entered in the dedup cache
+        # (where it would suppress a genuine table-miss PacketIn for the same flow).
+        if msg.cookie == ADG_IP_POLICY_COOKIE:
+            self.mirror_copies += 1
+            self.logger.debug("CONTROLLER=%s MIRROR_COPY Switch=%s IN=%s LEN=%s",
+                              self.controller_id, dpid, msg.match.get("in_port"), len(msg.data))
+            return
+
         self.mac_to_port.setdefault(dpid, {})
 
         in_port = msg.match["in_port"]
@@ -124,14 +141,16 @@ class ADGController(app_manager.OSKenApp):
             # Register with detector for background monitoring
             self.detector.register_host(src_ip)
             
-            # Same decision function as the background reconciler (trust AND risk)
-            trust, risk, decision = self.detector.decide(src_ip)
+            # Same decision function as the background reconciler (trust AND risk, with holds)
+            assessment = self.detector.assess(src_ip)
+            trust, risk, decision = assessment.trust.value, assessment.risk.value, assessment.action
             priority = IP_POLICY_PRIORITY.get(decision, 1)
 
             logger.info("[POLICY]")
             logger.info(f"Host : {src_ip}")
             logger.info(f"Trust : {trust}")
             logger.info(f"Risk : {risk}")
+            logger.info(f"Telemetry : trust={assessment.trust.quality.name} risk={assessment.risk.quality.name}")
             logger.info(f"Decision : {decision.name}")
             logger.info(f"Priority : {priority}")
         else:

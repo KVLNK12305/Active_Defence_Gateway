@@ -7,7 +7,8 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../controller')))
 
 from adg_controller import ADGController
-from policy import Action, PolicyEngine
+from policy import Action, PolicyEngine, Quality, Resolved
+from telemetry import Reading, LookupStatus
 from flow import ADG_IP_POLICY_COOKIE
 from os_ken.lib.packet import packet, ethernet, ipv4
 
@@ -27,6 +28,8 @@ class TestADGController(unittest.TestCase):
         self.controller.policy_engine = self.policy_engine_mock  # type: ignore
         self.controller.logger = self.logger_mock  # type: ignore
         self.controller.flow_installer = self.flow_installer_mock  # type: ignore
+        self.controller.telemetry = None  # type: ignore  # telemetry states covered in test_telemetry.py
+        self.risk_store_mock.read.return_value = Reading(0, LookupStatus.OK)
 
     def _create_mock_event(self, src_ip='10.0.0.1', dst_ip='10.0.0.2', src_mac='00:00:00:00:00:01', dst_mac='00:00:00:00:00:02'):
         ev = MagicMock()
@@ -36,6 +39,7 @@ class TestADGController(unittest.TestCase):
         ev.msg.datapath.ofproto.OFPP_FLOOD = 0xfffffffb
         ev.msg.match = {"in_port": 1}
         ev.msg.buffer_id = 0xffffffff
+        ev.msg.cookie = 0  # table-miss rule
         
         pkt = packet.Packet()
         eth = ethernet.ethernet(dst=dst_mac, src=src_mac, ethertype=0x0800)
@@ -48,17 +52,17 @@ class TestADGController(unittest.TestCase):
 
     def test_packet_in_handler_allow(self):
         ev = self._create_mock_event()
-        self.trust_store_mock.get.return_value = 100
-        self.policy_engine_mock.evaluate.return_value = Action.ALLOW
+        self.trust_store_mock.read.return_value = Reading(100, LookupStatus.OK)
+        self.policy_engine_mock.decide_resolved.return_value = Action.ALLOW
 
         # Pre-populate dst MAC in mac_to_port so out_port != FLOOD
         self.controller.mac_to_port[1] = {'00:00:00:00:00:02': 2}
 
         self.controller.packet_in_handler(ev)
 
-        self.trust_store_mock.get.assert_called_with('10.0.0.1')
-        self.risk_store_mock.get.assert_called_with('10.0.0.1')
-        self.policy_engine_mock.evaluate.assert_called_with(100, self.risk_store_mock.get.return_value)
+        self.trust_store_mock.read.assert_called_with('10.0.0.1')
+        self.risk_store_mock.read.assert_called_with('10.0.0.1')
+        self.policy_engine_mock.decide_resolved.assert_called_with(Resolved(100, Quality.VALID), Resolved(0, Quality.VALID))
         self.flow_installer_mock.install_policy_flow.assert_called_once()
         # Unknown prior state: one ALLOW reconciliation (strict removal of stale ADG tiers) ...
         self.flow_installer_mock.install_ip_policy_flow.assert_called_once_with(
@@ -72,8 +76,8 @@ class TestADGController(unittest.TestCase):
     def test_packet_in_high_risk_escalates_with_real_policy(self):
         # Real PolicyEngine and integer risk (not MagicMock): trust 100 + risk 80 -> MIRROR
         self.controller.policy_engine = PolicyEngine()
-        self.trust_store_mock.get.return_value = 100
-        self.risk_store_mock.get.return_value = 80
+        self.trust_store_mock.read.return_value = Reading(100, LookupStatus.OK)
+        self.risk_store_mock.read.return_value = Reading(80, LookupStatus.OK)
         ev = self._create_mock_event()
 
         self.controller.packet_in_handler(ev)
@@ -85,8 +89,8 @@ class TestADGController(unittest.TestCase):
 
     def test_packet_in_low_trust_high_risk_stays_drop(self):
         self.controller.policy_engine = PolicyEngine()
-        self.trust_store_mock.get.return_value = 39
-        self.risk_store_mock.get.return_value = 100
+        self.trust_store_mock.read.return_value = Reading(39, LookupStatus.OK)
+        self.risk_store_mock.read.return_value = Reading(100, LookupStatus.OK)
         ev = self._create_mock_event()
 
         self.controller.packet_in_handler(ev)
@@ -95,6 +99,35 @@ class TestADGController(unittest.TestCase):
             ev.msg.datapath, '10.0.0.1', Action.DROP
         )
         ev.msg.datapath.send_msg.assert_not_called()
+
+    def test_mirror_copy_is_never_reinjected(self):
+        # PacketIn sent by an ADG MIRROR rule (cookie set): original already forwarded by NORMAL
+        ev = self._create_mock_event()
+        ev.msg.cookie = ADG_IP_POLICY_COOKIE
+
+        self.controller.packet_in_handler(ev)
+
+        ev.msg.datapath.send_msg.assert_not_called()          # no PacketOut (no duplicate/truncation)
+        self.flow_installer_mock.install_ip_policy_flow.assert_not_called()
+        self.flow_installer_mock.install_policy_flow.assert_not_called()
+        self.trust_store_mock.read.assert_not_called()          # no per-copy re-evaluation
+        self.risk_store_mock.read.assert_not_called()
+        self.assertEqual(self.controller.pkt_seen, {})
+        self.assertNotIn(1, self.controller.mac_to_port)
+        self.assertEqual(self.controller.mirror_copies, 1)
+
+    def test_mirror_copy_does_not_suppress_table_miss_packet_in(self):
+        self.trust_store_mock.read.return_value = Reading(50, LookupStatus.OK)
+        self.policy_engine_mock.decide_resolved.return_value = Action.MIRROR
+        copy = self._create_mock_event()
+        copy.msg.cookie = ADG_IP_POLICY_COOKIE
+        self.controller.packet_in_handler(copy)
+
+        ev = self._create_mock_event()                         # same (dpid, in_port, src, dst)
+        self.controller.packet_in_handler(ev)
+
+        self.trust_store_mock.read.assert_called_once_with('10.0.0.1')
+        ev.msg.datapath.send_msg.assert_called_once()          # table-miss original is forwarded once
 
     def test_flow_removed_forgets_active_adg_rule(self):
         self.controller.detector.installed[(1, '10.0.0.1')] = Action.MIRROR
@@ -120,14 +153,14 @@ class TestADGController(unittest.TestCase):
 
     def test_packet_in_handler_mirror(self):
         ev = self._create_mock_event()
-        self.trust_store_mock.get.return_value = 50
-        self.policy_engine_mock.evaluate.return_value = Action.MIRROR
+        self.trust_store_mock.read.return_value = Reading(50, LookupStatus.OK)
+        self.policy_engine_mock.decide_resolved.return_value = Action.MIRROR
 
         self.controller.packet_in_handler(ev)
 
-        self.trust_store_mock.get.assert_called_with('10.0.0.1')
-        self.risk_store_mock.get.assert_called_with('10.0.0.1')
-        self.policy_engine_mock.evaluate.assert_called_with(50, self.risk_store_mock.get.return_value)
+        self.trust_store_mock.read.assert_called_with('10.0.0.1')
+        self.risk_store_mock.read.assert_called_with('10.0.0.1')
+        self.policy_engine_mock.decide_resolved.assert_called_with(Resolved(50, Quality.VALID), Resolved(0, Quality.VALID))
         self.flow_installer_mock.install_ip_policy_flow.assert_called_once_with(
             ev.msg.datapath, '10.0.0.1', Action.MIRROR
         )
@@ -135,14 +168,14 @@ class TestADGController(unittest.TestCase):
 
     def test_packet_in_handler_drop(self):
         ev = self._create_mock_event()
-        self.trust_store_mock.get.return_value = 10
-        self.policy_engine_mock.evaluate.return_value = Action.DROP
+        self.trust_store_mock.read.return_value = Reading(10, LookupStatus.OK)
+        self.policy_engine_mock.decide_resolved.return_value = Action.DROP
 
         self.controller.packet_in_handler(ev)
 
-        self.trust_store_mock.get.assert_called_with('10.0.0.1')
-        self.risk_store_mock.get.assert_called_with('10.0.0.1')
-        self.policy_engine_mock.evaluate.assert_called_with(10, self.risk_store_mock.get.return_value)
+        self.trust_store_mock.read.assert_called_with('10.0.0.1')
+        self.risk_store_mock.read.assert_called_with('10.0.0.1')
+        self.policy_engine_mock.decide_resolved.assert_called_with(Resolved(10, Quality.VALID), Resolved(0, Quality.VALID))
         self.flow_installer_mock.install_ip_policy_flow.assert_called_once_with(
             ev.msg.datapath, '10.0.0.1', Action.DROP
         )
