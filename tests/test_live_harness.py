@@ -80,9 +80,12 @@ class TestStopEscalation(HarnessTestBase):
     def test_children_get_own_session_and_run_marker(self):
         run = lh.LiveRun(self.tmp / "run", steps=SHORT)
         p = run.spawn("child", ["sleep", "30"], self.tmp / "c.log")
+        marker = ("%s=%s" % (lh.RUN_ENV, run.out)).encode()
+        # Between fork and exec /proc/<pid>/environ still shows the parent's initial environment,
+        # so wait for the exec before inspecting the child.
+        self.assertTrue(wait_until(lambda: Path("/proc/%d/cmdline" % p.pid).read_bytes().startswith(b"sleep"), 2))
         self.assertEqual(os.getsid(p.pid), p.pid)
-        env = Path("/proc/%d/environ" % p.pid).read_bytes()
-        self.assertIn(("%s=%s" % (lh.RUN_ENV, run.out)).encode(), env)
+        self.assertIn(marker, Path("/proc/%d/environ" % p.pid).read_bytes())
         run.stop("child")
 
 
