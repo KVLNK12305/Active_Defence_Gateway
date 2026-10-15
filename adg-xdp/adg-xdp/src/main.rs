@@ -7,7 +7,7 @@ use aya::{
 use clap::Parser;
 #[rustfmt::skip]
 use log::{debug, warn};
-use std::{collections, net::Ipv4Addr, sync::Arc, sync::atomic::{AtomicU64, Ordering}, time::Duration};
+use std::{collections, net::Ipv4Addr, sync::Arc, sync::atomic::{AtomicBool, AtomicU64, Ordering}, time::Duration};
 use tokio::{signal, sync::RwLock};
 
 
@@ -17,6 +17,7 @@ struct Opt {
     iface: String,
 }
 
+mod shutdown;
 mod profiler;
 mod telemetry_extensions;
 mod trust;
@@ -128,6 +129,9 @@ async fn main() -> anyhow::Result<()> {
     let flow_table = Arc::new(RwLock::new(network_intelligence::flow_table::FlowTable::new(10_000, 30_000_000_000)));
     let security_graph = Arc::new(RwLock::new(network_intelligence::security_graph::SecurityGraph::new()));
     let event_counter = Arc::new(AtomicU64::new(0));
+    // Set on SIGINT/SIGTERM; every FLOW_EVENTS consumer checks it so the runtime can shut down.
+    let stop_consumers = Arc::new(AtomicBool::new(false));
+    let mut consumer_handles = Vec::new();
 
     // Event-driven telemetry path for TCP control events (SYN/FIN/RST)
     let mut perf_array = aya::maps::perf::PerfEventArray::try_from(ebpf.take_map("FLOW_EVENTS").ok_or_else(|| anyhow::anyhow!("FLOW_EVENTS map not found"))?)?;
@@ -137,9 +141,10 @@ async fn main() -> anyhow::Result<()> {
         let ft = flow_table.clone();
         let sg = security_graph.clone();
         let ec = event_counter.clone();
+        let stop = stop_consumers.clone();
         
-        tokio::task::spawn_blocking(move || {
-            loop {
+        consumer_handles.push(tokio::task::spawn_blocking(move || {
+            shutdown::consumer_loop(&stop, || {
                 if buf.readable() {
                     buf.for_each(|event| match event {
                         aya::maps::perf::PerfEvent::Sample { head, tail: _ } => {
@@ -203,9 +208,8 @@ async fn main() -> anyhow::Result<()> {
                         _ => {}
                     });
                 }
-                std::thread::sleep(Duration::from_millis(10));
-            }
-        });
+            }, Duration::from_millis(10));
+        }));
     }
 
     // Track previous snapshots for windowed delta computation
@@ -219,11 +223,16 @@ async fn main() -> anyhow::Result<()> {
 
     let ctrl_c = signal::ctrl_c();
     tokio::pin!(ctrl_c);
+    let mut sigterm = signal::unix::signal(signal::unix::SignalKind::terminate())?;
 
     loop {
         tokio::select! {
             _ = &mut ctrl_c => {
                 println!("\nReceived Ctrl-C, exiting...");
+                break;
+            }
+            _ = sigterm.recv() => {
+                println!("\nReceived SIGTERM, exiting...");
                 break;
             }
             _ = tokio::time::sleep(Duration::from_secs(2)) => {
@@ -365,5 +374,16 @@ async fn main() -> anyhow::Result<()> {
         }
     }
 
+    // Bounded, cooperative stop of the blocking consumers; otherwise dropping the runtime waits forever.
+    stop_consumers.store(true, Ordering::SeqCst);
+    let summary = shutdown::join_with_deadline(consumer_handles, Duration::from_secs(3)).await;
+    if summary.unfinished > 0 {
+        warn!("{} FLOW_EVENTS consumer(s) did not stop within 3 s; exiting without waiting", summary.unfinished);
+        std::process::exit(1);
+    }
+    if summary.panicked > 0 {
+        warn!("{} FLOW_EVENTS consumer(s) panicked during execution", summary.panicked);
+    }
+    println!("All FLOW_EVENTS consumers stopped; shutdown complete.");
     Ok(())
 }

@@ -11,7 +11,7 @@ import time
 from policy import Action, PolicyEngine
 from trust import TrustStore
 from risk import RiskStore
-from flow import FlowInstaller
+from flow import FlowInstaller, ADG_IP_POLICY_COOKIE, IP_POLICY_PRIORITY
 from detector import TrustChangeDetector
 from utils import get_logger, debug_packet
 
@@ -39,6 +39,7 @@ class ADGController(app_manager.OSKenApp):
     def switch_features_handler(self, ev):
         datapath = ev.msg.datapath
         self.datapaths[datapath.id] = datapath
+        self.detector.forget_datapath(datapath.id)
         ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
 
@@ -123,17 +124,10 @@ class ADGController(app_manager.OSKenApp):
             # Register with detector for background monitoring
             self.detector.register_host(src_ip)
             
-            trust = self.trust_store.get(src_ip)
-            mock_trust = os.environ.get("ADG_MOCK_TRUST")
-            if mock_trust:
-                trust = int(mock_trust)
-            risk = self.risk_store.get(src_ip)
-            decision = self.policy_engine.evaluate(trust, risk)
-            
-            priority = 1
-            if decision == Action.DROP: priority = 200
-            elif decision == Action.MIRROR: priority = 120
-            
+            # Same decision function as the background reconciler (trust AND risk)
+            trust, risk, decision = self.detector.decide(src_ip)
+            priority = IP_POLICY_PRIORITY.get(decision, 1)
+
             logger.info("[POLICY]")
             logger.info(f"Host : {src_ip}")
             logger.info(f"Trust : {trust}")
@@ -145,11 +139,11 @@ class ADGController(app_manager.OSKenApp):
 
         match = parser.OFPMatch(in_port=in_port, eth_src=src, eth_dst=dst)
 
-        if decision in (Action.DROP, Action.MIRROR):
-            if src_ip:
-                self.flow_installer.install_ip_policy_flow(datapath, src_ip, decision)
-            if decision == Action.DROP:
-                return
+        if src_ip:
+            # Idempotent: only sends FlowMods when this host's ADG rule on this switch must change
+            self.detector.enforce(datapath, src_ip, decision)
+        if decision == Action.DROP:
+            return
 
         # ALLOW path (or forwarding for first PacketIn of MIRROR)
         if decision == Action.ALLOW and out_port != ofproto.OFPP_FLOOD:
@@ -169,3 +163,13 @@ class ADGController(app_manager.OSKenApp):
             data=data
         )
         datapath.send_msg(out)
+
+    # pyrefly: ignore [missing-attribute]
+    @set_ev_cls(ofp_event.EventOFPFlowRemoved, MAIN_DISPATCHER)
+    def flow_removed_handler(self, ev):
+        msg = ev.msg
+        if msg.cookie != ADG_IP_POLICY_COOKIE:
+            return
+        ip = msg.match.get("ipv4_src")
+        if ip:
+            self.detector.on_rule_removed(msg.datapath.id, ip, msg.priority)

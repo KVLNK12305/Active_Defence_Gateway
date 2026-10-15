@@ -7,7 +7,8 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../controller')))
 
 from adg_controller import ADGController
-from policy import Action
+from policy import Action, PolicyEngine
+from flow import ADG_IP_POLICY_COOKIE
 from os_ken.lib.packet import packet, ethernet, ipv4
 
 class TestADGController(unittest.TestCase):
@@ -59,7 +60,63 @@ class TestADGController(unittest.TestCase):
         self.risk_store_mock.get.assert_called_with('10.0.0.1')
         self.policy_engine_mock.evaluate.assert_called_with(100, self.risk_store_mock.get.return_value)
         self.flow_installer_mock.install_policy_flow.assert_called_once()
-        self.flow_installer_mock.install_ip_policy_flow.assert_not_called()
+        # Unknown prior state: one ALLOW reconciliation (strict removal of stale ADG tiers) ...
+        self.flow_installer_mock.install_ip_policy_flow.assert_called_once_with(
+            ev.msg.datapath, '10.0.0.1', Action.ALLOW
+        )
+        # ... and none on the next PacketIn for the same host and switch
+        self.controller.pkt_seen.clear()
+        self.controller.packet_in_handler(self._create_mock_event())
+        self.flow_installer_mock.install_ip_policy_flow.assert_called_once()
+
+    def test_packet_in_high_risk_escalates_with_real_policy(self):
+        # Real PolicyEngine and integer risk (not MagicMock): trust 100 + risk 80 -> MIRROR
+        self.controller.policy_engine = PolicyEngine()
+        self.trust_store_mock.get.return_value = 100
+        self.risk_store_mock.get.return_value = 80
+        ev = self._create_mock_event()
+
+        self.controller.packet_in_handler(ev)
+
+        self.flow_installer_mock.install_ip_policy_flow.assert_called_once_with(
+            ev.msg.datapath, '10.0.0.1', Action.MIRROR
+        )
+        self.flow_installer_mock.install_policy_flow.assert_not_called()
+
+    def test_packet_in_low_trust_high_risk_stays_drop(self):
+        self.controller.policy_engine = PolicyEngine()
+        self.trust_store_mock.get.return_value = 39
+        self.risk_store_mock.get.return_value = 100
+        ev = self._create_mock_event()
+
+        self.controller.packet_in_handler(ev)
+
+        self.flow_installer_mock.install_ip_policy_flow.assert_called_once_with(
+            ev.msg.datapath, '10.0.0.1', Action.DROP
+        )
+        ev.msg.datapath.send_msg.assert_not_called()
+
+    def test_flow_removed_forgets_active_adg_rule(self):
+        self.controller.detector.installed[(1, '10.0.0.1')] = Action.MIRROR
+        ev = MagicMock()
+        ev.msg.cookie = ADG_IP_POLICY_COOKIE
+        ev.msg.match = {'eth_type': 0x0800, 'ipv4_src': '10.0.0.1'}
+        ev.msg.priority = 120
+        ev.msg.datapath.id = 1
+
+        self.controller.flow_removed_handler(ev)
+        self.assertNotIn((1, '10.0.0.1'), self.controller.detector.installed)
+
+    def test_flow_removed_ignores_foreign_cookie(self):
+        self.controller.detector.installed[(1, '10.0.0.1')] = Action.MIRROR
+        ev = MagicMock()
+        ev.msg.cookie = 0
+        ev.msg.match = {'eth_type': 0x0800, 'ipv4_src': '10.0.0.1'}
+        ev.msg.priority = 120
+        ev.msg.datapath.id = 1
+
+        self.controller.flow_removed_handler(ev)
+        self.assertEqual(self.controller.detector.installed[(1, '10.0.0.1')], Action.MIRROR)
 
     def test_packet_in_handler_mirror(self):
         ev = self._create_mock_event()

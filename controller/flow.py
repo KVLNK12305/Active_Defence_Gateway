@@ -1,5 +1,10 @@
 from policy import Action
 
+# Identifies ADG IP-level policy rules (eth_type=IPv4, ipv4_src=<host>) in FlowRemoved messages.
+ADG_IP_POLICY_COOKIE = 0xAD60001
+# IP-level policy tiers; ALLOW is the absence of an ADG IP-level rule.
+IP_POLICY_PRIORITY = {Action.MIRROR: 120, Action.DROP: 200}
+
 class FlowInstaller:
     def __init__(self, logger):
         self.logger = logger
@@ -63,49 +68,50 @@ class FlowInstaller:
         self.logger.debug("Installed flow: Priority=%s, Action=%s", priority, action.name)
 
     def install_ip_policy_flow(self, datapath, ip, action):
-        """Installs or removes a global policy flow matching only ipv4_src"""
+        """Makes `action` the only ADG IP-level policy rule for `ip` on `datapath` (ALLOW = no rule).
+
+        The new tier is added before the other tier is removed, so there is no unenforced gap and
+        no window with contradictory tiers left behind. Removals are strict (exact
+        eth_type+ipv4_src match and ADG priority), so rules installed by anything else -- including
+        more specific rules for the same source -- are never touched.
+        """
         ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
-        
+
         match = parser.OFPMatch(eth_type=0x0800, ipv4_src=ip)
-        
-        if action == Action.ALLOW:
-            # Delete any existing restrictive policy flows for this IP
+
+        if action in IP_POLICY_PRIORITY:
+            actions = []  # DROP: no actions == drop
+            if action == Action.MIRROR:
+                # Forward traffic normally AND send a copy to controller for inspection.
+                # OFPP_NORMAL: let OVS handle L2 forwarding as usual.
+                # OFPP_CONTROLLER: duplicate a packet header copy (128 bytes) for the SDN controller.
+                actions = [
+                    parser.OFPActionOutput(ofproto.OFPP_NORMAL),
+                    parser.OFPActionOutput(ofproto.OFPP_CONTROLLER, 128),
+                ]
+            inst = [parser.OFPInstructionActions(ofproto.OFPIT_APPLY_ACTIONS, actions)]
             mod = parser.OFPFlowMod(
                 datapath=datapath,
-                command=ofproto.OFPFC_DELETE,
-                out_port=ofproto.OFPP_ANY,
-                out_group=ofproto.OFPG_ANY,
-                match=match
+                cookie=ADG_IP_POLICY_COOKIE,
+                priority=IP_POLICY_PRIORITY[action],
+                match=match,
+                instructions=inst,
+                idle_timeout=60,
+                # FlowRemoved lets the reconciler notice idle expiry / deletion by another controller
+                flags=ofproto.OFPFF_SEND_FLOW_REM
             )
             datapath.send_msg(mod)
-            self.logger.debug("Deleted policy flows for IP=%s", ip)
-            return
 
-        priority = 0
-        actions = []
-
-        if action == Action.DROP:
-            priority = 200
-            # No actions == drop
-        elif action == Action.MIRROR:
-            priority = 120
-            # Forward traffic normally AND send a copy to controller for inspection.
-            # OFPP_NORMAL: let OVS handle L2 forwarding as usual.
-            # OFPP_CONTROLLER: duplicate a packet header copy (128 bytes) for the SDN controller.
-            actions = [
-                parser.OFPActionOutput(ofproto.OFPP_NORMAL),
-                parser.OFPActionOutput(ofproto.OFPP_CONTROLLER, 128),
-            ]
-            
-        inst = [parser.OFPInstructionActions(ofproto.OFPIT_APPLY_ACTIONS, actions)]
-        
-        mod = parser.OFPFlowMod(
-            datapath=datapath,
-            priority=priority,
-            match=match,
-            instructions=inst,
-            idle_timeout=60
-        )
-        datapath.send_msg(mod)
-        self.logger.debug("Installed IP policy flow: IP=%s, Priority=%s, Action=%s", ip, priority, action.name)
+        for other, priority in IP_POLICY_PRIORITY.items():
+            if other != action:
+                mod = parser.OFPFlowMod(
+                    datapath=datapath,
+                    command=ofproto.OFPFC_DELETE_STRICT,
+                    priority=priority,
+                    out_port=ofproto.OFPP_ANY,
+                    out_group=ofproto.OFPG_ANY,
+                    match=match
+                )
+                datapath.send_msg(mod)
+        self.logger.debug("Applied IP policy: IP=%s, Action=%s", ip, action.name)
